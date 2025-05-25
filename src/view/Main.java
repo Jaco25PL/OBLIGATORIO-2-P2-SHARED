@@ -1,8 +1,13 @@
-package obligatorio.pkg2.p2;
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra ######]
+ */
 
-public class OBLIGATORIO2P2 {
+package view;
+
+public class Main {
 
     public static void main(String[] args) {
+        
     }
     
 }
