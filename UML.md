@@ -23,6 +23,7 @@
 	* `- clienteContrato: Cliente`
 	* `- vehiculoContrato: Vehiculo`
 	* `- numContrato: int`
+	* `- fechaInicio: String`
 
 ---
 
