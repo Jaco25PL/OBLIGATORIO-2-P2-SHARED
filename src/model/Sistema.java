@@ -70,18 +70,18 @@ public class Sistema {
     }
 
     public int getProxNumContrato() {
-        return proxNumContrato++;
+        return proxNumContrato;
     }
 
     public int getProxNumEntrada() {
-        return proxNumEntrada++;
+        return proxNumEntrada;
     }
 
     public int getProxNumSalida() {
-        return proxNumSalida++;
+        return proxNumSalida;
     }
 
     public int getProxNumServicio() {
-        return proxNumServicio++;
+        return proxNumServicio;
     }
 }
