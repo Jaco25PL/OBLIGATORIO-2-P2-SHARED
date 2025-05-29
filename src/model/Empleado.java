@@ -1,13 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package model;
 
-/**
- *
- * @author matip
- */
 public class Empleado {
-    
+   
+    // Atributos
+    private String nombre;
+    private int cedula;
+    private String direccion;
+    private int numEmpleado;
+
+    // Constructor
+    public Empleado(String unNombre, int unaCedula, String unaDireccion, int unNumEmpleado){
+        this.nombre = unNombre;
+        this.cedula = unaCedula;
+        this.direccion = unaDireccion;
+        this.numEmpleado = unNumEmpleado;
+    }
+
+    // Getters
+    public String getNombre(){
+        return nombre;
+    }
+
+    public int getCedula(){
+        return cedula;
+    }
+
+    public String getDireccion(){
+        return direccion;
+    }
+
+    public int getNumEmpleado(){
+        return numEmpleado;
+    }
+
 }

@@ -1,13 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package model;
 
-/**
- *
- * @author matip
- */
 public class Vehiculo {
     
+    // Atributos
+    private String matricula;
+    private String marca;
+    private String modelo;
+    private String estado;
+
+    // Constructor
+    public Vehiculo(String unaMatricula, String unaMarca, String unModelo, String unEstado){
+        this.matricula = unaMatricula;
+        this.marca = unaMarca;
+        this.modelo = unModelo;
+        this.estado = unEstado;
+    }
+
+    // Getters
+    public String getMatricula(){
+        return matricula;
+    }
+
+    public String getMarca(){
+        return marca;
+    }
+
+    public String getModelo(){
+        return modelo;
+    }
+
+    public String getEstado(){
+        return estado;
+    }
+
 }
