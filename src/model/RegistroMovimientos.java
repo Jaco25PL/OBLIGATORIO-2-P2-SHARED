@@ -1,6 +1,6 @@
 package model;
 
-public class RegistroMovimientos {
+public abstract class RegistroMovimientos {
     
     // Atributos
 
