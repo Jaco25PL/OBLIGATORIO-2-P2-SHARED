@@ -81,7 +81,9 @@ El **Sistema** contiene listas de los siguientes objetos:
 * **Vehiculo** (`listaVehiculos`)
 * **Empleado** (`listaEmpleados`)
 * **Contrato** (`listaContratos`)
-* **RegistroMovimientos** (`listaMovimientos`) ← **LISTA UNIFICADA**
+* **Salida** (`listaSalidas`)
+* **Entrada** (`listaEntradas`)
+* **ServicioAdicional** (`listaServiciosAdicionales`)
 
 ### Asociaciones
 
