@@ -22,6 +22,8 @@ public class Sistema {
     private int proxNumSalida;
     private int proxNumServicio;
 
+    // ----------------------------------------
+
     public Sistema() {
         // Listas inicializadas
         this.listaClientes = new ArrayList<>();

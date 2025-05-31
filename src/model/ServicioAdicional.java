@@ -3,51 +3,23 @@
  */
 package model;
 
-public class ServicioAdicional {
+public class ServicioAdicional extends RegistroMovimientos{
     
     // Atributos
-    private int numServicio;
     private String tipoServicio;
-    private String fecha;
-    private String hora;
-    private Vehiculo vehiculoServicio;
-    private Empleado empleadoServicio;
     private double costoServicio;
 
     //Constructor
-    public ServicioAdicional(String unTipoServicio, String unaFecha, String unaHora, Vehiculo unVehiculoServicio, Empleado unEmpleadoServicio, double unCostoServicio){
-        this.numServicio = 1;
+    public ServicioAdicional(int unNumMovimiento, String unTipoServicio, String unaFecha, String unaHora, String unaNota, Vehiculo unVehiculo, Empleado unEmpleado, double unCostoServicio){
+        super(unNumMovimiento, unaFecha, unaHora, unaNota, unEmpleado, unVehiculo);
         this.tipoServicio = unTipoServicio;
-        this.fecha = unaFecha;
-        this.hora = unaHora;
-        this.vehiculoServicio = unVehiculoServicio;
-        this.empleadoServicio = unEmpleadoServicio;
         this.costoServicio = unCostoServicio;
     }
 
     //Getters
-    public int getNumServicio() {
-        return numServicio;
-    }
 
     public String getTipoServicio() {
         return tipoServicio;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public String getHora() {
-        return hora;
-    }
-
-    public Vehiculo getVehiculoServicio() {
-        return vehiculoServicio;
-    }
-
-    public Empleado getEmpleadoServicio() {
-        return empleadoServicio;
     }
 
     public double getCostoServicio() {

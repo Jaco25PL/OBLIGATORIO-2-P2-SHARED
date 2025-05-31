@@ -11,6 +11,8 @@ public class Vehiculo {
     private String modelo;
     private String estado;
 
+    // ----------------------------------------
+
     // Constructor
     public Vehiculo(String unaMatricula, String unaMarca, String unModelo, String unEstado){
         this.matricula = unaMatricula;

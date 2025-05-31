@@ -3,54 +3,25 @@
  */
 package model;
 
-public class Entrada {
+public class Entrada extends RegistroMovimientos{
     
     // Atributos
-    private int numEntrada;
-    private String fecha;
-    private String hora;
-    private String notas;
-    private Empleado empleadoRecibe;
-    private Vehiculo vehiculoEntrada;
     private Salida salidaAsociada;
 
+    // ----------------------------------------
+
     // Constructor
-    public Entrada(String unaFecha, String unaHora, String unasNotas, Empleado unEmpleadoRecibe, Vehiculo unVehiculoEntrada, Salida unaSalidaAsociada) {
-        this.numEntrada = 1;
-        this.fecha = unaFecha;
-        this.hora = unaHora;
-        this.notas = unasNotas;
-        this.empleadoRecibe = unEmpleadoRecibe;
-        this.vehiculoEntrada = unVehiculoEntrada;
-        this.salidaAsociada = unaSalidaAsociada;
+    public Entrada(int unNumMovimiento, String unaFecha, String unaHora, String unaNota, Empleado unEmpleado, Vehiculo unVehiculo) {
+        super(unNumMovimiento, unaFecha, unaHora, unaNota, unEmpleado, unVehiculo);
+        this.salidaAsociada = null; // Se asigna cuando se crea la salida
     }
 
     // Getters
-    public int getNumEntrada() {
-        return numEntrada;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public String getHora() {
-        return hora;
-    }
-
-    public String getNotas() {
-        return notas;
-    }
-
-    public Empleado getEmpleadoRecibe() {
-        return empleadoRecibe;
-    }
-
-    public Vehiculo getVehiculoEntrada() {
-        return vehiculoEntrada;
-    }
-
     public Salida getSalidaAsociada() {
         return salidaAsociada;
+    }
+
+    public void setSalidaAsociada(Salida unaSalida){
+        this.salidaAsociada = unaSalida;
     }
 }

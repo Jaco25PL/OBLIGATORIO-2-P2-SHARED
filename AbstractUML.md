@@ -11,7 +11,7 @@
 * `numMovimiento`: int
 * `fecha`: String
 * `hora`: String
-* `notas`: String
+* `nota`: String
 * `empleado`: Empleado
 * `vehiculo`: Vehiculo
 
@@ -54,7 +54,9 @@
 * `listaVehiculos`: List<Vehiculo>
 * `listaEmpleados`: List<Empleado>
 * `listaContratos`: List<Contrato>
-* `listaMovimientos`: List<RegistroMovimientos>  ← **LISTA UNIFICADA**
+* `listaEntradas`: List<Entrada>
+* `listaSalidas`: List<Salida>
+* `listaServiciosAdicionales`: List<ServicioAdicional>
 * `proxNumContrato`: int
 * `proxNumServicio`: int
 * `proxNumEntrada`: int

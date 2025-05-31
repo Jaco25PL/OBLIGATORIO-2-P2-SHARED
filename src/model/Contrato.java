@@ -13,6 +13,8 @@ public class Contrato {
     private int numContrato;
     private String fechaInicio;
 
+    // ----------------------------------------
+
     // Constructor
     public Contrato(double unValorMensual, Empleado unEmpleadoContratEmpleado, Cliente unClienteContrato, Vehiculo unClienteVehiculo, int unNumContrato, String unFechaInicio){
         this.valorMensual = unValorMensual;
