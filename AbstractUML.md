@@ -1,6 +1,4 @@
-# Diagrama de Clases UML - Versión Mejorada
-
-A continuación, se presenta el diagrama de clases UML optimizado con herencia mejorada y lista unificada de movimientos:
+#  UML PARKING - Versión Mejorada
 
 ## Clases Abstractas
 
@@ -15,6 +13,7 @@ A continuación, se presenta el diagrama de clases UML optimizado con herencia m
 * `hora`: String
 * `notas`: String
 * `empleado`: Empleado
+* `vehiculo`: Vehiculo
 
 ---
 
@@ -42,14 +41,11 @@ A continuación, se presenta el diagrama de clases UML optimizado con herencia m
 * `fechaInicio`: String
 
 ### **Entrada** (extends RegistroMovimientos)
-* `vehiculo`: Vehiculo
-* `salidaAsociada`: Salida  ← **MANTENER AQUÍ**
+* `salidaAsociada`: Salida
 
 ### **Salida** (extends RegistroMovimientos)
-* `estadoVehiculo`: String
 
 ### **ServicioAdicional** (extends RegistroMovimientos)
-* `vehiculo`: Vehiculo
 * `tipoServicio`: String
 * `costoServicio`: double
 
@@ -60,7 +56,9 @@ A continuación, se presenta el diagrama de clases UML optimizado con herencia m
 * `listaContratos`: List<Contrato>
 * `listaMovimientos`: List<RegistroMovimientos>  ← **LISTA UNIFICADA**
 * `proxNumContrato`: int
-* `proxNumMovimiento`: int  ← **NUMERACIÓN UNIFICADA**
+* `proxNumServicio`: int
+* `proxNumEntrada`: int
+* `proxNumSalida`: int 
 
 ---
 
@@ -101,68 +99,3 @@ El **Sistema** contiene listas de los siguientes objetos:
 #### Entrada
 * **Entrada** se asocia con:
   - **Salida** (`salidaAsociada`)
-
----
-
-## Ventajas de esta Mejora
-
-### 1. **Eliminación de Código Duplicado**
-- `fecha`, `hora`, `notas` ahora están solo en `RegistroMovimientos`
-- `vehiculo` y `empleado` se mueven a la clase padre
-- Numeración unificada con `numMovimiento`
-
-### 2. **Lista Unificada de Movimientos**
-- Una sola lista `List<RegistroMovimientos>` en lugar de tres listas separadas
-- Facilita enormemente los reportes requeridos en la consigna
-- Mejor uso del polimorfismo
-
-### 3. **Reportes Simplificados**
-```java
-// Ejemplo de uso para reportes
-public List<RegistroMovimientos> getMovimientosPorVehiculo(Vehiculo vehiculo) {
-    return listaMovimientos.stream()
-        .filter(mov -> mov.getVehiculo().equals(vehiculo))
-        .collect(Collectors.toList());
-}
-
-public List<RegistroMovimientos> getTodosLosMovimientos() {
-    return new ArrayList<>(listaMovimientos);
-}
-```
-
-### 4. **Código Más Limpio**
-```java
-// En lugar de
-sistema.getListaEntradas().add(entrada);
-sistema.getListaSalidas().add(salida);
-sistema.getListaServiciosAdicionales().add(servicio);
-
-// Ahora solo
-sistema.getListaMovimientos().add(movimiento);
-```
-
-### 5. **Alineado con los Requerimientos**
-- **Punto 8.1**: "todos los movimientos (entradas, salidas, servicios adicionales)"
-- **Punto 8.2**: "grilla de movimientos que hubo"
-- Ambos se implementan fácilmente con la lista unificada
-
----
-
-## Implementación Sugerida
-
-### Orden de Desarrollo:
-1. **Persona** (clase abstracta)
-2. **RegistroMovimientos** (clase abstracta)
-3. **Cliente** y **Empleado** (extends Persona)
-4. **Vehiculo** (clase independiente)
-5. **Entrada**, **Salida**, **ServicioAdicional** (extends RegistroMovimientos)
-6. **Contrato** (clase independiente)
-7. **Sistema** (con lista unificada)
-
-### Métodos Útiles en RegistroMovimientos:
-```java
-public abstract String getTipoMovimiento(); // "Entrada", "Salida", "Servicio"
-public abstract String getDescripcion();    // Para reportes
-```
-
-Esta estructura es más profesional, mantiene el código DRY (Don't Repeat Yourself) y facilita enormemente la implementación de los reportes requeridos en el obligatorio.
