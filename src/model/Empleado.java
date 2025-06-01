@@ -21,4 +21,9 @@ public class Empleado extends Persona {
         return numEmpleado;
     }
 
+    @Override
+    public String toString(){
+        return "Empleado: " + super.toString() + " | Num. Empleado: " + getNumEmpleado();
+    }
+
 }

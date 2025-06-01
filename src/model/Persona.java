@@ -35,6 +35,6 @@ public abstract class Persona {
 
     @Override
     public String toString(){
-        return "Persona: " + getNombre() + " | CI: " + getCedula() + " | Dirección: " + getDireccion();
+        return getNombre() + " | CI: " + getCedula() + " | Dirección: " + getDireccion();
     }
 }

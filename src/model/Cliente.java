@@ -27,4 +27,9 @@ public class Cliente extends Persona {
         return añoCliente;
     }
 
+    @Override
+    public String toString(){
+        return "Cliente: " + super.toString() + " | Cel: " + getCelular() + " | Cliente Desde: " + getAñoCliente();
+    }
+
 }
