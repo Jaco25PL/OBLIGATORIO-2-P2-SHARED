@@ -5,7 +5,7 @@ package model;
 
 public class Contrato {
     
-    // Atributos
+    //Atributos
     private double valorMensual;
     private Empleado empleadoContrato;
     private Cliente clienteContrato;
@@ -13,19 +13,17 @@ public class Contrato {
     private int numContrato;
     private String fechaInicio;
 
-    // ----------------------------------------
-
-    // Constructor
-    public Contrato(double unValorMensual, Empleado unEmpleadoContratEmpleado, Cliente unClienteContrato, Vehiculo unClienteVehiculo, int unNumContrato, String unFechaInicio){
+    //Constructor
+    public Contrato(double unValorMensual, Empleado unEmpleadoContrato, Cliente unClienteContrato, Vehiculo unClienteVehiculo, int unNumContrato, String unFechaInicio){
         this.valorMensual = unValorMensual;
-        this.empleadoContrato = unEmpleadoContratEmpleado;
+        this.empleadoContrato = unEmpleadoContrato;
         this.clienteContrato = unClienteContrato;
         this.vehiculoContrato = unClienteVehiculo;
         this.numContrato = unNumContrato;
         this.fechaInicio = unFechaInicio;
     }
 
-    // Getters
+    //Metodos
     public double getValorMensual(){
         return valorMensual;
     }
@@ -50,7 +48,10 @@ public class Contrato {
         return fechaInicio;
     }
 
-
+    @Override
+    public String toString(){
+        return "Contrato #" + getNumContrato() + " | Valor Mensual: " + getValorMensual() + " | Fecha de Inicio: " + getFechaInicio() + " | Cliente: " + getClienteContrato().getNombre() + " CI: " + getClienteContrato().getCedula() + " | Vehiculo: " + getVehiculoContrato().getMarca() + " " + getVehiculoContrato().getModelo() + " Matricula: " + getVehiculoContrato().getMatricula() + " | Empleado: " + getEmpleadoContrato().getNombre() + getEmpleadoContrato().getCedula();
+    }
 }
 
 

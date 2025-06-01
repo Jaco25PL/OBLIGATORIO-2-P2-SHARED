@@ -5,7 +5,7 @@ package model;
 
 public abstract class RegistroMovimientos {
     
-    // Atributos
+    //Atributos
 
     protected int numMovimiento;
     protected String fecha;
@@ -14,9 +14,7 @@ public abstract class RegistroMovimientos {
     protected Empleado empleado;
     protected Vehiculo vehiculo;
 
-    // ----------------------------------------
-
-    // Constructor
+    //Constructor
 
     public RegistroMovimientos(int unNumMovimiento, String unaFecha, String unaHora, String unaNota, Empleado unEmpleado, Vehiculo unVehiculo){
         this.numMovimiento = unNumMovimiento;
@@ -27,7 +25,7 @@ public abstract class RegistroMovimientos {
         this.vehiculo = unVehiculo;
     }
 
-    // Getters
+    //Metodos
 
     public int getNumMovimiento(){
         return numMovimiento;
@@ -51,6 +49,11 @@ public abstract class RegistroMovimientos {
 
     public Vehiculo getVehiculo(){
         return vehiculo;
+    }
+
+    @Override
+    public String toString(){
+        return "Movimiento N#" + getNumMovimiento() + " | Fecha: " + getFecha() + " | Hora: " + getHora() + " | Nota: " + getNota() + " | Empleado Asociado: " + getEmpleado() + " | Vehiculo Asociado: " + getVehiculo(); 
     }
 
 }

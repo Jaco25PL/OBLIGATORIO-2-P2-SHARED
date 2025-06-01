@@ -5,15 +5,13 @@ package model;
 
 public class Vehiculo {
     
-    // Atributos
+    //Atributos
     private String matricula;
     private String marca;
     private String modelo;
     private String estado;
 
-    // ----------------------------------------
-
-    // Constructor
+    //Constructor
     public Vehiculo(String unaMatricula, String unaMarca, String unModelo, String unEstado){
         this.matricula = unaMatricula;
         this.marca = unaMarca;
@@ -21,7 +19,7 @@ public class Vehiculo {
         this.estado = unEstado;
     }
 
-    // Getters
+    //Metodos
     public String getMatricula(){
         return matricula;
     }
@@ -36,6 +34,15 @@ public class Vehiculo {
 
     public String getEstado(){
         return estado;
+    }
+
+    public void setEstado(String unEstado){
+        this.estado = unEstado;
+    }
+
+    @Override
+    public String toString(){
+        return "Matricula: " + getMatricula() + " | Marca: " + getMarca() + " | Modelo: " + getModelo() + " | Estado: " + getEstado();
     }
 
 }

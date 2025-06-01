@@ -5,7 +5,7 @@ package model;
 
 public class ServicioAdicional extends RegistroMovimientos{
     
-    // Atributos
+    //Atributos
     private String tipoServicio;
     private double costoServicio;
 
@@ -16,7 +16,7 @@ public class ServicioAdicional extends RegistroMovimientos{
         this.costoServicio = unCostoServicio;
     }
 
-    //Getters
+    //Metodos
 
     public String getTipoServicio() {
         return tipoServicio;
@@ -26,4 +26,8 @@ public class ServicioAdicional extends RegistroMovimientos{
         return costoServicio;
     }
 
+    @Override
+    public String toString(){
+        return "Movimiento: Servicio Adicional | " + super.toString() + " | Tipo: " + getTipoServicio() + " | Costo: " + getCostoServicio();
+    }
 }

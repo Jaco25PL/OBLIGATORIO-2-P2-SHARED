@@ -5,18 +5,16 @@ package model;
 
 public class Entrada extends RegistroMovimientos{
     
-    // Atributos
+    //Atributos
     private Salida salidaAsociada;
 
-    // ----------------------------------------
-
-    // Constructor
+    //Constructor
     public Entrada(int unNumMovimiento, String unaFecha, String unaHora, String unaNota, Empleado unEmpleado, Vehiculo unVehiculo) {
         super(unNumMovimiento, unaFecha, unaHora, unaNota, unEmpleado, unVehiculo);
         this.salidaAsociada = null; // Se asigna cuando se crea la salida
     }
 
-    // Getters
+    //Metodos
     public Salida getSalidaAsociada() {
         return salidaAsociada;
     }
@@ -24,4 +22,15 @@ public class Entrada extends RegistroMovimientos{
     public void setSalidaAsociada(Salida unaSalida){
         this.salidaAsociada = unaSalida;
     }
+
+    public boolean tieneSalida(){
+        boolean tiene = false;
+        //Completar coigo
+        return tiene;
+    }
+
+    @Override
+    public String toString(){
+        return "Movimiento: Entrada | " + super.toString() + " | Salida Asociada #" + salidaAsociada.getNumMovimiento();
+    }   
 }
