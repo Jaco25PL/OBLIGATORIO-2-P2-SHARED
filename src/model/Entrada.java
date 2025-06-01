@@ -24,13 +24,19 @@ public class Entrada extends RegistroMovimientos{
     }
 
     public boolean tieneSalida(){
-        boolean tiene = false;
-        //Completar coigo
-        return tiene;
+        boolean tieneSalida = false;
+        if(salidaAsociada != null){
+            tieneSalida = true;
+        }
+        return tieneSalida;
     }
 
     @Override
     public String toString(){
-        return "Movimiento: Entrada | " + super.toString() + " | Salida Asociada #" + salidaAsociada.getNumMovimiento();
+        String salidaInfo = "Sin Salida";
+        if(tieneSalida()){
+            salidaInfo = "Salida Asociada #" + salidaAsociada.getNumMovimiento();
+        }
+        return "Movimiento: Entrada | " + super.toString() + " | " + salidaInfo;
     }   
 }

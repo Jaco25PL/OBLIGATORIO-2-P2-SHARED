@@ -50,7 +50,12 @@ public class Contrato {
 
     @Override
     public String toString(){
-        return "Contrato #" + getNumContrato() + " | Valor Mensual: " + getValorMensual() + " | Fecha de Inicio: " + getFechaInicio() + " | Cliente: " + getClienteContrato().getNombre() + " CI: " + getClienteContrato().getCedula() + " | Vehiculo: " + getVehiculoContrato().getMarca() + " " + getVehiculoContrato().getModelo() + " Matricula: " + getVehiculoContrato().getMatricula() + " | Empleado: " + getEmpleadoContrato().getNombre() + getEmpleadoContrato().getCedula();
+        return "Contrato #" + getNumContrato() + 
+        " | Valor Mensual: " + getValorMensual() + 
+        " | Fecha de Inicio: " + getFechaInicio() + 
+        " | Cliente: " + getClienteContrato().getNombre() + " CI: " + getClienteContrato().getCedula() + 
+        " | Vehiculo: " + getVehiculoContrato().getMarca() + " " + getVehiculoContrato().getModelo() + " Matricula: " + getVehiculoContrato().getMatricula() + 
+        " | Empleado: " + getEmpleadoContrato().getNombre() + " " + getEmpleadoContrato().getCedula();
     }
 }
 
