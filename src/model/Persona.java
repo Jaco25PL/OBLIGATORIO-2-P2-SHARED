@@ -32,4 +32,9 @@ public abstract class Persona {
     public String getDireccion(){
         return direccion;
     }
+
+    @Override
+    public String toString(){
+        return "Persona: " + getNombre() + " | CI: " + getCedula() + " | Dirección: " + getDireccion();
+    }
 }
