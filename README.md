@@ -1,22 +1,22 @@
 # Roadmap
 
 ## Fase 1: Análisis y Diseño (20%)
-1. Análisis del Dominio (1-2 días)
-  - Lee la consigna completa 2-3 veces
-  - Identifica las entidades principales: Cliente, Vehículo, Empleado, Contrato, Entrada, Salida, ServicioAdicional
-  - Define las relaciones entre entidades
-  - Lista todos los atributos de cada clase
-2. Diagrama UML (1 día)
-  - Diseña el diagrama de clases del dominio
-  - Incluye solo clases de dominio (no interfaz ni pruebas)
-  - Especifica atributos, métodos y relaciones
-  - Usa notación UML correcta
+1. **LISTO** Análisis del Dominio (1-2 días)
+  - **LISTO** Lee la consigna completa 2-3 veces
+  - **LISTO** Identifica las entidades principales: Cliente, Vehículo, Empleado, Contrato, Entrada, Salida, ServicioAdicional
+  - **LISTO** Define las relaciones entre entidades
+  - **LISTO** Lista todos los atributos de cada clase
+2. **LISTO** Diagrama UML (1 día)
+  - **LISTO** Diseña el diagrama de clases del dominio
+  - **LISTO** Incluye solo clases de dominio (no interfaz ni pruebas)
+  - **LISTO** Especifica atributos, métodos y relaciones
+  - **LISTO** Usa notación UML correcta
 
 ## Fase 2: Estructura Base (25%)
-3. Configuración del Proyecto (medio día)
-  - Crea proyecto ANT en NetBeans
-  - Estructura de carpetas: dominio, interfaz
-  - Agrega nombres de autores en cada archivo
+3. **LISTO** Configuración del Proyecto (medio día)
+  - **LISTO** Crea proyecto ANT en NetBeans
+  - **LISTO** Estructura de carpetas: dominio, interfaz
+  - **LISTO** Agrega nombres de autores en cada archivo
 4. Clases de Dominio (2-3 días)
 5. Clase Sistema (1 día)
   - Implementa listas para todas las entidades
