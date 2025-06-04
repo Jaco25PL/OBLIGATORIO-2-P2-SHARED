@@ -35,8 +35,8 @@ public class Entrada extends RegistroMovimientos{
     public String toString(){
         String salidaInfo = "Sin Salida";
         if(tieneSalida()){
-            salidaInfo = "Salida Asociada #" + salidaAsociada.getNumMovimiento();
+            salidaInfo = " | Salida Asociada #" + salidaAsociada.getNumMovimiento();
         }
-        return "Movimiento: Entrada | " + super.toString() + " | " + salidaInfo;
+        return "Movimiento: Entrada | " + super.toString() + salidaInfo;
     }   
 }

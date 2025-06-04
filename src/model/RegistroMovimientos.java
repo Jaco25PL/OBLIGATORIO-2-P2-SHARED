@@ -31,6 +31,10 @@ public abstract class RegistroMovimientos {
         return numMovimiento;
     }
 
+    public void setNumMovimiento(int unNumMovimiento){
+        this.numMovimiento = unNumMovimiento;
+    }
+
     public String getFecha(){
         return fecha;
     }

@@ -17,11 +17,11 @@
   - **LISTO** Crea proyecto ANT en NetBeans
   - **LISTO** Estructura de carpetas: dominio, interfaz
   - **LISTO** Agrega nombres de autores en cada archivo
-4. Clases de Dominio (2-3 días)
+4. **LISTO** Clases de Dominio (2-3 días)
 5. Clase Sistema (1 día)
-  - Implementa listas para todas las entidades
-  - Métodos básicos de alta, baja, búsqueda
-  - Validaciones de unicidad
+  - **LISTO** Implementa listas para todas las entidades
+  - **LISTO** Métodos básicos de alta, baja, búsqueda
+  - **LISTO** Validaciones de unicidad
 
 ## Fase 3: Interfaz Básica (30%)
 6. Ventana Principal (1 día)

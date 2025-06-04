@@ -10,7 +10,7 @@ public class Contrato {
     private Empleado empleadoContrato;
     private Cliente clienteContrato;
     private Vehiculo vehiculoContrato;
-    private int numContrato;
+    private int numContrato = 1;
     private String fechaInicio;
 
     //Constructor
@@ -42,6 +42,10 @@ public class Contrato {
 
     public int getNumContrato(){
         return numContrato;
+    }
+
+    public void setNumContrato(int unNumContrato){
+        this.numContrato = unNumContrato;
     }
 
     public String getFechaInicio(){
