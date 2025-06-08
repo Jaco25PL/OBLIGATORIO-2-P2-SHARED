@@ -10,6 +10,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        setLocationRelativeTo(null);
+        ClaroOscuro.aplicarModo(this);
+        ClaroOscuro.aplicarModoABoton(jButtonClaroOscuro);
     }
 
     /**
@@ -22,120 +25,149 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelMain = new javax.swing.JPanel();
-        jButtonDarkMode = new javax.swing.JButton();
+        jButtonClaroOscuro = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        jMenuGestion = new javax.swing.JMenu();
+        jMenuItemClientes = new javax.swing.JMenuItem();
+        jMenuItemVehiculos = new javax.swing.JMenuItem();
+        jMenuItemEmpleados = new javax.swing.JMenuItem();
+        jMenuItemContratos = new javax.swing.JMenuItem();
+        jMenuMovimientos = new javax.swing.JMenu();
+        jMenuItemEntradas = new javax.swing.JMenuItem();
+        jMenuItemSalidas = new javax.swing.JMenuItem();
+        jMenuItemServicios = new javax.swing.JMenuItem();
+        jMenuVarios = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuTerminar = new javax.swing.JMenu();
+        jMenuItemSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PARKING - Matias Piedra 354007 y Joaquin Piedra ######");
+        setTitle("PARKING - Matias Piedra 354007 y Joaquin Piedra 304804");
+        getContentPane().setLayout(null);
 
-        jButtonDarkMode.setText("Claro/Oscuro");
-        jButtonDarkMode.addActionListener(new java.awt.event.ActionListener() {
+        jPanelMain.setLayout(null);
+        getContentPane().add(jPanelMain);
+        jPanelMain.setBounds(6, 304, 446, 0);
+
+        jButtonClaroOscuro.setText("Claro/Oscuro");
+        jButtonClaroOscuro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDarkModeActionPerformed(evt);
+                jButtonClaroOscuroActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonClaroOscuro);
+        jButtonClaroOscuro.setBounds(30, 230, 120, 27);
 
-        javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
-        jPanelMain.setLayout(jPanelMainLayout);
-        jPanelMainLayout.setHorizontalGroup(
-            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMainLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jButtonDarkMode)
-                .addContainerGap(251, Short.MAX_VALUE))
-        );
-        jPanelMainLayout.setVerticalGroup(
-            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMainLayout.createSequentialGroup()
-                .addContainerGap(247, Short.MAX_VALUE)
-                .addComponent(jButtonDarkMode)
-                .addGap(25, 25, 25))
-        );
+        jMenuGestion.setText("Gestión");
 
-        jMenu2.setText("Gestión");
-        jMenuBar1.add(jMenu2);
+        jMenuItemClientes.setText("Gestión de Clientes");
+        jMenuItemClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemClientesActionPerformed(evt);
+            }
+        });
+        jMenuGestion.add(jMenuItemClientes);
 
-        jMenu1.setText("Movimientos");
-        jMenuBar1.add(jMenu1);
+        jMenuItemVehiculos.setText("Gestión de Vehículos");
+        jMenuGestion.add(jMenuItemVehiculos);
 
-        jMenu3.setText("Varios");
-        jMenuBar1.add(jMenu3);
+        jMenuItemEmpleados.setText("Gestión de Empleados");
+        jMenuGestion.add(jMenuItemEmpleados);
 
-        jMenu4.setText("Terminar");
-        jMenuBar1.add(jMenu4);
+        jMenuItemContratos.setText("Gestión de Contratos");
+        jMenuGestion.add(jMenuItemContratos);
+
+        jMenuBar1.add(jMenuGestion);
+
+        jMenuMovimientos.setText("Movimientos");
+
+        jMenuItemEntradas.setText("Entradas");
+        jMenuMovimientos.add(jMenuItemEntradas);
+
+        jMenuItemSalidas.setText("Salidas");
+        jMenuMovimientos.add(jMenuItemSalidas);
+
+        jMenuItemServicios.setText("Servicios Adicionales");
+        jMenuMovimientos.add(jMenuItemServicios);
+
+        jMenuBar1.add(jMenuMovimientos);
+
+        jMenuVarios.setText("Varios");
+
+        jMenuItem1.setText("Reportes");
+        jMenuVarios.add(jMenuItem1);
+
+        jMenuItem2.setText("Recuperación de Datos");
+        jMenuVarios.add(jMenuItem2);
+
+        jMenuItem3.setText("Grabación de Datos");
+        jMenuVarios.add(jMenuItem3);
+
+        jMenuItem4.setText("MiniJuego");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenuVarios.add(jMenuItem4);
+
+        jMenuItem5.setText("Información de Autores");
+        jMenuVarios.add(jMenuItem5);
+
+        jMenuBar1.add(jMenuVarios);
+
+        jMenuTerminar.setText("Terminar");
+
+        jMenuItemSalir.setText("Salir");
+        jMenuTerminar.add(jMenuItemSalir);
+
+        jMenuBar1.add(jMenuTerminar);
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        pack();
+        setBounds(0, 0, 506, 345);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonDarkModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDarkModeActionPerformed
+    private void jButtonClaroOscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClaroOscuroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonDarkModeActionPerformed
+        ClaroOscuro.setModo();
+        ClaroOscuro.aplicarModo(this);
+        ClaroOscuro.aplicarModoABoton(jButtonClaroOscuro);
+    }//GEN-LAST:event_jButtonClaroOscuroActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemClientesActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaPrincipal().setVisible(true);
-            }
-        });
-    }
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonDarkMode;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JButton jButtonClaroOscuro;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuGestion;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItemClientes;
+    private javax.swing.JMenuItem jMenuItemContratos;
+    private javax.swing.JMenuItem jMenuItemEmpleados;
+    private javax.swing.JMenuItem jMenuItemEntradas;
+    private javax.swing.JMenuItem jMenuItemSalidas;
+    private javax.swing.JMenuItem jMenuItemSalir;
+    private javax.swing.JMenuItem jMenuItemServicios;
+    private javax.swing.JMenuItem jMenuItemVehiculos;
+    private javax.swing.JMenu jMenuMovimientos;
+    private javax.swing.JMenu jMenuTerminar;
+    private javax.swing.JMenu jMenuVarios;
     private javax.swing.JPanel jPanelMain;
     // End of variables declaration//GEN-END:variables
 }

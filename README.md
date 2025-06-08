@@ -18,16 +18,16 @@
   - **LISTO** Estructura de carpetas: dominio, interfaz
   - **LISTO** Agrega nombres de autores en cada archivo
 4. **LISTO** Clases de Dominio (2-3 días)
-5. Clase Sistema (1 día)
+5. **LISTO** Clase Sistema (1 día)
   - **LISTO** Implementa listas para todas las entidades
   - **LISTO** Métodos básicos de alta, baja, búsqueda
   - **LISTO** Validaciones de unicidad
 
 ## Fase 3: Interfaz Básica (30%)
-6. Ventana Principal (1 día)
-  - Menú principal con todas las opciones
-  - Título con nombres de estudiantes
-  - Botón modo claro/oscuro
+6. **LISTO** Ventana Principal (1 día)
+  - **LISTO** Menú principal con todas las opciones
+  - **LISTO** Título con nombres de estudiantes
+  - **LISTO** Botón modo claro/oscuro
 7. Gestión - Ventanas CRUD (3-4 días)
   - Orden prioritario:
     1. Gestión de Clientes (alta, baja, visualización)
