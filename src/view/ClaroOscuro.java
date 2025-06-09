@@ -11,10 +11,6 @@ public class ClaroOscuro {
     
     private static boolean estaModoClaro = true;
     
-    public static boolean getEstaModoOscuro(){
-        return estaModoClaro;
-    }
-    
     public static void setModo(){
         estaModoClaro = !estaModoClaro;
     }

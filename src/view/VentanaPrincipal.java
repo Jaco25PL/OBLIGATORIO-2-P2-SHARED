@@ -24,8 +24,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelMain = new javax.swing.JPanel();
         jButtonClaroOscuro = new javax.swing.JButton();
+        jPanelMain = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuGestion = new javax.swing.JMenu();
         jMenuItemClientes = new javax.swing.JMenuItem();
@@ -49,10 +49,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setTitle("PARKING - Matias Piedra 354007 y Joaquin Piedra 304804");
         getContentPane().setLayout(null);
 
-        jPanelMain.setLayout(null);
-        getContentPane().add(jPanelMain);
-        jPanelMain.setBounds(6, 304, 446, 0);
-
         jButtonClaroOscuro.setText("Claro/Oscuro");
         jButtonClaroOscuro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,6 +57,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonClaroOscuro);
         jButtonClaroOscuro.setBounds(30, 230, 120, 27);
+
+        jPanelMain.setLayout(null);
+        getContentPane().add(jPanelMain);
+        jPanelMain.setBounds(6, 14, 480, 290);
 
         jMenuGestion.setText("Gestión");
 
