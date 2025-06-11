@@ -8,16 +8,13 @@ package view;
  *
  * @author matip
  */
-public class VentanaGestionClientes extends javax.swing.JFrame {
+public class VentanaGestionEmpleados extends javax.swing.JFrame {
 
     /**
-     * Creates new form Clientes
+     * Creates new form VentanaGestionEmpleados
      */
-    public VentanaGestionClientes() {
+    public VentanaGestionEmpleados() {
         initComponents();
-        
-        jPanelGestionClientes.setBounds(0,0, this.getWidth(), this.getHeight());
-        
     }
 
     /**
@@ -29,88 +26,80 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelGestionClientes = new javax.swing.JPanel();
+        jPanelGestionEmpleados = new javax.swing.JPanel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelDireccion = new javax.swing.JLabel();
-        jLabelCelular = new javax.swing.JLabel();
         jLabelCedula = new javax.swing.JLabel();
-        jLabelAño = new javax.swing.JLabel();
+        jLabelNumEmpleado = new javax.swing.JLabel();
         jLabelClientes = new javax.swing.JLabel();
         jButtonVaciar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jScrollPaneClientes = new javax.swing.JScrollPane();
-        jListClientes = new javax.swing.JList<>();
+        jScrollPaneEmpleados = new javax.swing.JScrollPane();
+        jListEmpleados = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestión de Clientes");
+        setTitle("Gestión de Empleados");
         getContentPane().setLayout(null);
 
-        jPanelGestionClientes.setLayout(null);
+        jPanelGestionEmpleados.setLayout(null);
 
         jLabelNombre.setText("Nombre");
-        jPanelGestionClientes.add(jLabelNombre);
+        jPanelGestionEmpleados.add(jLabelNombre);
         jLabelNombre.setBounds(37, 100, 60, 16);
 
         jLabelDireccion.setText("Direccion");
-        jPanelGestionClientes.add(jLabelDireccion);
+        jPanelGestionEmpleados.add(jLabelDireccion);
         jLabelDireccion.setBounds(37, 140, 60, 16);
 
-        jLabelCelular.setText("Celular");
-        jPanelGestionClientes.add(jLabelCelular);
-        jLabelCelular.setBounds(37, 180, 60, 16);
-
         jLabelCedula.setText("Cédula");
-        jPanelGestionClientes.add(jLabelCedula);
-        jLabelCedula.setBounds(207, 100, 50, 16);
+        jPanelGestionEmpleados.add(jLabelCedula);
+        jLabelCedula.setBounds(200, 100, 50, 16);
 
-        jLabelAño.setText("Año");
-        jPanelGestionClientes.add(jLabelAño);
-        jLabelAño.setBounds(212, 140, 30, 16);
+        jLabelNumEmpleado.setText("N° Empleado");
+        jPanelGestionEmpleados.add(jLabelNumEmpleado);
+        jLabelNumEmpleado.setBounds(200, 140, 80, 16);
 
-        jLabelClientes.setText("Clientes");
-        jPanelGestionClientes.add(jLabelClientes);
+        jLabelClientes.setText("Empleados");
+        jPanelGestionEmpleados.add(jLabelClientes);
         jLabelClientes.setBounds(387, 50, 60, 16);
 
         jButtonVaciar.setText("Vaciar");
-        jPanelGestionClientes.add(jButtonVaciar);
+        jPanelGestionEmpleados.add(jButtonVaciar);
         jButtonVaciar.setBounds(40, 280, 90, 27);
 
         jButtonAgregar.setText("Agregar");
-        jPanelGestionClientes.add(jButtonAgregar);
+        jPanelGestionEmpleados.add(jButtonAgregar);
         jButtonAgregar.setBounds(150, 280, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
-        jPanelGestionClientes.add(jButtonEliminar);
+        jPanelGestionEmpleados.add(jButtonEliminar);
         jButtonEliminar.setBounds(340, 280, 130, 27);
-        jPanelGestionClientes.add(jTextField1);
+        jPanelGestionEmpleados.add(jTextField1);
         jTextField1.setBounds(110, 100, 68, 26);
-        jPanelGestionClientes.add(jTextField2);
+        jPanelGestionEmpleados.add(jTextField2);
         jTextField2.setBounds(110, 140, 68, 26);
-        jPanelGestionClientes.add(jTextField3);
-        jTextField3.setBounds(110, 180, 68, 26);
-        jPanelGestionClientes.add(jTextField4);
-        jTextField4.setBounds(270, 100, 70, 26);
-        jPanelGestionClientes.add(jTextField5);
-        jTextField5.setBounds(270, 140, 75, 26);
+        jPanelGestionEmpleados.add(jTextField4);
+        jTextField4.setBounds(290, 100, 70, 26);
+        jPanelGestionEmpleados.add(jTextField5);
+        jTextField5.setBounds(290, 140, 75, 26);
 
-        jListClientes.setModel(new javax.swing.AbstractListModel<String>() {
+        jListEmpleados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPaneClientes.setViewportView(jListClientes);
+        jScrollPaneEmpleados.setViewportView(jListEmpleados);
 
-        jPanelGestionClientes.add(jScrollPaneClientes);
-        jScrollPaneClientes.setBounds(380, 80, 100, 150);
+        jPanelGestionEmpleados.add(jScrollPaneEmpleados);
+        jScrollPaneEmpleados.setBounds(380, 80, 100, 150);
 
-        getContentPane().add(jPanelGestionClientes);
-        jPanelGestionClientes.setBounds(0, 0, 500, 350);
+        getContentPane().add(jPanelGestionEmpleados);
+        jPanelGestionEmpleados.setBounds(0, 0, 500, 350);
 
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
@@ -120,18 +109,16 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVaciar;
-    private javax.swing.JLabel jLabelAño;
     private javax.swing.JLabel jLabelCedula;
-    private javax.swing.JLabel jLabelCelular;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelNombre;
-    private javax.swing.JList<String> jListClientes;
-    private javax.swing.JPanel jPanelGestionClientes;
-    private javax.swing.JScrollPane jScrollPaneClientes;
+    private javax.swing.JLabel jLabelNumEmpleado;
+    private javax.swing.JList<String> jListEmpleados;
+    private javax.swing.JPanel jPanelGestionEmpleados;
+    private javax.swing.JScrollPane jScrollPaneEmpleados;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables

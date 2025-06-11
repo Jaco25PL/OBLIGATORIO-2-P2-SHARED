@@ -10,6 +10,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        jPanelMain.setBounds(0,0, this.getWidth(), this.getHeight());
         setLocationRelativeTo(null);
         ClaroOscuro.aplicarModo(this);
         ClaroOscuro.aplicarModoABoton(jButtonClaroOscuro);
@@ -24,8 +25,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButtonClaroOscuro = new javax.swing.JButton();
         jPanelMain = new javax.swing.JPanel();
+        jButtonClaroOscuro = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuGestion = new javax.swing.JMenu();
         jMenuItemClientes = new javax.swing.JMenuItem();
@@ -37,11 +38,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItemSalidas = new javax.swing.JMenuItem();
         jMenuItemServicios = new javax.swing.JMenuItem();
         jMenuVarios = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItemReportes = new javax.swing.JMenuItem();
+        jMenuItemRecuperacionDatos = new javax.swing.JMenuItem();
+        jMenuItemGrabacionDatos = new javax.swing.JMenuItem();
+        jMenuItemMiniJuego = new javax.swing.JMenuItem();
+        jMenuItemInfoAutores = new javax.swing.JMenuItem();
         jMenuTerminar = new javax.swing.JMenu();
         jMenuItemSalir = new javax.swing.JMenuItem();
 
@@ -49,18 +50,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setTitle("PARKING - Matias Piedra 354007 y Joaquin Piedra 304804");
         getContentPane().setLayout(null);
 
+        jPanelMain.setBackground(new java.awt.Color(0, 0, 0));
+        jPanelMain.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelMain.setLayout(null);
+
         jButtonClaroOscuro.setText("Claro/Oscuro");
         jButtonClaroOscuro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonClaroOscuroActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonClaroOscuro);
+        jPanelMain.add(jButtonClaroOscuro);
         jButtonClaroOscuro.setBounds(30, 230, 120, 27);
 
-        jPanelMain.setLayout(null);
         getContentPane().add(jPanelMain);
-        jPanelMain.setBounds(6, 14, 480, 290);
+        jPanelMain.setBounds(0, 0, 500, 330);
 
         jMenuGestion.setText("Gestión");
 
@@ -73,12 +77,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuGestion.add(jMenuItemClientes);
 
         jMenuItemVehiculos.setText("Gestión de Vehículos");
+        jMenuItemVehiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemVehiculosActionPerformed(evt);
+            }
+        });
         jMenuGestion.add(jMenuItemVehiculos);
 
         jMenuItemEmpleados.setText("Gestión de Empleados");
+        jMenuItemEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEmpleadosActionPerformed(evt);
+            }
+        });
         jMenuGestion.add(jMenuItemEmpleados);
 
         jMenuItemContratos.setText("Gestión de Contratos");
+        jMenuItemContratos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemContratosActionPerformed(evt);
+            }
+        });
         jMenuGestion.add(jMenuItemContratos);
 
         jMenuBar1.add(jMenuGestion);
@@ -86,50 +105,91 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuMovimientos.setText("Movimientos");
 
         jMenuItemEntradas.setText("Entradas");
+        jMenuItemEntradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEntradasActionPerformed(evt);
+            }
+        });
         jMenuMovimientos.add(jMenuItemEntradas);
 
         jMenuItemSalidas.setText("Salidas");
+        jMenuItemSalidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSalidasActionPerformed(evt);
+            }
+        });
         jMenuMovimientos.add(jMenuItemSalidas);
 
         jMenuItemServicios.setText("Servicios Adicionales");
+        jMenuItemServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemServiciosActionPerformed(evt);
+            }
+        });
         jMenuMovimientos.add(jMenuItemServicios);
 
         jMenuBar1.add(jMenuMovimientos);
 
         jMenuVarios.setText("Varios");
 
-        jMenuItem1.setText("Reportes");
-        jMenuVarios.add(jMenuItem1);
-
-        jMenuItem2.setText("Recuperación de Datos");
-        jMenuVarios.add(jMenuItem2);
-
-        jMenuItem3.setText("Grabación de Datos");
-        jMenuVarios.add(jMenuItem3);
-
-        jMenuItem4.setText("MiniJuego");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemReportes.setText("Reportes");
+        jMenuItemReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMenuItemReportesActionPerformed(evt);
             }
         });
-        jMenuVarios.add(jMenuItem4);
+        jMenuVarios.add(jMenuItemReportes);
 
-        jMenuItem5.setText("Información de Autores");
-        jMenuVarios.add(jMenuItem5);
+        jMenuItemRecuperacionDatos.setText("Recuperación de Datos");
+        jMenuItemRecuperacionDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRecuperacionDatosActionPerformed(evt);
+            }
+        });
+        jMenuVarios.add(jMenuItemRecuperacionDatos);
+
+        jMenuItemGrabacionDatos.setText("Grabación de Datos");
+        jMenuItemGrabacionDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGrabacionDatosActionPerformed(evt);
+            }
+        });
+        jMenuVarios.add(jMenuItemGrabacionDatos);
+
+        jMenuItemMiniJuego.setText("MiniJuego");
+        jMenuItemMiniJuego.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMiniJuegoActionPerformed(evt);
+            }
+        });
+        jMenuVarios.add(jMenuItemMiniJuego);
+
+        jMenuItemInfoAutores.setText("Información de Autores");
+        jMenuItemInfoAutores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInfoAutoresActionPerformed(evt);
+            }
+        });
+        jMenuVarios.add(jMenuItemInfoAutores);
 
         jMenuBar1.add(jMenuVarios);
 
         jMenuTerminar.setText("Terminar");
 
         jMenuItemSalir.setText("Salir");
+        jMenuItemSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSalirActionPerformed(evt);
+            }
+        });
         jMenuTerminar.add(jMenuItemSalir);
 
         jMenuBar1.add(jMenuTerminar);
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 506, 345);
+        setSize(new java.awt.Dimension(514, 358));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonClaroOscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClaroOscuroActionPerformed
@@ -140,27 +200,81 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonClaroOscuroActionPerformed
 
     private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
-        // TODO add your handling code here:
+        VentanaGestionClientes ventanaClientes = new VentanaGestionClientes();
+        ventanaClientes.setVisible(true);
     }//GEN-LAST:event_jMenuItemClientesActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jMenuItemMiniJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMiniJuegoActionPerformed
+        VentanaMiniJuego ventanaMiniJuego = new VentanaMiniJuego();
+        ventanaMiniJuego.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMiniJuegoActionPerformed
+
+    private void jMenuItemVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVehiculosActionPerformed
+        VentanaGestionVehiculos ventanaVehiculos = new VentanaGestionVehiculos();
+        ventanaVehiculos.setVisible(true);
+    }//GEN-LAST:event_jMenuItemVehiculosActionPerformed
+
+    private void jMenuItemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEmpleadosActionPerformed
+        VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados();
+        ventanaEmpleados.setVisible(true);
+    }//GEN-LAST:event_jMenuItemEmpleadosActionPerformed
+
+    private void jMenuItemContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemContratosActionPerformed
+        VentanaGestionContratos ventanaContratos = new VentanaGestionContratos();
+        ventanaContratos.setVisible(true);
+    }//GEN-LAST:event_jMenuItemContratosActionPerformed
+
+    private void jMenuItemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEntradasActionPerformed
+        VentanaEntradas ventanaEntradas = new VentanaEntradas();
+        ventanaEntradas.setVisible(true);
+    }//GEN-LAST:event_jMenuItemEntradasActionPerformed
+
+    private void jMenuItemSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalidasActionPerformed
+        VentanaSalidas ventanaSalidas = new VentanaSalidas();
+        ventanaSalidas.setVisible(true);
+    }//GEN-LAST:event_jMenuItemSalidasActionPerformed
+
+    private void jMenuItemServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemServiciosActionPerformed
+        VentanaServiciosAdicionales ventanaServiciosAdicionales = new VentanaServiciosAdicionales();
+        ventanaServiciosAdicionales.setVisible(true);
+    }//GEN-LAST:event_jMenuItemServiciosActionPerformed
+
+    private void jMenuItemReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReportesActionPerformed
+        VentanaReportes ventanaReportes = new VentanaReportes();
+        ventanaReportes.setVisible(true);
+    }//GEN-LAST:event_jMenuItemReportesActionPerformed
+
+    private void jMenuItemInfoAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInfoAutoresActionPerformed
+        VentanaInfoAutores ventanaInfoAutores = new VentanaInfoAutores();
+        ventanaInfoAutores.setVisible(true);
+    }//GEN-LAST:event_jMenuItemInfoAutoresActionPerformed
+
+    private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jMenuItemSalirActionPerformed
+
+    private void jMenuItemRecuperacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRecuperacionDatosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemRecuperacionDatosActionPerformed
+
+    private void jMenuItemGrabacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGrabacionDatosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemGrabacionDatosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClaroOscuro;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuGestion;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItemClientes;
     private javax.swing.JMenuItem jMenuItemContratos;
     private javax.swing.JMenuItem jMenuItemEmpleados;
     private javax.swing.JMenuItem jMenuItemEntradas;
+    private javax.swing.JMenuItem jMenuItemGrabacionDatos;
+    private javax.swing.JMenuItem jMenuItemInfoAutores;
+    private javax.swing.JMenuItem jMenuItemMiniJuego;
+    private javax.swing.JMenuItem jMenuItemRecuperacionDatos;
+    private javax.swing.JMenuItem jMenuItemReportes;
     private javax.swing.JMenuItem jMenuItemSalidas;
     private javax.swing.JMenuItem jMenuItemSalir;
     private javax.swing.JMenuItem jMenuItemServicios;

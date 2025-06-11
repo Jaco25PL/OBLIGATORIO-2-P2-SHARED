@@ -2,7 +2,9 @@
  * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 
-package view;
+package main;
+
+import view.VentanaPrincipal;
 
 public class Main {
 
@@ -10,7 +12,6 @@ public class Main {
         
         VentanaPrincipal ventana = new VentanaPrincipal();
         ventana.setVisible(true);
-        
     }
     
 }
