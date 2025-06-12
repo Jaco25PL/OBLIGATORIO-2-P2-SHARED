@@ -15,6 +15,8 @@ public class VentanaInfoAutores extends javax.swing.JFrame {
      */
     public VentanaInfoAutores() {
         initComponents();
+
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**

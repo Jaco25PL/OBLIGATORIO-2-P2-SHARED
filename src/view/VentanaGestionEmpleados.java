@@ -15,6 +15,8 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
      */
     public VentanaGestionEmpleados() {
         initComponents();
+
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**

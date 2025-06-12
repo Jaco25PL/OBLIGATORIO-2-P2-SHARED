@@ -15,6 +15,8 @@ public class VentanaGestionContratos extends javax.swing.JFrame {
      */
     public VentanaGestionContratos() {
         initComponents();
+
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**

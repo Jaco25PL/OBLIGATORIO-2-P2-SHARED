@@ -4,9 +4,19 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaPrincipal.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/main/Main.java</file>
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaGestionClientes.java</file>
-            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/Main.java</file>
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaReportes.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaGestionVehiculos.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/model/Vehiculo.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaGestionEmpleados.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaGestionContratos.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaEntradas.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaSalidas.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaServiciosAdicionales.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaInfoAutores.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaMiniJuego.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/ClaroOscuro.java</file>
         </group>
     </open-files>
 </project-private>

@@ -15,6 +15,8 @@ public class VentanaReportes extends javax.swing.JFrame {
      */
     public VentanaReportes() {
         initComponents();
+
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**
@@ -61,6 +63,7 @@ public class VentanaReportes extends javax.swing.JFrame {
         jLabelEstadia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Reportes");
         getContentPane().setLayout(null);
 
         jPanelReportes.setLayout(null);

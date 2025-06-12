@@ -15,6 +15,8 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
      */
     public VentanaGestionVehiculos() {
         initComponents();
+
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**

@@ -15,6 +15,8 @@ public class VentanaEntradas extends javax.swing.JFrame {
      */
     public VentanaEntradas() {
         initComponents();
+
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**
@@ -46,6 +48,7 @@ public class VentanaEntradas extends javax.swing.JFrame {
         jTextFieldNotas = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Entradas");
         getContentPane().setLayout(null);
 
         jPanelEntradas.setLayout(null);

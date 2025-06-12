@@ -3,7 +3,10 @@
  */
 package view;
 
-public class VentanaPrincipal extends javax.swing.JFrame {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
     /**
      * Creates new form VentanaPrincipal
@@ -12,8 +15,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         jPanelMain.setBounds(0,0, this.getWidth(), this.getHeight());
         setLocationRelativeTo(null);
+        
         ClaroOscuro.aplicarModo(this);
-        ClaroOscuro.aplicarModoABoton(jButtonClaroOscuro);
+
+        ClaroOscuro.addPropertyChangeListener(this);
     }
 
     /**
@@ -196,7 +201,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         ClaroOscuro.setModo();
         ClaroOscuro.aplicarModo(this);
-        ClaroOscuro.aplicarModoABoton(jButtonClaroOscuro);
     }//GEN-LAST:event_jButtonClaroOscuroActionPerformed
 
     private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
@@ -284,4 +288,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuVarios;
     private javax.swing.JPanel jPanelMain;
     // End of variables declaration//GEN-END:variables
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 }

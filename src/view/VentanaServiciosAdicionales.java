@@ -15,6 +15,8 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
      */
     public VentanaServiciosAdicionales() {
         initComponents();
+
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**
@@ -49,6 +51,7 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         jTextFieldCosto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Servicios Adicionales");
         getContentPane().setLayout(null);
 
         jPanelServiciosAdicionales.setLayout(null);

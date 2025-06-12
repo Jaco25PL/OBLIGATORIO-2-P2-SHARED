@@ -15,6 +15,8 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
      */
     public VentanaMiniJuego() {
         initComponents();
+
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**

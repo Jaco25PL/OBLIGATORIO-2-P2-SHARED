@@ -18,6 +18,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         
         jPanelGestionClientes.setBounds(0,0, this.getWidth(), this.getHeight());
         
+        ClaroOscuro.aplicarModo(this);
     }
 
     /**

@@ -3,24 +3,41 @@
  */
 package view;
 
-import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+import javax.swing.*;
 
 public class ClaroOscuro {
     
     private static boolean estaModoClaro = true;
-    
-    public static void setModo(){
-        estaModoClaro = !estaModoClaro;
+
+    private static PropertyChangeSupport manejador = new PropertyChangeSupport(ClaroOscuro.class);
+
+    public static boolean getEstaModoClaro(){
+        return estaModoClaro;
     }
     
+    public static void setModo(){
+        boolean anterior = estaModoClaro;
+        estaModoClaro = !estaModoClaro;
+
+        manejador.firePropertyChange("modo", anterior, estaModoClaro);
+
+        actualizarVentanas();
+    }
+
+    public static void addPropertyChangeListener(PropertyChangeListener listener){
+        manejador.addPropertyChangeListener(listener);
+    }
+
     public static void aplicarModo(JFrame frame){
         
         Color colorFondo; //Background
         Color colorTexto; //Foreground
         
-        if(estaModoClaro){
+        if(getEstaModoClaro()){
             colorFondo = Color.WHITE;
             colorTexto = Color.BLACK;
         } else {
@@ -28,51 +45,68 @@ public class ClaroOscuro {
             colorTexto = Color.WHITE;
         }
         
-        //Aplicar al fondo de la ventana
+        //Aplicar al jFrame
         frame.getContentPane().setBackground(colorFondo);
         frame.getContentPane().setForeground(colorTexto);
         
-        //Aplicar al menu        
+        //Aplicar al menu  
+        aplicarModoAMenu(frame, colorFondo, colorTexto);      
+        
+        //Aplicar a componentes
+        aplicarModoAComponentes(frame.getContentPane(), colorFondo, colorTexto);
+    }
+    
+    private static void aplicarModoAComponentes(Container container, Color fondo, Color texto){
+        Component[] components = container.getComponents();
+        
+        for(int i=0; i<components.length; i++){
+
+            Component comp = components[i];
+
+            comp.setBackground(fondo);
+            comp.setForeground(texto);
+
+            if (comp instanceof Container) {
+                aplicarModoAComponentes((Container) comp, fondo, texto);
+            }
+        }
+    }
+
+    private static void aplicarModoAMenu(JFrame frame, Color fondo, Color texto){
         if(frame.getJMenuBar() != null){
             
-            frame.getJMenuBar().setBackground(colorFondo);
-            frame.getJMenuBar().setForeground(colorTexto);
+            frame.getJMenuBar().setBackground(fondo);
+            frame.getJMenuBar().setForeground(texto);
             
             for (int i = 0; i < frame.getJMenuBar().getMenuCount(); i++) {
                 
                 if (frame.getJMenuBar().getMenu(i) != null) {
                     
-                    frame.getJMenuBar().getMenu(i).setBackground(colorFondo);
-                    frame.getJMenuBar().getMenu(i).setForeground(colorTexto);
+                    frame.getJMenuBar().getMenu(i).setBackground(fondo);
+                    frame.getJMenuBar().getMenu(i).setForeground(texto);
                     
                     for (int j = 0; j < frame.getJMenuBar().getMenu(i).getItemCount(); j++) {
                         
                         if(frame.getJMenuBar().getMenu(i).getItem(j) != null){
-                            frame.getJMenuBar().getMenu(i).getItem(j).setBackground(colorFondo); 
-                            frame.getJMenuBar().getMenu(i).getItem(j).setForeground(colorTexto); 
+                            frame.getJMenuBar().getMenu(i).getItem(j).setBackground(fondo); 
+                            frame.getJMenuBar().getMenu(i).getItem(j).setForeground(texto); 
                         }
                         
                     }
                 }
             }
         }
-        
+
     }
-    
-    public static void aplicarModoABoton(JButton boton){
-        Color colorFondo;
-        Color colorTexto;
+
+    private static void actualizarVentanas(){
+        Window[] ventanas = Window.getWindows();
         
-        if(estaModoClaro){
-            colorFondo = Color.WHITE;
-            colorTexto = Color.BLACK;
-        } else {
-            colorFondo = Color.BLACK;
-            colorTexto = Color.WHITE;
+        for(int i=0; i<ventanas.length; i++){
+            Window ventana = ventanas[i];
+            aplicarModo((JFrame) ventana);
         }
-        
-        boton.setBackground(colorFondo);
-        boton.setForeground(colorTexto);
     }
-            
+
 }
+
