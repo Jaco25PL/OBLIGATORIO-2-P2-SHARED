@@ -17,6 +17,17 @@
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaInfoAutores.java</file>
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaMiniJuego.java</file>
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/ClaroOscuro.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/model/Sistema.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/model/Persona.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/model/RegistroMovimientos.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/model/Cliente.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/ClienteControlador.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/ContratoControlador.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/EmpleadorControlador.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/EntradaControlador.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/SalidaControlador.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/ServicioAdicionalControlador.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/VehiculoControlador.java</file>
         </group>
     </open-files>
 </project-private>

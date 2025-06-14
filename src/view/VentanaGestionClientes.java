@@ -40,11 +40,11 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         jButtonVaciar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldDireccion = new javax.swing.JTextField();
+        jTextFieldCelular = new javax.swing.JTextField();
+        jTextFieldCedula = new javax.swing.JTextField();
+        jTextFieldAñoCliente = new javax.swing.JTextField();
         jScrollPaneClientes = new javax.swing.JScrollPane();
         jListClientes = new javax.swing.JList<>();
 
@@ -83,22 +83,27 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         jButtonVaciar.setBounds(40, 280, 90, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
         jPanelGestionClientes.add(jButtonAgregar);
         jButtonAgregar.setBounds(150, 280, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
         jPanelGestionClientes.add(jButtonEliminar);
         jButtonEliminar.setBounds(340, 280, 130, 27);
-        jPanelGestionClientes.add(jTextField1);
-        jTextField1.setBounds(110, 100, 68, 26);
-        jPanelGestionClientes.add(jTextField2);
-        jTextField2.setBounds(110, 140, 68, 26);
-        jPanelGestionClientes.add(jTextField3);
-        jTextField3.setBounds(110, 180, 68, 26);
-        jPanelGestionClientes.add(jTextField4);
-        jTextField4.setBounds(270, 100, 70, 26);
-        jPanelGestionClientes.add(jTextField5);
-        jTextField5.setBounds(270, 140, 75, 26);
+        jPanelGestionClientes.add(jTextFieldNombre);
+        jTextFieldNombre.setBounds(110, 100, 68, 26);
+        jPanelGestionClientes.add(jTextFieldDireccion);
+        jTextFieldDireccion.setBounds(110, 140, 68, 26);
+        jPanelGestionClientes.add(jTextFieldCelular);
+        jTextFieldCelular.setBounds(110, 180, 68, 26);
+        jPanelGestionClientes.add(jTextFieldCedula);
+        jTextFieldCedula.setBounds(270, 100, 70, 26);
+        jPanelGestionClientes.add(jTextFieldAñoCliente);
+        jTextFieldAñoCliente.setBounds(270, 140, 75, 26);
 
         jListClientes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -116,6 +121,16 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        String nombre = jTextFieldNombre.getText();
+        int cedula = Integer.parseInt(jTextFieldCedula.getText());
+        String direccion = jTextFieldDireccion.getText();
+        int celular = Integer.parseInt(jTextFieldCelular.getText());
+        int añoCliente = Integer.parseInt(jTextFieldAñoCliente.getText());
+        
+        controlador.agregarCliente(nombre, cedula, direccion, celular, añoCliente);
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
@@ -130,10 +145,10 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
     private javax.swing.JList<String> jListClientes;
     private javax.swing.JPanel jPanelGestionClientes;
     private javax.swing.JScrollPane jScrollPaneClientes;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextFieldAñoCliente;
+    private javax.swing.JTextField jTextFieldCedula;
+    private javax.swing.JTextField jTextFieldCelular;
+    private javax.swing.JTextField jTextFieldDireccion;
+    private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 }
