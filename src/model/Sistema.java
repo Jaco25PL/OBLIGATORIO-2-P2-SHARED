@@ -225,6 +225,23 @@ public class Sistema {
         }
         return existe;
     }
+    
+    public boolean vehiculoTieneContrato(Vehiculo vehiculo){
+        boolean tiene = false;
+        
+        if (buscarVehiculoPorMatricula(vehiculo.getMatricula()) != null) {
+            
+            Iterator<Contrato> it = listaContratos.iterator();
+            while (it.hasNext() && !tiene) {
+                Contrato contrato = it.next();
+                if (contrato.getVehiculoContrato().getMatricula().equals(vehiculo.getMatricula())) {
+                    tiene = true;
+                }
+            }
+        }
+        
+        return tiene;
+    }
 
     public ArrayList<Contrato> getListaContratos() {
         return listaContratos;

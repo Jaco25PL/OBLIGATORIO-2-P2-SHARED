@@ -1,22 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package view;
 
-/**
- *
- * @author matip
- */
+import controlador.ContratoControlador;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import model.Cliente;
+import model.Contrato;
+import model.Empleado;
+import model.Vehiculo;
+
 public class VentanaGestionContratos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaGestionContratos
-     */
-    public VentanaGestionContratos() {
+    private ContratoControlador controlador;
+
+    
+    public VentanaGestionContratos(ContratoControlador controlador) {
+        this.controlador = controlador;
+        
         initComponents();
+        
+        actualizarListaContratos();
+        actualizarListaClientes();
+        actualizarListaEmpleados();
+        actualizarListaVehiculos();
 
         ClaroOscuro.aplicarModo(this);
+        
+        //Listener para la Lista
+        jListContratos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    mostrarContratoSeleccionado();
+                }
+            }
+        });
     }
 
     /**
@@ -48,6 +69,10 @@ public class VentanaGestionContratos extends javax.swing.JFrame {
         jScrollPaneEmpleados = new javax.swing.JScrollPane();
         jListEmpleados = new javax.swing.JList<>();
         jLabelEmpleados = new javax.swing.JLabel();
+        jTextFieldEmpleado = new javax.swing.JTextField();
+        jTextFieldVehiculo = new javax.swing.JTextField();
+        jTextFieldCliente = new javax.swing.JTextField();
+        jTextFieldNumContrato = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de Contratos");
@@ -64,14 +89,29 @@ public class VentanaGestionContratos extends javax.swing.JFrame {
         jLabelContratos.setBounds(390, 70, 60, 16);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVaciarActionPerformed(evt);
+            }
+        });
         jPanelGestionContratos.add(jButtonVaciar);
         jButtonVaciar.setBounds(40, 290, 90, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
         jPanelGestionContratos.add(jButtonAgregar);
         jButtonAgregar.setBounds(150, 290, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
         jPanelGestionContratos.add(jButtonEliminar);
         jButtonEliminar.setBounds(340, 290, 130, 27);
         jPanelGestionContratos.add(jTextFieldFechaInicio);
@@ -134,12 +174,180 @@ public class VentanaGestionContratos extends javax.swing.JFrame {
         jLabelEmpleados.setText("Empleados");
         jPanelGestionContratos.add(jLabelEmpleados);
         jLabelEmpleados.setBounds(250, 70, 60, 16);
+        jPanelGestionContratos.add(jTextFieldEmpleado);
+        jTextFieldEmpleado.setBounds(240, 250, 100, 26);
+        jPanelGestionContratos.add(jTextFieldVehiculo);
+        jTextFieldVehiculo.setBounds(130, 250, 100, 26);
+        jPanelGestionContratos.add(jTextFieldCliente);
+        jTextFieldCliente.setBounds(20, 250, 100, 26);
+        jPanelGestionContratos.add(jTextFieldNumContrato);
+        jTextFieldNumContrato.setBounds(380, 250, 100, 26);
 
         getContentPane().add(jPanelGestionContratos);
         jPanelGestionContratos.setBounds(0, 0, 500, 350);
 
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void mostrarContratoSeleccionado() {
+        String seleccionado = jListContratos.getSelectedValue();
+        
+        if (seleccionado != null) {
+            try {
+                int numContrato = Integer.parseInt(seleccionado.split(" - ")[0]);
+                Contrato contrato = controlador.buscarContratoPorNumContrato(numContrato);
+                
+                if (contrato != null) {
+                    jTextFieldValorMensual.setText(String.valueOf(contrato.getValorMensual()));
+                    jTextFieldFechaInicio.setText(String.valueOf(contrato.getFechaInicio()));
+                    jTextFieldCliente.setText(contrato.getClienteContrato().getNombre() + " - " + contrato.getClienteContrato().getCedula());
+                    jTextFieldVehiculo.setText(contrato.getVehiculoContrato().getMarca() + " " + contrato.getVehiculoContrato().getModelo() 
+                        + " - " + contrato.getVehiculoContrato().getMatricula());
+                    jTextFieldEmpleado.setText(contrato.getEmpleadoContrato().getNombre() + " - " + contrato.getEmpleadoContrato().getCedula());
+                    jTextFieldNumContrato.setText(String.valueOf(contrato.getNumContrato()));
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar datos del contrato: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void limpiarCampos() {
+        jTextFieldValorMensual.setText("");
+        jTextFieldFechaInicio.setText("");
+        jTextFieldCliente.setText("");
+        jTextFieldVehiculo.setText("");
+        jTextFieldEmpleado.setText("");
+        jTextFieldNumContrato.setText("");
+    }
+    
+    private void actualizarListaEmpleados(){
+        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado empleado = empleados.get(i);
+            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
+        }
+
+        jListEmpleados.setModel(modelo);
+    }
+    
+    private void actualizarListaClientes(){
+        ArrayList<Cliente> clientes = controlador.getListaClientes();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+        
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente cliente = clientes.get(i);
+            modelo.addElement(cliente.getNombre() + " - " + cliente.getCedula());
+        }
+        
+        jListClientes.setModel(modelo);
+    }
+    
+    private void actualizarListaVehiculos() {
+        ArrayList<Vehiculo> vehiculos = controlador.getListaVehiculos();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < vehiculos.size(); i++) {
+            Vehiculo vehiculo = vehiculos.get(i);
+            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() + " - " + vehiculo.getMatricula());
+        }
+
+        jListVehiculos.setModel(modelo);
+    }
+    
+    private void actualizarListaContratos() {
+        ArrayList<Contrato> contratos = controlador.getListaContratos();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < contratos.size(); i++) {
+            Contrato contrato = contratos.get(i);
+            modelo.addElement(contrato.getNumContrato() + " - " + contrato.getClienteContrato().getNombre()
+                + " - " + contrato.getVehiculoContrato().getMarca()  + " " + contrato.getVehiculoContrato().getModelo()
+                + " - " + contrato.getEmpleadoContrato().getNombre());
+        }
+
+        jListContratos.setModel(modelo);
+    }
+    
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        
+        try {
+            String valorMensual = jTextFieldValorMensual.getText();
+            String fechaInicio = jTextFieldFechaInicio.getText();
+            
+            String empleadoSeleccionado = jListEmpleados.getSelectedValue();
+            String clienteSeleccionado = jListClientes.getSelectedValue();
+            String vehiculoSeleccionado = jListVehiculos.getSelectedValue();
+            
+            String cedulaEmpleado = "";
+            String cedulaCliente = "";
+            String matriculaVehiculo = "";
+            
+            if (empleadoSeleccionado != null) {
+                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+            }
+            if (clienteSeleccionado != null) {
+                cedulaCliente = clienteSeleccionado.split(" - ")[1];
+            }
+            if (vehiculoSeleccionado != null) {
+                matriculaVehiculo = vehiculoSeleccionado.split(" - ")[1];
+            }
+            
+            controlador.registrarContrato(valorMensual, cedulaEmpleado, cedulaCliente, matriculaVehiculo, fechaInicio);
+            
+            actualizarListaContratos();
+            
+            JOptionPane.showMessageDialog(this, "Contrato agregado con éxito");
+            
+            limpiarCampos();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        
+        try {
+            String seleccionado = jListContratos.getSelectedValue();
+
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un contrato para eliminar",
+                        "Selección requerida", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int numContrato = Integer.parseInt(seleccionado.split(" - ")[0]);
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro que desea eliminar este contrato?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                controlador.eliminarContrato(numContrato);
+
+                actualizarListaContratos();
+                JOptionPane.showMessageDialog(this, "Contrato eliminado con éxito");
+                limpiarCampos();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
+        limpiarCampos();
+        jListContratos.clearSelection();
+        jListEmpleados.clearSelection();
+        jListClientes.clearSelection();
+        jListVehiculos.clearSelection();
+    }//GEN-LAST:event_jButtonVaciarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -161,7 +369,11 @@ public class VentanaGestionContratos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneContratos;
     private javax.swing.JScrollPane jScrollPaneEmpleados;
     private javax.swing.JScrollPane jScrollPaneVehiculos;
+    private javax.swing.JTextField jTextFieldCliente;
+    private javax.swing.JTextField jTextFieldEmpleado;
     private javax.swing.JTextField jTextFieldFechaInicio;
+    private javax.swing.JTextField jTextFieldNumContrato;
     private javax.swing.JTextField jTextFieldValorMensual;
+    private javax.swing.JTextField jTextFieldVehiculo;
     // End of variables declaration//GEN-END:variables
 }
