@@ -4,21 +4,47 @@
  */
 package view;
 
+import controlador.ClienteControlador;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import model.Cliente;
+import model.Sistema;
+
 /**
  *
  * @author matip
  */
 public class VentanaGestionClientes extends javax.swing.JFrame {
-
+    
+    private ClienteControlador controlador;
+    
     /**
      * Creates new form Clientes
+     * @param controlador 
      */
-    public VentanaGestionClientes() {
+    public VentanaGestionClientes(ClienteControlador controlador) {
+        this.controlador = controlador;
+        
         initComponents();
         
         jPanelGestionClientes.setBounds(0,0, this.getWidth(), this.getHeight());
         
+        actualizarListaClientes();
+        
         ClaroOscuro.aplicarModo(this);
+        
+        //Listener para la Lista
+        jListClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    mostrarClienteSeleccionado();
+                }
+            }
+        });
     }
 
     /**
@@ -79,6 +105,11 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         jLabelClientes.setBounds(387, 50, 60, 16);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVaciarActionPerformed(evt);
+            }
+        });
         jPanelGestionClientes.add(jButtonVaciar);
         jButtonVaciar.setBounds(40, 280, 90, 27);
 
@@ -92,6 +123,11 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         jButtonAgregar.setBounds(150, 280, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
         jPanelGestionClientes.add(jButtonEliminar);
         jButtonEliminar.setBounds(340, 280, 130, 27);
         jPanelGestionClientes.add(jTextFieldNombre);
@@ -121,15 +157,106 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        String nombre = jTextFieldNombre.getText();
-        int cedula = Integer.parseInt(jTextFieldCedula.getText());
-        String direccion = jTextFieldDireccion.getText();
-        int celular = Integer.parseInt(jTextFieldCelular.getText());
-        int añoCliente = Integer.parseInt(jTextFieldAñoCliente.getText());
+    private void mostrarClienteSeleccionado() {
+        String seleccionado = jListClientes.getSelectedValue();
+
+        if (seleccionado != null) {
+            try {
+                int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
+                Cliente cliente = controlador.buscarClientePorCedula(cedula);
+
+                if (cliente != null) {
+                    jTextFieldNombre.setText(cliente.getNombre());
+                    jTextFieldCedula.setText(String.valueOf(cliente.getCedula()));
+                    jTextFieldDireccion.setText(cliente.getDireccion());
+                    jTextFieldCelular.setText(String.valueOf(cliente.getCelular()));
+                    jTextFieldAñoCliente.setText(String.valueOf(cliente.getAñoCliente()));
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(), 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void limpiarCampos(){
+        jTextFieldNombre.setText("");
+        jTextFieldCedula.setText("");
+        jTextFieldDireccion.setText("");
+        jTextFieldCelular.setText("");
+        jTextFieldAñoCliente.setText("");
+    }
+    
+    private void actualizarListaClientes(){
+        ArrayList<Cliente> clientes = controlador.getListaClientes();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
         
-        controlador.agregarCliente(nombre, cedula, direccion, celular, añoCliente);
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente cliente = clientes.get(i);
+            modelo.addElement(cliente.getNombre() + " - " + cliente.getCedula());
+        }
+        
+        jListClientes.setModel(modelo);
+    }
+    
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+
+        try {
+            String nombre = jTextFieldNombre.getText();
+            String cedula = jTextFieldCedula.getText();
+            String direccion = jTextFieldDireccion.getText();
+            String celular = jTextFieldCelular.getText();
+            String añoCliente = jTextFieldAñoCliente.getText();
+            
+            controlador.registrarCliente(nombre, cedula, direccion, celular, añoCliente);
+            
+            actualizarListaClientes();
+            
+            JOptionPane.showMessageDialog(this, "Cliente agregado con éxito");
+            
+            limpiarCampos();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+            
+        try {
+            String seleccionado = jListClientes.getSelectedValue();
+
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente para eliminar", 
+                    "Selección requerida", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
+            
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro que desea eliminar este cliente?\nEsto eliminará también todos sus contratos.", 
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+            
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                controlador.eliminarCliente(cedula);
+                
+                actualizarListaClientes();
+                JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito");
+                limpiarCampos();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
+        limpiarCampos();
+        jListClientes.clearSelection();
+    }//GEN-LAST:event_jButtonVaciarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

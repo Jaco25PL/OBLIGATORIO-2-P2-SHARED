@@ -3,21 +3,28 @@
  */
 package view;
 
+import controlador.ClienteControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import model.Sistema;
 
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
+    private Sistema sistema;
+    private ClienteControlador clienteControlador;
+    
     /**
      * Creates new form VentanaPrincipal
      */
-    public VentanaPrincipal() {
+    public VentanaPrincipal(Sistema sistema) {
+        this.sistema = sistema;
+        this.clienteControlador = new ClienteControlador(sistema);
+        
         initComponents();
         jPanelMain.setBounds(0,0, this.getWidth(), this.getHeight());
         setLocationRelativeTo(null);
         
         ClaroOscuro.aplicarModo(this);
-
         ClaroOscuro.addPropertyChangeListener(this);
     }
 
@@ -204,7 +211,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jButtonClaroOscuroActionPerformed
 
     private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
-        VentanaGestionClientes ventanaClientes = new VentanaGestionClientes();
+        VentanaGestionClientes ventanaClientes = new VentanaGestionClientes(clienteControlador);
         ventanaClientes.setVisible(true);
     }//GEN-LAST:event_jMenuItemClientesActionPerformed
 

@@ -104,7 +104,10 @@ public class ClaroOscuro {
         
         for(int i=0; i<ventanas.length; i++){
             Window ventana = ventanas[i];
-            aplicarModo((JFrame) ventana);
+            if (ventana instanceof JFrame) {
+                aplicarModo((JFrame) ventana);
+            }
+            
         }
     }
 

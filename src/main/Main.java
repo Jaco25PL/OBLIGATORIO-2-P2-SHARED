@@ -4,13 +4,16 @@
 
 package main;
 
+import model.Sistema;
 import view.VentanaPrincipal;
 
 public class Main {
 
     public static void main(String[] args) {
         
-        VentanaPrincipal ventana = new VentanaPrincipal();
+        Sistema sistema = new Sistema();
+        
+        VentanaPrincipal ventana = new VentanaPrincipal(sistema);
         ventana.setVisible(true);
     }
     
