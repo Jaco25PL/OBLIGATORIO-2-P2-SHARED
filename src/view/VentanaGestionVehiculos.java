@@ -1,22 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package view;
 
-/**
- *
- * @author matip
- */
+import controlador.VehiculoControlador;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import model.Vehiculo;
+
 public class VentanaGestionVehiculos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaGestionVehiculos
-     */
-    public VentanaGestionVehiculos() {
+    private VehiculoControlador controlador;
+    
+    public VentanaGestionVehiculos(VehiculoControlador controlador) {
+        this.controlador = controlador;
+        
         initComponents();
-
+        
+        actualizarListaVehiculos();
+        
         ClaroOscuro.aplicarModo(this);
+        
+        //Listener para la Lista
+        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    mostrarVehiculoSeleccionado();
+                }
+            }
+        });
     }
 
     /**
@@ -51,10 +65,20 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
         jPanelGestionVehiculos.setLayout(null);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
         jPanelGestionVehiculos.add(jButtonEliminar);
         jButtonEliminar.setBounds(317, 270, 130, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
         jPanelGestionVehiculos.add(jButtonAgregar);
         jButtonAgregar.setBounds(169, 270, 130, 27);
 
@@ -97,6 +121,11 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
         jTextFieldEstado.setBounds(110, 180, 250, 26);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVaciarActionPerformed(evt);
+            }
+        });
         jPanelGestionVehiculos.add(jButtonVaciar);
         jButtonVaciar.setBounds(60, 270, 76, 27);
 
@@ -106,6 +135,103 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void mostrarVehiculoSeleccionado() {
+        String seleccionado = jListVehiculos.getSelectedValue();
+
+        if (seleccionado != null) {
+            try {
+                String matricula = seleccionado.split(" - ")[1];
+                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
+
+                if (vehiculo != null) {
+                    jTextFieldMatricula.setText(vehiculo.getMatricula());
+                    jTextFieldMarca.setText(String.valueOf(vehiculo.getMarca()));
+                    jTextFieldModelo.setText(vehiculo.getModelo());
+                    jTextFieldEstado.setText(vehiculo.getEstado());
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar datos del vehículo: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void limpiarCampos() {
+        jTextFieldMatricula.setText("");
+        jTextFieldMarca.setText("");
+        jTextFieldModelo.setText("");
+        jTextFieldEstado.setText("");
+    }
+
+    private void actualizarListaVehiculos() {
+        ArrayList<Vehiculo> vehiculos = controlador.getListaVehiculos();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < vehiculos.size(); i++) {
+            Vehiculo vehiculo = vehiculos.get(i);
+            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() + " - " + vehiculo.getMatricula());
+        }
+
+        jListVehiculos.setModel(modelo);
+    }
+    
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        
+        try {
+            String matricula = jTextFieldMatricula.getText();
+            String marca = jTextFieldMarca.getText();
+            String modelo = jTextFieldModelo.getText();
+            String estado = jTextFieldEstado.getText();
+
+            controlador.registrarVehiculo(matricula, marca, modelo, estado);
+
+            actualizarListaVehiculos();
+
+            JOptionPane.showMessageDialog(this, "Vehículo agregado con éxito");
+
+            limpiarCampos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        
+        try {
+            String seleccionado = jListVehiculos.getSelectedValue();
+
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo para eliminar",
+                        "Selección requerida", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String matricula = seleccionado.split(" - ")[1];
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro que desea eliminar este vehículo?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                controlador.eliminarVehiculo(matricula);
+
+                actualizarListaVehiculos();
+                JOptionPane.showMessageDialog(this, "Vehículo eliminado con éxito");
+                limpiarCampos();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
+        limpiarCampos();
+        jListVehiculos.clearSelection();
+    }//GEN-LAST:event_jButtonVaciarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;

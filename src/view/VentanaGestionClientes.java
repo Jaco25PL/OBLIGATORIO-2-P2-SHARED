@@ -1,30 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package view;
 
 import controlador.ClienteControlador;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.Cliente;
-import model.Sistema;
 
-/**
- *
- * @author matip
- */
 public class VentanaGestionClientes extends javax.swing.JFrame {
     
     private ClienteControlador controlador;
     
-    /**
-     * Creates new form Clientes
-     * @param controlador 
-     */
     public VentanaGestionClientes(ClienteControlador controlador) {
         this.controlador = controlador;
         

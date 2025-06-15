@@ -1,22 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package view;
 
-/**
- *
- * @author matip
- */
+import controlador.EmpleadoControlador;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import model.Empleado;
+
 public class VentanaGestionEmpleados extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaGestionEmpleados
-     */
-    public VentanaGestionEmpleados() {
+    private EmpleadoControlador controlador;
+    
+    public VentanaGestionEmpleados(EmpleadoControlador controlador) {
+        this.controlador = controlador;
+        
         initComponents();
+        
+        actualizarListaEmpleados();
 
         ClaroOscuro.aplicarModo(this);
+        
+        //Listener para la Lista
+        jListEmpleados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    mostrarEmpleadoSeleccionado();
+                }
+            }
+        });
     }
 
     /**
@@ -37,10 +51,10 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         jButtonVaciar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldDireccion = new javax.swing.JTextField();
+        jTextFieldCedula = new javax.swing.JTextField();
+        jTextFieldNumEmpleado = new javax.swing.JTextField();
         jScrollPaneEmpleados = new javax.swing.JScrollPane();
         jListEmpleados = new javax.swing.JList<>();
 
@@ -71,24 +85,39 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         jLabelClientes.setBounds(387, 50, 60, 16);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVaciarActionPerformed(evt);
+            }
+        });
         jPanelGestionEmpleados.add(jButtonVaciar);
         jButtonVaciar.setBounds(40, 280, 90, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
         jPanelGestionEmpleados.add(jButtonAgregar);
         jButtonAgregar.setBounds(150, 280, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
         jPanelGestionEmpleados.add(jButtonEliminar);
         jButtonEliminar.setBounds(340, 280, 130, 27);
-        jPanelGestionEmpleados.add(jTextField1);
-        jTextField1.setBounds(110, 100, 68, 26);
-        jPanelGestionEmpleados.add(jTextField2);
-        jTextField2.setBounds(110, 140, 68, 26);
-        jPanelGestionEmpleados.add(jTextField4);
-        jTextField4.setBounds(290, 100, 70, 26);
-        jPanelGestionEmpleados.add(jTextField5);
-        jTextField5.setBounds(290, 140, 75, 26);
+        jPanelGestionEmpleados.add(jTextFieldNombre);
+        jTextFieldNombre.setBounds(110, 100, 68, 26);
+        jPanelGestionEmpleados.add(jTextFieldDireccion);
+        jTextFieldDireccion.setBounds(110, 140, 68, 26);
+        jPanelGestionEmpleados.add(jTextFieldCedula);
+        jTextFieldCedula.setBounds(290, 100, 70, 26);
+        jPanelGestionEmpleados.add(jTextFieldNumEmpleado);
+        jTextFieldNumEmpleado.setBounds(290, 140, 75, 26);
 
         jListEmpleados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -106,6 +135,104 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void mostrarEmpleadoSeleccionado() {
+        String seleccionado = jListEmpleados.getSelectedValue();
+        
+        if (seleccionado != null) {
+            try {
+                int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
+                Empleado empleado = controlador.buscarEmpleadoPorCedula(cedula);
+                
+                if (empleado != null) {
+                    jTextFieldNombre.setText(empleado.getNombre());
+                    jTextFieldCedula.setText(String.valueOf(empleado.getCedula()));
+                    jTextFieldDireccion.setText(empleado.getDireccion());
+                    jTextFieldNumEmpleado.setText(String.valueOf(empleado.getNumEmpleado()));
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar datos del empleado: " + e.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void limpiarCampos(){
+        jTextFieldNombre.setText("");
+        jTextFieldCedula.setText("");
+        jTextFieldDireccion.setText("");
+        jTextFieldNumEmpleado.setText("");
+    }
+    
+    private void actualizarListaEmpleados(){
+        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado empleado = empleados.get(i);
+            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
+        }
+
+        jListEmpleados.setModel(modelo);
+    }
+    
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        
+        try {
+            String nombre = jTextFieldNombre.getText();
+            String cedula = jTextFieldCedula.getText();
+            String direccion = jTextFieldDireccion.getText();
+            String numEmpleado = jTextFieldNumEmpleado.getText();
+
+            controlador.registrarEmpleado(nombre, cedula, direccion, numEmpleado);
+
+            actualizarListaEmpleados();
+
+            JOptionPane.showMessageDialog(this, "Empleado agregado con éxito");
+
+            limpiarCampos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
+        limpiarCampos();
+        jListEmpleados.clearSelection();
+    }//GEN-LAST:event_jButtonVaciarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        
+        try {
+            String seleccionado = jListEmpleados.getSelectedValue();
+
+            if (seleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un empleado para eliminar",
+                        "Selección requerida", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
+
+            int confirmacion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro que desea eliminar este empleado?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                controlador.eliminarEmpleado(cedula);
+
+                actualizarListaEmpleados();
+                JOptionPane.showMessageDialog(this, "Empleado eliminado con éxito");
+                limpiarCampos();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
@@ -119,9 +246,9 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     private javax.swing.JList<String> jListEmpleados;
     private javax.swing.JPanel jPanelGestionEmpleados;
     private javax.swing.JScrollPane jScrollPaneEmpleados;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextFieldCedula;
+    private javax.swing.JTextField jTextFieldDireccion;
+    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldNumEmpleado;
     // End of variables declaration//GEN-END:variables
 }

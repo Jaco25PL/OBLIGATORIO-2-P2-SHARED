@@ -4,6 +4,8 @@
 package view;
 
 import controlador.ClienteControlador;
+import controlador.EmpleadoControlador;
+import controlador.VehiculoControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import model.Sistema;
@@ -12,6 +14,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
 
     private Sistema sistema;
     private ClienteControlador clienteControlador;
+    private EmpleadoControlador empleadoControlador;
+    private VehiculoControlador vehiculoControlador;
     
     /**
      * Creates new form VentanaPrincipal
@@ -19,6 +23,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
         this.clienteControlador = new ClienteControlador(sistema);
+        this.empleadoControlador = new EmpleadoControlador(sistema);
+        this.vehiculoControlador = new VehiculoControlador(sistema);
         
         initComponents();
         jPanelMain.setBounds(0,0, this.getWidth(), this.getHeight());
@@ -221,12 +227,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemMiniJuegoActionPerformed
 
     private void jMenuItemVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVehiculosActionPerformed
-        VentanaGestionVehiculos ventanaVehiculos = new VentanaGestionVehiculos();
+        VentanaGestionVehiculos ventanaVehiculos = new VentanaGestionVehiculos(vehiculoControlador);
         ventanaVehiculos.setVisible(true);
     }//GEN-LAST:event_jMenuItemVehiculosActionPerformed
 
     private void jMenuItemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEmpleadosActionPerformed
-        VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados();
+        VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados(empleadoControlador);
         ventanaEmpleados.setVisible(true);
     }//GEN-LAST:event_jMenuItemEmpleadosActionPerformed
 
