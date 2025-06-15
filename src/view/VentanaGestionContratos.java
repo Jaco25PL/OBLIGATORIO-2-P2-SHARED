@@ -11,8 +11,9 @@ import model.Cliente;
 import model.Contrato;
 import model.Empleado;
 import model.Vehiculo;
+import observer.SistemaObserver;
 
-public class VentanaGestionContratos extends javax.swing.JFrame {
+public class VentanaGestionContratos extends javax.swing.JFrame implements SistemaObserver{
 
     private ContratoControlador controlador;
 
@@ -21,6 +22,8 @@ public class VentanaGestionContratos extends javax.swing.JFrame {
         this.controlador = controlador;
         
         initComponents();
+        
+        controlador.getSistema().addObserver(this);
         
         actualizarListaContratos();
         actualizarListaClientes();
@@ -376,4 +379,46 @@ public class VentanaGestionContratos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldValorMensual;
     private javax.swing.JTextField jTextFieldVehiculo;
     // End of variables declaration//GEN-END:variables
+
+
+    @Override
+    public void onClienteEliminado() {
+        actualizarListaContratos();
+        actualizarListaClientes();
+    }
+
+    @Override
+    public void onClienteCreado() {
+        actualizarListaClientes();
+    }
+
+    @Override
+    public void onVehiculoEliminado() {
+        actualizarListaVehiculos();
+    }
+
+    @Override
+    public void onVehiculoCreado() {
+        actualizarListaVehiculos();
+    }
+
+    @Override
+    public void onEmpleadoEliminado() {
+        actualizarListaEmpleados();
+    }
+
+    @Override
+    public void onEmpleadoCreado() {
+        actualizarListaEmpleados();
+    }
+
+    @Override
+    public void onContratoEliminado() {
+        actualizarListaContratos();
+    }
+
+    @Override
+    public void onContratoCreado() {
+        actualizarListaContratos();
+    }
 }

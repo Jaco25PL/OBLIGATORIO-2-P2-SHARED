@@ -30,13 +30,13 @@
   - **LISTO** Botón modo claro/oscuro
 7. Gestión - Ventanas CRUD (3-4 días)
   - Orden prioritario:
-    1. Gestión de Clientes (alta, baja, visualización)
-    2. Gestión de Vehículos (alta, visualización)
-    3. Gestión de Empleados (alta, visualización)
-    4. Gestión de Contratos (alta con combos, visualización)
+    1. **LISTO** Gestión de Clientes (alta, baja, visualización)
+    2. **LISTO** Gestión de Vehículos (alta, visualización)
+    3. **LISTO** Gestión de Empleados (alta, visualización)
+    4. **LISTO** Gestión de Contratos (alta con combos, visualización)
 8. Validaciones y Actualización (1 día)
-  - Implementa todas las validaciones
-  - Patrón Observer para actualización automática
+  - **LISTO** Implementa todas las validaciones
+  - **LISTO** Patrón Observer para actualización automática
 
 ## Fase 4: Movimientos (20%)
 9. Funcionalidades de Movimiento (2-3 días)

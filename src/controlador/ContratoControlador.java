@@ -124,4 +124,7 @@ public class ContratoControlador {
         return sistema.buscarContratoPorNumContrato(numContrato);
     }
     
+    public Sistema getSistema() {
+        return sistema;
+    }
 }

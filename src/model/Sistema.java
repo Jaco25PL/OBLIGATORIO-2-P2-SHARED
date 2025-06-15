@@ -5,6 +5,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import observer.SistemaObserver;
 
 public class Sistema {
     
@@ -23,6 +25,9 @@ public class Sistema {
     private int proxNumEntrada;
     private int proxNumSalida;
     private int proxNumServicio;
+    
+    // Lista de observers
+    private List<SistemaObserver> observers = new ArrayList<>();
 
     //Constructor
     public Sistema() {
@@ -50,6 +55,7 @@ public class Sistema {
         if (!existeClienteConCedula(cliente.getCedula())) {
             registrado = true;
             listaClientes.add(cliente);
+            notificarClienteCreado();
         }
         return registrado;
     }
@@ -69,6 +75,8 @@ public class Sistema {
             
             listaClientes.remove(cliente);
             eliminado = true;
+            
+            notificarClienteEliminado();
         }
         return eliminado;
     }
@@ -103,6 +111,7 @@ public class Sistema {
         if (!existeVehiculoConMatricula(vehiculo.getMatricula())) {
             registrado = true;
             listaVehiculos.add(vehiculo);
+            notificarVehiculoCreado();
         }
         return registrado;
     }
@@ -114,6 +123,7 @@ public class Sistema {
             
             listaVehiculos.remove(vehiculo);
             eliminado = true;
+            notificarVehiculoEliminado();
         }
         return eliminado;
     }
@@ -148,6 +158,7 @@ public class Sistema {
         if (!existeEmpleadoConCedula(empleado.getCedula())) {
             registrado = true;
             listaEmpleados.add(empleado);
+            notificarEmpleadoCreado();
         }
         return registrado;
     }
@@ -159,6 +170,7 @@ public class Sistema {
             
             listaEmpleados.remove(empleado);
             eliminado = true;
+            notificarEmpleadoEliminado();
         }
         return eliminado;
     }
@@ -192,6 +204,7 @@ public class Sistema {
         contrato.setNumContrato(proxNumContrato);
         listaContratos.add(contrato);
         proxNumContrato++;
+        notificarContratoCreado();
         return true;
     }
 
@@ -202,6 +215,7 @@ public class Sistema {
             
             listaContratos.remove(contrato);
             eliminado = true;
+            notificarContratoEliminado();
         }
         return eliminado;
     }
@@ -239,7 +253,6 @@ public class Sistema {
                 }
             }
         }
-        
         return tiene;
     }
 
@@ -318,9 +331,6 @@ public class Sistema {
         return listaServiciosAdicionales;
     }
 
-
-
-    
     public int getProxNumContrato() {
         return proxNumContrato;
     }
@@ -335,5 +345,67 @@ public class Sistema {
 
     public int getProxNumServicio() {
         return proxNumServicio;
+    }
+    
+    // Registrar observer
+    public void addObserver(SistemaObserver observer) {
+        observers.add(observer);
+    }
+    
+    // Notificar cambios
+    private void notificarClienteEliminado() {
+        for (int i = 0; i < observers.size(); i++) {
+            SistemaObserver observer = observers.get(i);
+            observer.onClienteEliminado();
+        }
+    }
+
+    private void notificarClienteCreado() {
+        for (int i = 0; i < observers.size(); i++) {
+            SistemaObserver observer = observers.get(i);
+            observer.onClienteCreado();
+        }
+    }
+    
+    private void notificarVehiculoEliminado() {
+        for (int i = 0; i < observers.size(); i++) {
+            SistemaObserver observer = observers.get(i);
+            observer.onVehiculoEliminado();
+        }
+    }
+
+    private void notificarVehiculoCreado() {
+        for (int i = 0; i < observers.size(); i++) {
+            SistemaObserver observer = observers.get(i);
+            observer.onVehiculoCreado();
+        }
+    }
+
+    private void notificarEmpleadoEliminado() {
+        for (int i = 0; i < observers.size(); i++) {
+            SistemaObserver observer = observers.get(i);
+            observer.onEmpleadoEliminado();
+        }
+    }
+
+    private void notificarEmpleadoCreado() {
+        for (int i = 0; i < observers.size(); i++) {
+            SistemaObserver observer = observers.get(i);
+            observer.onEmpleadoCreado();
+        }
+    }
+
+    private void notificarContratoEliminado() {
+        for (int i = 0; i < observers.size(); i++) {
+            SistemaObserver observer = observers.get(i);
+            observer.onContratoEliminado();
+        }
+    }
+
+    private void notificarContratoCreado() {
+        for (int i = 0; i < observers.size(); i++) {
+            SistemaObserver observer = observers.get(i);
+            observer.onContratoCreado();
+        }
     }
 }
