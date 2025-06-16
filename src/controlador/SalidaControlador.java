@@ -9,6 +9,7 @@ import model.Entrada;
 import model.Salida;
 import model.Sistema;
 import model.Vehiculo;
+import util.ValidadorFechaHora;
 
 public class SalidaControlador {
     
@@ -18,16 +19,13 @@ public class SalidaControlador {
         this.sistema = sistema;
     }
     
-    public void registrarSalida(String fecha, String hora, String notas, String cedulaEmpleadoStr, String matriculaVehiculoEntrada) throws Exception {
-        // Validar que los campos no estén vacíos
-        if (fecha == null || fecha.trim().isEmpty()) {
-            throw new Exception("La fecha no puede estar vacía");
-        }
-        if (hora == null || hora.trim().isEmpty()) {
-            throw new Exception("La hora no puede estar vacía");
-        }
-        if (notas == null || notas.trim().isEmpty()) {
-            throw new Exception("Las notas no pueden estar vacías");
+    public void registrarSalida(String fechaSalida, String horaSalida, String notas, String cedulaEmpleadoStr, String matriculaVehiculoEntrada) throws Exception {
+        // Validar que los campos no estén vacíos y tengan el formato correcto
+        ValidadorFechaHora.validarFecha(fechaSalida);
+        ValidadorFechaHora.validarHora(horaSalida);
+        
+        if (notas == null) { // Las notas pueden estar vacías
+            notas = "";
         }
         if (cedulaEmpleadoStr == null || cedulaEmpleadoStr.trim().isEmpty()) {
             throw new Exception("Debe seleccionar un empleado");
@@ -61,13 +59,16 @@ public class SalidaControlador {
             throw new Exception("No se encontró una entrada activa para el vehículo seleccionado");
         }
 
+        //Validar que fecha/hora de salida sea posterior a la de entrada
+        ValidadorFechaHora.validarFechaHoraPosterior(entrada.getFecha(), entrada.getHora(), fechaSalida, horaSalida);
+        
         // Verificar unicidad
         if (!sistema.vehiculoEstaEnParking(matriculaVehiculoEntrada)) {
             throw new Exception("El vehículo no está en el parking");
         }
-
+        
         // Crear y registrar
-        Salida salida = new Salida(0, fecha, hora, notas, empleado, vehiculo);
+        Salida salida = new Salida(0, fechaSalida, horaSalida, notas, empleado, vehiculo);
         boolean resultado = sistema.registrarSalida(salida, entrada);
 
         if (!resultado) {
@@ -93,5 +94,13 @@ public class SalidaControlador {
     
     public ArrayList<Empleado> getListaEmpleados() {
         return sistema.getListaEmpleados();
+    }
+    
+    public String getFechaActual() {
+        return ValidadorFechaHora.getFechaActual();
+    }
+    
+    public String getHoraActual() {
+        return ValidadorFechaHora.getHoraActual();
     }
 }

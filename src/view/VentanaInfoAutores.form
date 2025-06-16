@@ -32,7 +32,7 @@
     <Container class="javax.swing.JPanel" name="jPanelInfoAutores">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
+          <AbsoluteConstraints x="0" y="0" width="500" height="350"/>
         </Constraint>
       </Constraints>
 

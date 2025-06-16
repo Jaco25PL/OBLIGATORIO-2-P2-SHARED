@@ -8,6 +8,7 @@ import model.Empleado;
 import model.Entrada;
 import model.Sistema;
 import model.Vehiculo;
+import util.ValidadorFechaHora;
 
 public class EntradaControlador {
     
@@ -18,15 +19,12 @@ public class EntradaControlador {
     }
     
     public void registrarEntrada(String fecha, String hora, String notas, String cedulaEmpleadoStr, String matriculaVehiculo) throws Exception {
-        // Validar que los campos no estén vacíos
-        if (fecha == null || fecha.trim().isEmpty()) {
-            throw new Exception("La fecha no puede estar vacía");
-        }
-        if (hora == null || hora.trim().isEmpty()) {
-            throw new Exception("La hora no puede estar vacía");
-        }
-        if (notas == null || notas.trim().isEmpty()) {
-            throw new Exception("Las notas no pueden estar vacías");
+        // Validar que los campos no estén vacíos y tengan el formato correcto
+        ValidadorFechaHora.validarFecha(fecha);
+        ValidadorFechaHora.validarHora(hora);
+        
+        if (notas == null) { // Las notas pueden estar vacías
+            notas = "";
         }
         if (cedulaEmpleadoStr == null || cedulaEmpleadoStr.trim().isEmpty()) {
             throw new Exception("Debe seleccionar un empleado");
@@ -87,6 +85,14 @@ public class EntradaControlador {
     
     public ArrayList<Empleado> getListaEmpleados() {
         return sistema.getListaEmpleados();
+    }
+    
+    public String getFechaActual() {
+        return ValidadorFechaHora.getFechaActual();
+    }
+    
+    public String getHoraActual() {
+        return ValidadorFechaHora.getHoraActual();
     }
     
 }
