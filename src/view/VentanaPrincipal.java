@@ -6,6 +6,7 @@ package view;
 import controlador.ClienteControlador;
 import controlador.ContratoControlador;
 import controlador.EmpleadoControlador;
+import controlador.EntradaControlador;
 import controlador.VehiculoControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +19,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     private EmpleadoControlador empleadoControlador;
     private VehiculoControlador vehiculoControlador;
     private ContratoControlador contratoControlador;
+    private EntradaControlador entradaControlador;
     
     /**
      * Creates new form VentanaPrincipal
@@ -28,6 +30,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
         this.empleadoControlador = new EmpleadoControlador(sistema);
         this.vehiculoControlador = new VehiculoControlador(sistema);
         this.contratoControlador = new ContratoControlador(sistema);
+        this.entradaControlador = new EntradaControlador(sistema);
         
         initComponents();
         jPanelMain.setBounds(0,0, this.getWidth(), this.getHeight());
@@ -245,7 +248,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemContratosActionPerformed
 
     private void jMenuItemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEntradasActionPerformed
-        VentanaEntradas ventanaEntradas = new VentanaEntradas();
+        VentanaEntradas ventanaEntradas = new VentanaEntradas(entradaControlador);
         ventanaEntradas.setVisible(true);
     }//GEN-LAST:event_jMenuItemEntradasActionPerformed
 

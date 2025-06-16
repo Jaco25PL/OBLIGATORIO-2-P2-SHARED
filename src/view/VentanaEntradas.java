@@ -1,22 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package view;
 
-/**
- *
- * @author matip
- */
+import controlador.EntradaControlador;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import model.Empleado;
+import model.Vehiculo;
+
 public class VentanaEntradas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaEntradas
-     */
-    public VentanaEntradas() {
+    private EntradaControlador controlador;
+    
+    public VentanaEntradas(EntradaControlador controlador) {
+        this.controlador = controlador;
+        
         initComponents();
+        
+        actualizarListaVehiculos();
+        actualizarListaEmpleados();
+        
+        jButtonEliminar.setVisible(false);
 
         ClaroOscuro.aplicarModo(this);
+        
+        //Listener para la Lista
+        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    vehiculoTieneContrato();
+                }
+            }
+        });
     }
 
     /**
@@ -58,14 +76,29 @@ public class VentanaEntradas extends javax.swing.JFrame {
         jLabelFecha.setBounds(30, 70, 50, 16);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVaciarActionPerformed(evt);
+            }
+        });
         jPanelEntradas.add(jButtonVaciar);
         jButtonVaciar.setBounds(40, 290, 90, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
         jPanelEntradas.add(jButtonAgregar);
         jButtonAgregar.setBounds(150, 290, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
         jPanelEntradas.add(jButtonEliminar);
         jButtonEliminar.setBounds(340, 290, 130, 27);
         jPanelEntradas.add(jTextFieldFecha);
@@ -115,7 +148,7 @@ public class VentanaEntradas extends javax.swing.JFrame {
 
         jLabelTieneContratoRespuesta.setText("---");
         jPanelEntradas.add(jLabelTieneContratoRespuesta);
-        jLabelTieneContratoRespuesta.setBounds(120, 230, 14, 16);
+        jLabelTieneContratoRespuesta.setBounds(120, 230, 60, 16);
         jPanelEntradas.add(jTextFieldNotas);
         jTextFieldNotas.setBounds(80, 150, 68, 26);
 
@@ -125,7 +158,106 @@ public class VentanaEntradas extends javax.swing.JFrame {
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void vehiculoTieneContrato(){
+        String seleccionado = jListVehiculos.getSelectedValue();
 
+        if (seleccionado != null) {
+            try {
+                String matricula = seleccionado.split(" - ")[1];
+                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
+
+                if (vehiculo != null) {
+                    if(controlador.vehiculoTieneContrato(vehiculo)){
+                        jLabelTieneContratoRespuesta.setText("SI");
+                    } else if(!controlador.vehiculoTieneContrato(vehiculo)){
+                        jLabelTieneContratoRespuesta.setText("NO");
+                    }
+                    
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void actualizarListaVehiculos() {
+        ArrayList<Vehiculo> vehiculos = controlador.getVehiculosDisponiblesParaEntrada();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < vehiculos.size(); i++) {
+            Vehiculo vehiculo = vehiculos.get(i);
+            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() + " - " + vehiculo.getMatricula());
+        }
+
+        jListVehiculos.setModel(modelo);
+    }
+    
+    private void actualizarListaEmpleados() {
+        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado empleado = empleados.get(i);
+            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
+        }
+
+        jListEmpleados.setModel(modelo);
+    }
+    
+    private void limpiarCampos(){
+        jTextFieldFecha.setText("");
+        jTextFieldHora.setText("");
+        jTextFieldNotas.setText("");
+        jLabelTieneContratoRespuesta.setText("---");
+                
+        jListVehiculos.clearSelection();
+        jListEmpleados.clearSelection();
+    }
+    
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        
+        try {
+            String fecha = jTextFieldFecha.getText();
+            String hora = jTextFieldHora.getText();
+            String notas = jTextFieldNotas.getText();
+
+            String empleadoSeleccionado = jListEmpleados.getSelectedValue();
+            String vehiculoSeleccionado = jListVehiculos.getSelectedValue();
+
+            String cedulaEmpleado = "";
+            String matriculaVehiculo = "";
+
+            if (empleadoSeleccionado != null) {
+                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+            }
+            if (vehiculoSeleccionado != null) {
+                matriculaVehiculo = vehiculoSeleccionado.split(" - ")[1];
+            }
+
+            controlador.registrarEntrada(fecha, hora, notas, cedulaEmpleado, matriculaVehiculo);
+            
+            actualizarListaVehiculos();
+            
+            JOptionPane.showMessageDialog(this, "Entrada agregada con éxito");
+
+            limpiarCampos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_jButtonVaciarActionPerformed
+
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonEliminar;

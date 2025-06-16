@@ -223,6 +223,11 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         jTextFieldVehiculo.setText("");
         jTextFieldEmpleado.setText("");
         jTextFieldNumContrato.setText("");
+        
+        jListContratos.clearSelection();
+        jListEmpleados.clearSelection();
+        jListClientes.clearSelection();
+        jListVehiculos.clearSelection();
     }
     
     private void actualizarListaEmpleados(){
@@ -346,10 +351,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
 
     private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
         limpiarCampos();
-        jListContratos.clearSelection();
-        jListEmpleados.clearSelection();
-        jListClientes.clearSelection();
-        jListVehiculos.clearSelection();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
 
 

@@ -287,6 +287,31 @@ public class Sistema {
         }
         return existe;
     }
+    
+    public boolean vehiculoEstaEnParking(String matricula){
+        boolean esta = false;
+        Iterator<Entrada> it = listaEntradas.iterator();
+        while(it.hasNext() && !esta){
+            Entrada entrada = it.next();
+            if (entrada.getVehiculo().getMatricula().equals(matricula) && !entrada.tieneSalida()) {
+                esta = true;
+            }
+        }
+        return esta;
+    }
+    
+    public ArrayList<Vehiculo> getVehiculosDisponiblesParaEntrada() {
+        ArrayList<Vehiculo> vehiculosDisponibles = new ArrayList<>();
+        
+        Iterator<Vehiculo> it = listaVehiculos.iterator();
+        while(it.hasNext()){
+            Vehiculo vehiculo = it.next();
+            if (!vehiculoEstaEnParking(vehiculo.getMatricula())){
+                vehiculosDisponibles.add(vehiculo);
+            }
+        }
+        return vehiculosDisponibles;
+    }
 
     public ArrayList<Entrada> getListaEntradas() {
         return listaEntradas;

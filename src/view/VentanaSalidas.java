@@ -1,20 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package view;
 
-/**
- *
- * @author matip
- */
 public class VentanaSalidas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaSalidas
-     */
     public VentanaSalidas() {
         initComponents();
+        
+        jButtonEliminar.setVisible(false);
 
         ClaroOscuro.aplicarModo(this);
     }
@@ -46,6 +40,8 @@ public class VentanaSalidas extends javax.swing.JFrame {
         jLabelTiempoEnParking = new javax.swing.JLabel();
         jLabelTiempoEnParkingResultado = new javax.swing.JLabel();
         jTextFieldNotas = new javax.swing.JTextField();
+        jLabelTieneContratoResultado = new javax.swing.JLabel();
+        jLabelTieneContrato = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Salidas");
@@ -119,6 +115,14 @@ public class VentanaSalidas extends javax.swing.JFrame {
         jPanelSalidas.add(jTextFieldNotas);
         jTextFieldNotas.setBounds(80, 150, 68, 26);
 
+        jLabelTieneContratoResultado.setText("---");
+        jPanelSalidas.add(jLabelTieneContratoResultado);
+        jLabelTieneContratoResultado.setBounds(140, 210, 15, 16);
+
+        jLabelTieneContrato.setText("Tiene Contrato:");
+        jPanelSalidas.add(jLabelTieneContrato);
+        jLabelTieneContrato.setBounds(30, 210, 110, 16);
+
         getContentPane().add(jPanelSalidas);
         jPanelSalidas.setBounds(0, 0, 500, 350);
 
@@ -137,6 +141,8 @@ public class VentanaSalidas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNotas;
     private javax.swing.JLabel jLabelTiempoEnParking;
     private javax.swing.JLabel jLabelTiempoEnParkingResultado;
+    private javax.swing.JLabel jLabelTieneContrato;
+    private javax.swing.JLabel jLabelTieneContratoResultado;
     private javax.swing.JList<String> jListEmpleados;
     private javax.swing.JList<String> jListEntradas;
     private javax.swing.JPanel jPanelSalidas;
