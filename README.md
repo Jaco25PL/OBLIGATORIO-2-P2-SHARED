@@ -1,77 +1,107 @@
 # Roadmap
 
 ## Fase 1: Análisis y Diseño (20%)
+
 1. **LISTO** Análisis del Dominio (1-2 días)
-  - **LISTO** Lee la consigna completa 2-3 veces
-  - **LISTO** Identifica las entidades principales: Cliente, Vehículo, Empleado, Contrato, Entrada, Salida, ServicioAdicional
-  - **LISTO** Define las relaciones entre entidades
-  - **LISTO** Lista todos los atributos de cada clase
+
+- **LISTO** Lee la consigna completa 2-3 veces
+- **LISTO** Identifica las entidades principales: Cliente, Vehículo, Empleado, Contrato, Entrada, Salida, ServicioAdicional
+- **LISTO** Define las relaciones entre entidades
+- **LISTO** Lista todos los atributos de cada clase
+
 2. **LISTO** Diagrama UML (1 día)
-  - **LISTO** Diseña el diagrama de clases del dominio
-  - **LISTO** Incluye solo clases de dominio (no interfaz ni pruebas)
-  - **LISTO** Especifica atributos, métodos y relaciones
-  - **LISTO** Usa notación UML correcta
+
+- **LISTO** Diseña el diagrama de clases del dominio
+- **LISTO** Incluye solo clases de dominio (no interfaz ni pruebas)
+- **LISTO** Especifica atributos, métodos y relaciones
+- **LISTO** Usa notación UML correcta
 
 ## Fase 2: Estructura Base (25%)
+
 3. **LISTO** Configuración del Proyecto (medio día)
-  - **LISTO** Crea proyecto ANT en NetBeans
-  - **LISTO** Estructura de carpetas: dominio, interfaz
-  - **LISTO** Agrega nombres de autores en cada archivo
+
+- **LISTO** Crea proyecto ANT en NetBeans
+- **LISTO** Estructura de carpetas: dominio, interfaz
+- **LISTO** Agrega nombres de autores en cada archivo
+
 4. **LISTO** Clases de Dominio (2-3 días)
 5. **LISTO** Clase Sistema (1 día)
-  - **LISTO** Implementa listas para todas las entidades
-  - **LISTO** Métodos básicos de alta, baja, búsqueda
-  - **LISTO** Validaciones de unicidad
+
+- **LISTO** Implementa listas para todas las entidades
+- **LISTO** Métodos básicos de alta, baja, búsqueda
+- **LISTO** Validaciones de unicidad
 
 ## Fase 3: Interfaz Básica (30%)
+
 6. **LISTO** Ventana Principal (1 día)
-  - **LISTO** Menú principal con todas las opciones
-  - **LISTO** Título con nombres de estudiantes
-  - **LISTO** Botón modo claro/oscuro
+
+- **LISTO** Menú principal con todas las opciones
+- **LISTO** Título con nombres de estudiantes
+- **LISTO** Botón modo claro/oscuro
+
 7. Gestión - Ventanas CRUD (3-4 días)
-  - Orden prioritario:
-    1. **LISTO** Gestión de Clientes (alta, baja, visualización)
-    2. **LISTO** Gestión de Vehículos (alta, visualización)
-    3. **LISTO** Gestión de Empleados (alta, visualización)
-    4. **LISTO** Gestión de Contratos (alta con combos, visualización)
+
+- Orden prioritario:
+  1. **LISTO** Gestión de Clientes (alta, baja, visualización)
+  2. **LISTO** Gestión de Vehículos (alta, visualización)
+  3. **LISTO** Gestión de Empleados (alta, visualización)
+  4. **LISTO** Gestión de Contratos (alta con combos, visualización)
+
 8. Validaciones y Actualización (1 día)
-  - **LISTO** Implementa todas las validaciones
-  - **LISTO** Patrón Observer para actualización automática
+
+- **LISTO** Implementa todas las validaciones
+- **LISTO** Patrón Observer para actualización automática
 
 ## Fase 4: Movimientos (20%)
+
 9. Funcionalidades de Movimiento (2-3 días)
-  1. Entradas: Lista vehículos disponibles, registro
-  2. Salidas: Lista entradas sin salida, cálculo de tiempo
-  3. Servicios Adicionales: Combo de servicios, registro y consulta
+1. **LISTO** Entradas: Lista vehículos disponibles, registro
+1. Salidas: Lista entradas sin salida, cálculo de tiempo
+1. Servicios Adicionales: Combo de servicios, registro y consulta
 
 ## Fase 5: Reportes (15%)
+
 10. Ventana de Reportes con Pestañas (2-3 días)
-  1. Historial por vehículo: Tabla, ordenamiento, filtros, exportación TXT
-  2. Grilla de movimientos: Botones 4x3, colores según cantidad, ventanas emergentes
-  3. Estadísticas generales: Cálculos y visualización
+1. Historial por vehículo: Tabla, ordenamiento, filtros, exportación TXT
+1. Grilla de movimientos: Botones 4x3, colores según cantidad, ventanas emergentes
+1. Estadísticas generales: Cálculos y visualización
 
 ## Fase 6: Funcionalidades Complementarias (10%)
+
 11. Persistencia (1 día)
-  - Serialización en DATOS.ser
-  - Recuperación y grabación con confirmación
+
+- Serialización en DATOS.ser
+- Recuperación y grabación con confirmación
+
 12. Mini Juego (1 día)
-  - Implementa algo simple (puede usar ChatGPT)
-  - Uso de mouse/teclado
+
+- Implementa algo simple (puede usar ChatGPT)
+- Uso de mouse/teclado
+
 13. Información de Autores (medio día)
-  - Ventana con datos completos y fotos
+
+- Ventana con datos completos y fotos
+
 14. Modo Oscuro (medio día)
-  - Implementa cambio de tema en todas las ventanas
+
+- Implementa cambio de tema en todas las ventanas
 
 ## Fase 7: Documentación y Entrega (tiempo paralelo)
+
 15. Video de YouTube (1 día)
-  - Máximo 2 minutos
-  - Mostrar funcionalidades principales
-  - Ambos integrantes visibles
+
+- Máximo 2 minutos
+- Mostrar funcionalidades principales
+- Ambos integrantes visibles
+
 16. Documentación PDF (1 día)
-  - Carátula con fotos
-  - Diagrama UML
-  - Link del video
+
+- Carátula con fotos
+- Diagrama UML
+- Link del video
+
 17. Testing y JAR (1 día)
-  - Pruebas exhaustivas
-  - Generación del JAR sin datos precargados
-  - Verificación de funcionamiento
+
+- Pruebas exhaustivas
+- Generación del JAR sin datos precargados
+- Verificación de funcionamiento

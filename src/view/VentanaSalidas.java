@@ -3,14 +3,40 @@
  */
 package view;
 
-public class VentanaSalidas extends javax.swing.JFrame {
+import controlador.SalidaControlador;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import model.Empleado;
+import model.Entrada;
+import model.Vehiculo;
 
-    public VentanaSalidas() {
+public class VentanaSalidas extends javax.swing.JFrame {
+    
+    private SalidaControlador controlador;
+
+    public VentanaSalidas(SalidaControlador controlador) {
+        this.controlador = controlador;
+        
         initComponents();
+        
+        actualizarListaEntradas();
+        actualizarListaEmpleados();
         
         jButtonEliminar.setVisible(false);
 
         ClaroOscuro.aplicarModo(this);
+        
+        //Listener para la Lista
+        jListEntradas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    vehiculoTieneContrato();
+                    vehiculoTiempoEnParking();
+                }
+            }
+        });
     }
 
     /**
@@ -38,9 +64,9 @@ public class VentanaSalidas extends javax.swing.JFrame {
         jLabelEmpleados = new javax.swing.JLabel();
         jLabelNotas = new javax.swing.JLabel();
         jLabelTiempoEnParking = new javax.swing.JLabel();
-        jLabelTiempoEnParkingResultado = new javax.swing.JLabel();
+        jLabelTiempoEnParkingRespuesta = new javax.swing.JLabel();
         jTextFieldNotas = new javax.swing.JTextField();
-        jLabelTieneContratoResultado = new javax.swing.JLabel();
+        jLabelTieneContratoRespuesta = new javax.swing.JLabel();
         jLabelTieneContrato = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -54,14 +80,29 @@ public class VentanaSalidas extends javax.swing.JFrame {
         jLabelFecha.setBounds(30, 70, 50, 16);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVaciarActionPerformed(evt);
+            }
+        });
         jPanelSalidas.add(jButtonVaciar);
         jButtonVaciar.setBounds(40, 290, 90, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
         jPanelSalidas.add(jButtonAgregar);
         jButtonAgregar.setBounds(150, 290, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
         jPanelSalidas.add(jButtonEliminar);
         jButtonEliminar.setBounds(340, 290, 130, 27);
         jPanelSalidas.add(jTextFieldFecha);
@@ -109,15 +150,15 @@ public class VentanaSalidas extends javax.swing.JFrame {
         jPanelSalidas.add(jLabelTiempoEnParking);
         jLabelTiempoEnParking.setBounds(30, 230, 110, 16);
 
-        jLabelTiempoEnParkingResultado.setText("---");
-        jPanelSalidas.add(jLabelTiempoEnParkingResultado);
-        jLabelTiempoEnParkingResultado.setBounds(140, 230, 15, 16);
+        jLabelTiempoEnParkingRespuesta.setText("---");
+        jPanelSalidas.add(jLabelTiempoEnParkingRespuesta);
+        jLabelTiempoEnParkingRespuesta.setBounds(140, 230, 60, 16);
         jPanelSalidas.add(jTextFieldNotas);
         jTextFieldNotas.setBounds(80, 150, 68, 26);
 
-        jLabelTieneContratoResultado.setText("---");
-        jPanelSalidas.add(jLabelTieneContratoResultado);
-        jLabelTieneContratoResultado.setBounds(140, 210, 15, 16);
+        jLabelTieneContratoRespuesta.setText("---");
+        jPanelSalidas.add(jLabelTieneContratoRespuesta);
+        jLabelTieneContratoRespuesta.setBounds(140, 210, 40, 16);
 
         jLabelTieneContrato.setText("Tiene Contrato:");
         jPanelSalidas.add(jLabelTieneContrato);
@@ -128,6 +169,123 @@ public class VentanaSalidas extends javax.swing.JFrame {
 
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void vehiculoTieneContrato() {
+        String seleccionado = jListEntradas.getSelectedValue();
+
+        if (seleccionado != null) {
+            try {
+                String matricula = seleccionado.split(" - ")[1];
+                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
+
+                if (vehiculo != null) {
+                    if (controlador.vehiculoTieneContrato(vehiculo)) {
+                        jLabelTieneContratoRespuesta.setText("SI");
+                    } else if (!controlador.vehiculoTieneContrato(vehiculo)) {
+                        jLabelTieneContratoRespuesta.setText("NO");
+                    }
+
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar datos del vehiculo: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void vehiculoTiempoEnParking() {
+        String seleccionado = jListEntradas.getSelectedValue();
+
+        if (seleccionado != null) {
+            try {
+                String matricula = seleccionado.split(" - ")[1];
+                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
+
+                if (vehiculo != null) {
+                    jLabelTiempoEnParkingRespuesta.setText(controlador.vehiculoTiempoEnParking(vehiculo) + "");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar datos del vehiculo: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void actualizarListaEntradas() {
+        ArrayList<Entrada> entradas = controlador.getEntradasSinSalida();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < entradas.size(); i++) {
+            Entrada entrada = entradas.get(i);
+            modelo.addElement(entrada.getVehiculo().getMarca() + " " + entrada.getVehiculo().getModelo() + " - " + entrada.getVehiculo().getMatricula());
+        }
+
+        jListEntradas.setModel(modelo);
+    }
+    
+    private void actualizarListaEmpleados() {
+        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado empleado = empleados.get(i);
+            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
+        }
+
+        jListEmpleados.setModel(modelo);
+    }
+    
+    private void limpiarCampos(){
+        jTextFieldFecha.setText("");
+        jTextFieldHora.setText("");
+        jTextFieldNotas.setText("");
+        jLabelTieneContratoRespuesta.setText("---");
+        jLabelTiempoEnParkingRespuesta.setText("---");
+                
+        jListEntradas.clearSelection();
+        jListEmpleados.clearSelection();
+    }
+    
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+
+        try {
+            String fecha = jTextFieldFecha.getText();
+            String hora = jTextFieldHora.getText();
+            String notas = jTextFieldNotas.getText();
+
+            String empleadoSeleccionado = jListEmpleados.getSelectedValue();
+            String entradaSeleccionada = jListEntradas.getSelectedValue();
+
+            String cedulaEmpleado = "";
+            String matriculaVehiculoEntrada = "";
+
+            if (empleadoSeleccionado != null) {
+                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+            }
+            if (entradaSeleccionada != null) {
+                matriculaVehiculoEntrada = entradaSeleccionada.split(" - ")[1];
+            }
+
+            controlador.registrarSalida(fecha, hora, notas, cedulaEmpleado, matriculaVehiculoEntrada);
+
+            actualizarListaEntradas();
+
+            JOptionPane.showMessageDialog(this, "Salida agregada con éxito");
+
+            limpiarCampos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_jButtonVaciarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -140,9 +298,9 @@ public class VentanaSalidas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelHora;
     private javax.swing.JLabel jLabelNotas;
     private javax.swing.JLabel jLabelTiempoEnParking;
-    private javax.swing.JLabel jLabelTiempoEnParkingResultado;
+    private javax.swing.JLabel jLabelTiempoEnParkingRespuesta;
     private javax.swing.JLabel jLabelTieneContrato;
-    private javax.swing.JLabel jLabelTieneContratoResultado;
+    private javax.swing.JLabel jLabelTieneContratoRespuesta;
     private javax.swing.JList<String> jListEmpleados;
     private javax.swing.JList<String> jListEntradas;
     private javax.swing.JPanel jPanelSalidas;

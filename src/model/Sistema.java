@@ -255,6 +255,74 @@ public class Sistema {
         }
         return tiene;
     }
+    
+    public String vehiculoTiempoEnParking(Vehiculo vehiculo){
+        String tiempo = "0:00";
+
+        // Busco la entrada más reciente del vehiculo que no tenga salida
+        boolean encontrada = false;
+        Entrada entradaActiva = null;
+        Iterator<Entrada> it = listaEntradas.iterator();
+        while(it.hasNext() && !encontrada){
+            Entrada entrada = it.next();
+            if (entrada.getVehiculo().getMatricula().equals(vehiculo.getMatricula())){
+                entradaActiva = entrada;
+                encontrada = true;
+            }
+        }
+
+        if (entradaActiva != null) {
+            // Obtengo fecha y hora actual para calcular
+            java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
+            String fechaActual = ahora.getDayOfMonth() + "/" + ahora.getMonthValue() 
+            + "/" + ahora.getYear();
+            String horaActual = String.format("%02d:%02d", ahora.getHour(), ahora.getMinute());
+        
+            tiempo = calcularDiferenciaTiempo(entradaActiva.getFecha(), entradaActiva.getHora(), 
+            fechaActual, horaActual);
+        }
+
+        return tiempo;
+    }
+
+    private String calcularDiferenciaTiempo(String fechaEntrada, String horaEntrada, String fechaSalida, String horaSalida){
+
+        // Parsear la fecha entrada a formato: dd/mm/yyyy
+        String[] partesFechaEntrada = fechaEntrada.split("/");
+        int diaEntrada = Integer.parseInt(partesFechaEntrada[0]);
+        int mesEntrada = Integer.parseInt(partesFechaEntrada[1]);
+        int añoEntrada = Integer.parseInt(partesFechaEntrada[2]);
+
+        // Parsear hora de entrada a formato: HH:MM
+        String[] partesHoraEntrada = horaEntrada.split(":");
+        int horasEntrada = Integer.parseInt(partesHoraEntrada[0]);
+        int minutosEntrada = Integer.parseInt(partesHoraEntrada[1]);
+
+        // Parsear fecha de salida a formato: dd/mm/yyyy
+        String[] partesFechaSalida = fechaSalida.split("/");
+        int diaSalida = Integer.parseInt(partesFechaSalida[0]);
+        int mesSalida = Integer.parseInt(partesFechaSalida[1]);
+        int añoSalida = Integer.parseInt(partesFechaSalida[2]);
+
+        // Parsear hora de salida a formato: HH:MM
+        String[] partesHoraSalida = horaSalida.split(":");
+        int horasSalida = Integer.parseInt(partesHoraSalida[0]);
+        int minutosSalida = Integer.parseInt(partesHoraSalida[1]);
+
+        // Crear objetos LocalDateTime
+        java.time.LocalDateTime fechaHoraEntrada = java.time.LocalDateTime.of(
+            añoEntrada, mesEntrada, diaEntrada, horasEntrada, minutosEntrada);
+        java.time.LocalDateTime fechaHoraSalida = java.time.LocalDateTime.of(
+            añoSalida, mesSalida, diaSalida, horasSalida, minutosSalida);
+
+        // Calcular diferencia
+        java.time.Duration duracion = java.time.Duration.between(fechaHoraEntrada, fechaHoraSalida);
+
+        long horas = duracion.toHours();
+        long minutos = duracion.toMinutes() % 60;
+
+        return String.format("%d:%02d", horas, minutos);
+    }
 
     public ArrayList<Contrato> getListaContratos() {
         return listaContratos;
@@ -274,6 +342,18 @@ public class Sistema {
         while(it.hasNext() && entradaEncontrado == null){
             Entrada entrada = it.next();
             if (entrada.getNumMovimiento() == numMovimiento) {
+                entradaEncontrado = entrada;
+            }
+        }
+        return entradaEncontrado;
+    }
+    
+    public Entrada buscarEntradaPorMatricula(String matricula){ //BUSCAR
+        Entrada entradaEncontrado = null;
+        Iterator<Entrada> it = listaEntradas.iterator();
+        while(it.hasNext() && entradaEncontrado == null){
+            Entrada entrada = it.next();
+            if (entrada.getVehiculo().getMatricula().equals(matricula)) {
                 entradaEncontrado = entrada;
             }
         }
