@@ -9,6 +9,7 @@ import model.Contrato;
 import model.Empleado;
 import model.Sistema;
 import model.Vehiculo;
+import util.ValidadorFechaHora;
 
 public class ContratoControlador {
     
@@ -32,9 +33,8 @@ public class ContratoControlador {
         if (matriculaVehiculoStr == null || matriculaVehiculoStr.trim().isEmpty()) {
             throw new Exception("Debe seleccionar un vehículo");
         }
-        if (fechaInicio == null || fechaInicio.trim().isEmpty()) {
-            throw new Exception("La fecha de inicio no puede estar vacía");
-        }
+        //Validar fecha
+        ValidadorFechaHora.validarFecha(fechaInicio);
 
         // Convertir strings a números
         double valorMensual;
@@ -126,5 +126,9 @@ public class ContratoControlador {
     
     public Sistema getSistema() {
         return sistema;
+    }
+    
+    public String getFechaActual() {
+        return ValidadorFechaHora.getFechaActual();
     }
 }

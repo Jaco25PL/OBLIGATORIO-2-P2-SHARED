@@ -23,6 +23,9 @@ public class VentanaEntradas extends javax.swing.JFrame {
         actualizarListaEmpleados();
         
         jButtonEliminar.setVisible(false);
+        
+        jTextFieldFecha.setText(controlador.getFechaActual());
+        jTextFieldHora.setText(controlador.getHoraActual());
 
         ClaroOscuro.aplicarModo(this);
         

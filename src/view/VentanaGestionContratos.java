@@ -32,6 +32,8 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
 
         ClaroOscuro.aplicarModo(this);
         
+        jTextFieldFechaInicio.setText(controlador.getFechaActual());
+        
         //Listener para la Lista
         jListContratos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             @Override
