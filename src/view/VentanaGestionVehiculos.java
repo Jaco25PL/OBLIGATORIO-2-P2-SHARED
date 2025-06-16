@@ -147,11 +147,10 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
                     jTextFieldMatricula.setText(vehiculo.getMatricula());
                     jTextFieldMarca.setText(String.valueOf(vehiculo.getMarca()));
                     jTextFieldModelo.setText(vehiculo.getModelo());
-                    jTextFieldEstado.setText(vehiculo.getEstado());
-                }
+                    jTextFieldEstado.setText(vehiculo.getEstado());                }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al cargar datos del vehículo: " + e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del vehículo: " + e.getMessage(),
+                        "Error");
             }
         }
     }
@@ -183,16 +182,14 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
             String modelo = jTextFieldModelo.getText();
             String estado = jTextFieldEstado.getText();
 
-            controlador.registrarVehiculo(matricula, marca, modelo, estado);
+            controlador.registrarVehiculo(matricula, marca, modelo, estado);            actualizarListaVehiculos();
 
-            actualizarListaVehiculos();
-
-            JOptionPane.showMessageDialog(this, "Vehículo agregado con éxito");
+            ClaroOscuro.mostrarMensaje(this, "Vehículo agregado con éxito", "Éxito");
 
             limpiarCampos();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
         
     }//GEN-LAST:event_jButtonAgregarActionPerformed
@@ -200,30 +197,26 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         
         try {
-            String seleccionado = jListVehiculos.getSelectedValue();
-
-            if (seleccionado == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo para eliminar",
-                        "Selección requerida", JOptionPane.WARNING_MESSAGE);
+            String seleccionado = jListVehiculos.getSelectedValue();            if (seleccionado == null) {
+                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un vehículo para eliminar",
+                        "Selección requerida");
                 return;
             }
 
             String matricula = seleccionado.split(" - ")[1];
 
-            int confirmacion = JOptionPane.showConfirmDialog(this,
+            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
                     "¿Está seguro que desea eliminar este vehículo?",
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION);
+                    "Confirmar eliminación");
 
             if (confirmacion == JOptionPane.YES_OPTION) {
                 controlador.eliminarVehiculo(matricula);
 
                 actualizarListaVehiculos();
-                JOptionPane.showMessageDialog(this, "Vehículo eliminado con éxito");
+                ClaroOscuro.mostrarMensaje(this, "Vehículo eliminado con éxito", "Éxito");
                 limpiarCampos();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }        } catch (Exception e) {
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
         
     }//GEN-LAST:event_jButtonEliminarActionPerformed

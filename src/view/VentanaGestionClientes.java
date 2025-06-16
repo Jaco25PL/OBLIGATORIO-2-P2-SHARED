@@ -161,8 +161,8 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
                     jTextFieldAñoCliente.setText(String.valueOf(cliente.getAñoCliente()));
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(), 
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error");
             }
         }
     }
@@ -197,15 +197,14 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
             String añoCliente = jTextFieldAñoCliente.getText();
             
             controlador.registrarCliente(nombre, cedula, direccion, celular, añoCliente);
+              actualizarListaClientes();
             
-            actualizarListaClientes();
-            
-            JOptionPane.showMessageDialog(this, "Cliente agregado con éxito");
+            ClaroOscuro.mostrarMensaje(this, "Cliente agregado con éxito", "Éxito");
             
             limpiarCampos();
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
         
     }//GEN-LAST:event_jButtonAgregarActionPerformed
@@ -213,30 +212,27 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
             
         try {
-            String seleccionado = jListClientes.getSelectedValue();
-
-            if (seleccionado == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente para eliminar", 
-                    "Selección requerida", JOptionPane.WARNING_MESSAGE);
+            String seleccionado = jListClientes.getSelectedValue();            if (seleccionado == null) {
+                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un cliente para eliminar", 
+                    "Selección requerida");
                 return;
             }
             
             int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
             
-            int confirmacion = JOptionPane.showConfirmDialog(this,
+            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
                     "¿Está seguro que desea eliminar este cliente?\nEsto eliminará también todos sus contratos.", 
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION);
+                    "Confirmar eliminación");
             
             if (confirmacion == JOptionPane.YES_OPTION) {
                 controlador.eliminarCliente(cedula);
                 
                 actualizarListaClientes();
-                JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito");
+                ClaroOscuro.mostrarMensaje(this, "Cliente eliminado con éxito", "Éxito");
                 limpiarCampos();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
         
     }//GEN-LAST:event_jButtonEliminarActionPerformed

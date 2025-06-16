@@ -6,7 +6,7 @@ package view;
 import controlador.EntradaControlador;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+// import javax.swing.JOptionPane;
 import model.Empleado;
 import model.Vehiculo;
 
@@ -175,8 +175,10 @@ public class VentanaEntradas extends javax.swing.JFrame {
                     
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(),
+                //         "Error", JOptionPane.ERROR_MESSAGE);
+
+                 ClaroOscuro.mostrarMensaje(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error");
             }
         }
     }
@@ -239,12 +241,16 @@ public class VentanaEntradas extends javax.swing.JFrame {
             
             actualizarListaVehiculos();
             
-            JOptionPane.showMessageDialog(this, "Entrada agregada con éxito");
+            // JOptionPane.showMessageDialog(this, "Entrada agregada con éxito");
+            ClaroOscuro.mostrarMensaje(this, "Entrada agregada con éxito", "Éxito");
+
 
             limpiarCampos();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this,  e.getMessage(), "Error");
+            
         }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 

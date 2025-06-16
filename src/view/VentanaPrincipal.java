@@ -211,9 +211,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
         });
         jMenuTerminar.add(jMenuItemSalir);
 
-        jMenuBar1.add(jMenuTerminar);
-
-        setJMenuBar(jMenuBar1);
+        jMenuBar1.add(jMenuTerminar);        setJMenuBar(jMenuBar1);
 
         setSize(new java.awt.Dimension(514, 358));
         setLocationRelativeTo(null);
@@ -307,10 +305,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     private javax.swing.JMenuItem jMenuItemVehiculos;
     private javax.swing.JMenu jMenuMovimientos;
     private javax.swing.JMenu jMenuTerminar;
-    private javax.swing.JMenu jMenuVarios;
-    private javax.swing.JPanel jPanelMain;
+    private javax.swing.JMenu jMenuVarios;    private javax.swing.JPanel jPanelMain;
     // End of variables declaration//GEN-END:variables
-    @Override
+      @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
     }

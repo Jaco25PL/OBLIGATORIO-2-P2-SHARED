@@ -147,11 +147,10 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
                     jTextFieldNombre.setText(empleado.getNombre());
                     jTextFieldCedula.setText(String.valueOf(empleado.getCedula()));
                     jTextFieldDireccion.setText(empleado.getDireccion());
-                    jTextFieldNumEmpleado.setText(String.valueOf(empleado.getNumEmpleado()));
-                }
+                    jTextFieldNumEmpleado.setText(String.valueOf(empleado.getNumEmpleado()));                }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al cargar datos del empleado: " + e.getMessage(), 
-                "Error", JOptionPane.ERROR_MESSAGE);
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del empleado: " + e.getMessage(), 
+                "Error");
             }
         }
     }
@@ -183,16 +182,14 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
             String direccion = jTextFieldDireccion.getText();
             String numEmpleado = jTextFieldNumEmpleado.getText();
 
-            controlador.registrarEmpleado(nombre, cedula, direccion, numEmpleado);
+            controlador.registrarEmpleado(nombre, cedula, direccion, numEmpleado);            actualizarListaEmpleados();
 
-            actualizarListaEmpleados();
-
-            JOptionPane.showMessageDialog(this, "Empleado agregado con éxito");
+            ClaroOscuro.mostrarMensaje(this, "Empleado agregado con éxito", "Éxito");
 
             limpiarCampos();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
         
     }//GEN-LAST:event_jButtonAgregarActionPerformed
@@ -205,30 +202,27 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         
         try {
-            String seleccionado = jListEmpleados.getSelectedValue();
-
-            if (seleccionado == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un empleado para eliminar",
-                        "Selección requerida", JOptionPane.WARNING_MESSAGE);
+            String seleccionado = jListEmpleados.getSelectedValue();            if (seleccionado == null) {
+                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un empleado para eliminar",
+                        "Selección requerida");
                 return;
             }
 
             int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
 
-            int confirmacion = JOptionPane.showConfirmDialog(this,
+            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
                     "¿Está seguro que desea eliminar este empleado?",
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION);
+                    "Confirmar eliminación");
 
             if (confirmacion == JOptionPane.YES_OPTION) {
                 controlador.eliminarEmpleado(cedula);
 
                 actualizarListaEmpleados();
-                JOptionPane.showMessageDialog(this, "Empleado eliminado con éxito");
+                ClaroOscuro.mostrarMensaje(this, "Empleado eliminado con éxito", "Éxito");
                 limpiarCampos();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
         
     }//GEN-LAST:event_jButtonEliminarActionPerformed

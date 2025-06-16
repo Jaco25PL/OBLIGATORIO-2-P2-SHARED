@@ -6,7 +6,6 @@ package view;
 import controlador.SalidaControlador;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import model.Empleado;
 import model.Entrada;
 import model.Vehiculo;
@@ -176,9 +175,7 @@ public class VentanaSalidas extends javax.swing.JFrame {
         if (seleccionado != null) {
             try {
                 String matricula = seleccionado.split(" - ")[1];
-                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
-
-                if (vehiculo != null) {
+                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);                if (vehiculo != null) {
                     if (controlador.vehiculoTieneContrato(vehiculo)) {
                         jLabelTieneContratoRespuesta.setText("SI");
                     } else if (!controlador.vehiculoTieneContrato(vehiculo)) {
@@ -187,8 +184,8 @@ public class VentanaSalidas extends javax.swing.JFrame {
 
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al cargar datos del vehiculo: " + e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del vehiculo: " + e.getMessage(),
+                        "Error");
             }
         }
     }
@@ -199,14 +196,12 @@ public class VentanaSalidas extends javax.swing.JFrame {
         if (seleccionado != null) {
             try {
                 String matricula = seleccionado.split(" - ")[1];
-                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
-
-                if (vehiculo != null) {
+                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);                if (vehiculo != null) {
                     jLabelTiempoEnParkingRespuesta.setText(controlador.vehiculoTiempoEnParking(vehiculo) + "");
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al cargar datos del vehiculo: " + e.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del vehiculo: " + e.getMessage(),
+                        "Error");
             }
         }
     }
@@ -266,16 +261,14 @@ public class VentanaSalidas extends javax.swing.JFrame {
                 matriculaVehiculoEntrada = entradaSeleccionada.split(" - ")[1];
             }
 
-            controlador.registrarSalida(fecha, hora, notas, cedulaEmpleado, matriculaVehiculoEntrada);
+            controlador.registrarSalida(fecha, hora, notas, cedulaEmpleado, matriculaVehiculoEntrada);            actualizarListaEntradas();
 
-            actualizarListaEntradas();
-
-            JOptionPane.showMessageDialog(this, "Salida agregada con éxito");
+            ClaroOscuro.mostrarMensaje(this, "Salida agregada con éxito", "Éxito");
 
             limpiarCampos();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
