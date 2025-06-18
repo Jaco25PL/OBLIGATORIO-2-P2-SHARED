@@ -60,7 +60,7 @@ public class VentanaInfoAutores extends javax.swing.JFrame {
         jLabelAutoresTitulo.setBounds(100, 10, 280, 60);
 
         jLabelMatiasImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelMatiasImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/matias_image.jpg"))); // NOI18N
+        jLabelMatiasImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/matias_image.png"))); // NOI18N
         jPanelInfoAutores.add(jLabelMatiasImage);
         jLabelMatiasImage.setBounds(70, 90, 120, 120);
 
