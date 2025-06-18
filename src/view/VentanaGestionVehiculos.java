@@ -197,7 +197,8 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         
         try {
-            String seleccionado = jListVehiculos.getSelectedValue();            if (seleccionado == null) {
+            String seleccionado = jListVehiculos.getSelectedValue();            
+            if (seleccionado == null) {
                 ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un vehículo para eliminar",
                         "Selección requerida");
                 return;

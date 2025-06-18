@@ -274,6 +274,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemInfoAutoresActionPerformed
 
     private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
+        this.dispose();     
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 

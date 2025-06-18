@@ -7,6 +7,8 @@ import controlador.ContratoControlador;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+
+// import javax.swing.JOptionPane;
 import model.Cliente;
 import model.Contrato;
 import model.Empleado;
@@ -212,8 +214,8 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
                     jTextFieldNumContrato.setText(String.valueOf(contrato.getNumContrato()));
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Error al cargar datos del contrato: " + e.getMessage(), 
-                "Error", JOptionPane.ERROR_MESSAGE);
+                ClaroOscuro.mostrarMensaje(this, "Error al cargar datos del contrato: " + e.getMessage(), 
+                "Error");
             }
         }
     }
@@ -310,12 +312,12 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
             
             actualizarListaContratos();
             
-            JOptionPane.showMessageDialog(this, "Contrato agregado con éxito");
+            ClaroOscuro.mostrarMensaje(this, "Contrato agregado con éxito", "Éxito");
             
             limpiarCampos();
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
         
     }//GEN-LAST:event_jButtonAgregarActionPerformed
@@ -326,27 +328,26 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
             String seleccionado = jListContratos.getSelectedValue();
 
             if (seleccionado == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar un contrato para eliminar",
-                        "Selección requerida", JOptionPane.WARNING_MESSAGE);
+                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un contrato para eliminar",
+                        "Selección requerida");
                 return;
             }
 
             int numContrato = Integer.parseInt(seleccionado.split(" - ")[0]);
 
-            int confirmacion = JOptionPane.showConfirmDialog(this,
+            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
                     "¿Está seguro que desea eliminar este contrato?",
-                    "Confirmar eliminación",
-                    JOptionPane.YES_NO_OPTION);
+                    "Confirmar eliminación");
 
             if (confirmacion == JOptionPane.YES_OPTION) {
                 controlador.eliminarContrato(numContrato);
 
                 actualizarListaContratos();
-                JOptionPane.showMessageDialog(this, "Contrato eliminado con éxito");
+                ClaroOscuro.mostrarMensaje(this, "Contrato eliminado con éxito", "Exito");
                 limpiarCampos();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
         }
         
     }//GEN-LAST:event_jButtonEliminarActionPerformed

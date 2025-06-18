@@ -44,7 +44,7 @@ public class ClaroOscuro {
             colorFondo = Color.BLACK;
             colorTexto = Color.WHITE;
         }
-        
+
         //Aplicar al jFrame
         frame.getContentPane().setBackground(colorFondo);
         frame.getContentPane().setForeground(colorTexto);
@@ -128,14 +128,12 @@ public class ClaroOscuro {
         mostrarDialogo(parent, mensaje, titulo, JOptionPane.WARNING_MESSAGE, JOptionPane.DEFAULT_OPTION);
     }
     
-    // Muestra un diálogo de confirmación (Sí/No)
-    // @return JOptionPane.YES_OPTION o JOptionPane.NO_OPTION
+    // (Sí/No)
     public static int mostrarConfirmacion(Component parent, String mensaje, String titulo) {
         return mostrarDialogo(parent, mensaje, titulo, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
     }
     
-    // Muestra un diálogo de confirmación (Sí/No/Cancelar)
-    // @return JOptionPane.YES_OPTION, JOptionPane.NO_OPTION o JOptionPane.CANCEL_OPTION
+    // (Sí/No/Cancelar)
     public static int mostrarConfirmacionConCancelar(Component parent, String mensaje, String titulo) {
         return mostrarDialogo(parent, mensaje, titulo, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_CANCEL_OPTION);
     }
