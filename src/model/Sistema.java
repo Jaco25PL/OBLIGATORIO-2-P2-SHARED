@@ -286,7 +286,6 @@ public class Sistema {
     }
 
     private String calcularDiferenciaTiempo(String fechaEntrada, String horaEntrada, String fechaSalida, String horaSalida){
-
         // Parsear la fecha entrada a formato: dd/mm/yyyy
         String[] partesFechaEntrada = fechaEntrada.split("/");
         int diaEntrada = Integer.parseInt(partesFechaEntrada[0]);
@@ -315,13 +314,70 @@ public class Sistema {
         java.time.LocalDateTime fechaHoraSalida = java.time.LocalDateTime.of(
             añoSalida, mesSalida, diaSalida, horasSalida, minutosSalida);
 
-        // Calcular diferencia
-        java.time.Duration duracion = java.time.Duration.between(fechaHoraEntrada, fechaHoraSalida);
-
+        // Calcular diferencia usando Period y Duration
+        java.time.Period periodo = java.time.Period.between(fechaHoraEntrada.toLocalDate(), fechaHoraSalida.toLocalDate());
+        java.time.Duration duracion = java.time.Duration.between(fechaHoraEntrada.toLocalTime(), fechaHoraSalida.toLocalTime());
+        
+        // Si la duración es negativa, ajustar
+        if (duracion.isNegative()) {
+            periodo = periodo.minusDays(1);
+            duracion = duracion.plusDays(1);
+        }
+        
+        int años = periodo.getYears();
+        int meses = periodo.getMonths();
+        int dias = periodo.getDays();
         long horas = duracion.toHours();
         long minutos = duracion.toMinutes() % 60;
-
-        return String.format("%d:%02d", horas, minutos);
+        
+        // Formatear el resultado usando concatenación de strings
+        String resultado = "";
+        
+        if (años > 0) {
+            if (años == 1) {
+                resultado = resultado + años + " año";
+            } else {
+                resultado = resultado + años + " años";
+            }
+        }
+        
+        if (meses > 0) {
+            if (!resultado.equals("")) {
+                resultado = resultado + ", ";
+            }
+            if (meses == 1) {
+                resultado = resultado + meses + " mes";
+            } else {
+                resultado = resultado + meses + " meses";
+            }
+        }
+        
+        if (dias > 0) {
+            if (!resultado.equals("")) {
+                resultado = resultado + ", ";
+            }
+            if (dias == 1) {
+                resultado = resultado + dias + " día";
+            } else {
+                resultado = resultado + dias + " días";
+            }
+        }
+        
+        // Siempre mostrar las horas y minutos
+        if (!resultado.equals("")) {
+            resultado = resultado + ", ";
+        }
+        
+        String minutosFormateados;
+        if (minutos < 10) {
+            minutosFormateados = "0" + minutos;
+        } else {
+            minutosFormateados = "" + minutos;
+        }
+        
+        resultado = resultado + horas + ":" + minutosFormateados;
+        
+        return resultado;
     }
 
     public ArrayList<Contrato> getListaContratos() {

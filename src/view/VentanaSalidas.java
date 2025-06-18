@@ -154,7 +154,7 @@ public class VentanaSalidas extends javax.swing.JFrame {
 
         jLabelTiempoEnParkingRespuesta.setText("---");
         jPanelSalidas.add(jLabelTiempoEnParkingRespuesta);
-        jLabelTiempoEnParkingRespuesta.setBounds(140, 230, 60, 16);
+        jLabelTiempoEnParkingRespuesta.setBounds(140, 230, 120, 16);
         jPanelSalidas.add(jTextFieldNotas);
         jTextFieldNotas.setBounds(80, 150, 68, 26);
 
