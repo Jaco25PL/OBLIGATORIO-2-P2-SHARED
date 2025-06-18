@@ -67,6 +67,7 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
         jPanelGestionVehiculos.setLayout(null);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEliminarActionPerformed(evt);
@@ -76,6 +77,7 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
         jButtonEliminar.setBounds(317, 270, 130, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAgregarActionPerformed(evt);
@@ -123,6 +125,7 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
         jTextFieldEstado.setBounds(110, 180, 250, 26);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVaciarActionPerformed(evt);

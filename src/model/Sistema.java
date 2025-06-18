@@ -581,13 +581,7 @@ public class Sistema {
             observer.onContratoCreado();
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
     
     public void cargarDatosPrueba() {
         // Crear algunos clientes
@@ -660,6 +654,5 @@ public class Sistema {
         registrarServicio(servicio2);
 
         System.out.println("Datos de prueba cargados exitosamente.");
-    }
-    
+    }   
 }

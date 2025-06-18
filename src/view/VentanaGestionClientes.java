@@ -93,6 +93,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         jLabelClientes.setBounds(387, 50, 60, 16);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVaciarActionPerformed(evt);
@@ -102,6 +103,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         jButtonVaciar.setBounds(40, 280, 90, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAgregarActionPerformed(evt);
@@ -111,6 +113,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         jButtonAgregar.setBounds(150, 280, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEliminarActionPerformed(evt);
