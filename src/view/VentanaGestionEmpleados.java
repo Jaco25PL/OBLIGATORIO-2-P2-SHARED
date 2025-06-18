@@ -19,6 +19,8 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         initComponents();
         
         actualizarListaEmpleados();
+        
+        jButtonEliminar.setVisible(false);
 
         ClaroOscuro.aplicarModo(this);
         

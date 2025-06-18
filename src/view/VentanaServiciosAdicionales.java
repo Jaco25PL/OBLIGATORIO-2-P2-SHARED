@@ -33,6 +33,8 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         actualizarListaEmpleados();
         actualizarListaServicios();
         
+        jButtonEliminar.setVisible(false);
+        
         ClaroOscuro.aplicarModo(this);
         
         //Listener para la Lista

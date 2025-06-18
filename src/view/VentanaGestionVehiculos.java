@@ -20,6 +20,8 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
         
         actualizarListaVehiculos();
         
+        jButtonEliminar.setVisible(false);
+        
         ClaroOscuro.aplicarModo(this);
         
         //Listener para la Lista
