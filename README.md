@@ -54,10 +54,10 @@
 
 ## Fase 4: Movimientos (20%)
 
-9. Funcionalidades de Movimiento (2-3 días)
+9. **LISTO** Funcionalidades de Movimiento (2-3 días)
 1. **LISTO** Entradas: Lista vehículos disponibles, registro
 1. **LISTO** Salidas: Lista entradas sin salida, cálculo de tiempo
-1. Servicios Adicionales: Combo de servicios, registro y consulta
+1. **LISTO** Servicios Adicionales: Combo de servicios, registro y consulta
 
 ## Fase 5: Reportes (15%)
 

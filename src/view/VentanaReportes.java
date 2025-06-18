@@ -1,18 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package view;
 
-/**
- *
- * @author matip
- */
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+
 public class VentanaReportes extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaReportes
-     */
     public VentanaReportes() {
         initComponents();
 
@@ -99,6 +97,48 @@ public class VentanaReportes extends javax.swing.JFrame {
 
         jPanelHistorial.add(jScrollPane2);
         jScrollPane2.setBounds(170, 30, 320, 170);
+
+        // Panel Historial - componentes adicionales
+        JRadioButton jRadioButtonCreciente = new JRadioButton("Fecha/Hora Creciente");
+        jRadioButtonCreciente.setSelected(true);
+        jPanelHistorial.add(jRadioButtonCreciente);
+        jRadioButtonCreciente.setBounds(170, 210, 150, 20);
+
+        JRadioButton jRadioButtonDecreciente = new JRadioButton("Fecha/Hora Decreciente");
+        jPanelHistorial.add(jRadioButtonDecreciente);
+        jRadioButtonDecreciente.setBounds(330, 210, 160, 20);
+
+        // Agrupar los botones de radio
+        ButtonGroup grupoOrdenamiento = new ButtonGroup();
+        grupoOrdenamiento.add(jRadioButtonCreciente);
+        grupoOrdenamiento.add(jRadioButtonDecreciente);
+
+        // Checkboxes para filtrar
+        JCheckBox jCheckBoxEntradas = new JCheckBox("Entradas", true);
+        jPanelHistorial.add(jCheckBoxEntradas);
+        jCheckBoxEntradas.setBounds(500, 50, 100, 20);
+
+        JCheckBox jCheckBoxSalidas = new JCheckBox("Salidas", true);
+        jPanelHistorial.add(jCheckBoxSalidas);
+        jCheckBoxSalidas.setBounds(500, 80, 100, 20);
+
+        JCheckBox jCheckBoxServicios = new JCheckBox("Servicios", true);
+        jPanelHistorial.add(jCheckBoxServicios);
+        jCheckBoxServicios.setBounds(500, 110, 100, 20);
+
+        JLabel jLabelFiltrar = new JLabel("Filtrar:");
+        jPanelHistorial.add(jLabelFiltrar);
+        jLabelFiltrar.setBounds(500, 30, 100, 16);
+
+        // Botón de exportación
+        JButton jButtonExportar = new JButton("Exportar a TXT");
+        jPanelHistorial.add(jButtonExportar);
+        jButtonExportar.setBounds(500, 160, 120, 30);
+
+        // Título para la tabla
+        JLabel jLabelMovimientos = new JLabel("Movimientos del vehículo:");
+        jPanelHistorial.add(jLabelMovimientos);
+        jLabelMovimientos.setBounds(170, 10, 200, 16);
 
         jTabbedPaneReportes.addTab("Historial", jPanelHistorial);
 
