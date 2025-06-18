@@ -30,9 +30,8 @@ public class VentanaInfoAutores extends javax.swing.JFrame {
 
         jPanelInfoAutores = new javax.swing.JPanel();
         jLabelMatiasPiedra = new javax.swing.JLabel();
-        jLabel354007 = new javax.swing.JLabel();
         jLabelJoaquinPiedra = new javax.swing.JLabel();
-        jLabel304804 = new javax.swing.JLabel();
+        jLabelAutoresTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Información de Autores");
@@ -40,21 +39,20 @@ public class VentanaInfoAutores extends javax.swing.JFrame {
 
         jPanelInfoAutores.setLayout(null);
 
-        jLabelMatiasPiedra.setText("Matias Piedra");
+        jLabelMatiasPiedra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelMatiasPiedra.setText("Matias Piedra - 354007");
         jPanelInfoAutores.add(jLabelMatiasPiedra);
-        jLabelMatiasPiedra.setBounds(110, 190, 80, 16);
+        jLabelMatiasPiedra.setBounds(50, 110, 180, 30);
 
-        jLabel354007.setText("354007");
-        jPanelInfoAutores.add(jLabel354007);
-        jLabel354007.setBounds(120, 220, 50, 16);
-
-        jLabelJoaquinPiedra.setText("Joaquín Piedra");
+        jLabelJoaquinPiedra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelJoaquinPiedra.setText("Joaquín Piedra - 304804");
         jPanelInfoAutores.add(jLabelJoaquinPiedra);
-        jLabelJoaquinPiedra.setBounds(290, 190, 80, 16);
+        jLabelJoaquinPiedra.setBounds(50, 140, 180, 30);
 
-        jLabel304804.setText("304804");
-        jPanelInfoAutores.add(jLabel304804);
-        jLabel304804.setBounds(300, 220, 50, 16);
+        jLabelAutoresTitulo.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
+        jLabelAutoresTitulo.setText("Autores del proyecto");
+        jPanelInfoAutores.add(jLabelAutoresTitulo);
+        jLabelAutoresTitulo.setBounds(50, 50, 280, 60);
 
         getContentPane().add(jPanelInfoAutores);
         jPanelInfoAutores.setBounds(0, 0, 500, 350);
@@ -63,8 +61,7 @@ public class VentanaInfoAutores extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel304804;
-    private javax.swing.JLabel jLabel354007;
+    private javax.swing.JLabel jLabelAutoresTitulo;
     private javax.swing.JLabel jLabelJoaquinPiedra;
     private javax.swing.JLabel jLabelMatiasPiedra;
     private javax.swing.JPanel jPanelInfoAutores;
