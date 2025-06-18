@@ -34,6 +34,14 @@ public class VentanaReportes extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
         jPanelMovimientos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -76,7 +84,7 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         jPanelHistorial.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 50, 100, 150);
+        jScrollPane1.setBounds(30, 50, 100, 170);
 
         jLabel13.setText("Lista de vehículos:");
         jPanelHistorial.add(jLabel13);
@@ -96,7 +104,39 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         jPanelHistorial.add(jScrollPane2);
-        jScrollPane2.setBounds(170, 30, 320, 170);
+        jScrollPane2.setBounds(160, 50, 320, 170);
+
+        jLabel14.setText("Filtrar:");
+        jPanelHistorial.add(jLabel14);
+        jLabel14.setBounds(500, 20, 80, 16);
+
+        jCheckBox1.setText("Entradas");
+        jPanelHistorial.add(jCheckBox1);
+        jCheckBox1.setBounds(500, 50, 90, 20);
+
+        jCheckBox2.setText("Salidas");
+        jPanelHistorial.add(jCheckBox2);
+        jCheckBox2.setBounds(500, 80, 90, 20);
+
+        jCheckBox3.setText("Servicios");
+        jPanelHistorial.add(jCheckBox3);
+        jCheckBox3.setBounds(500, 110, 90, 20);
+
+        jButton1.setText("Exportar");
+        jPanelHistorial.add(jButton1);
+        jButton1.setBounds(500, 187, 90, 30);
+
+        jLabel15.setText("Movimientos del vehículo:");
+        jPanelHistorial.add(jLabel15);
+        jLabel15.setBounds(160, 20, 210, 16);
+
+        jRadioButton1.setText("Fecha/Hora Creciente");
+        jPanelHistorial.add(jRadioButton1);
+        jRadioButton1.setBounds(160, 230, 150, 21);
+
+        jRadioButton2.setText("Fecha/Hora Decreciente");
+        jPanelHistorial.add(jRadioButton2);
+        jRadioButton2.setBounds(320, 230, 160, 21);
 
         jTabbedPaneReportes.addTab("Historial", jPanelHistorial);
 
@@ -195,21 +235,27 @@ public class VentanaReportes extends javax.swing.JFrame {
         jTabbedPaneReportes.addTab("Estadísticas Generales", jPanelEstadisticas);
 
         jPanelReportes.add(jTabbedPaneReportes);
-        jTabbedPaneReportes.setBounds(40, 50, 730, 270);
+        jTabbedPaneReportes.setBounds(40, 50, 610, 300);
 
         getContentPane().add(jPanelReportes);
         jPanelReportes.setBounds(0, 0, 650, 350);
 
-        setBounds(0, 0, 814, 358);
+        setBounds(0, 0, 663, 378);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -231,6 +277,8 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelHistorial;
     private javax.swing.JPanel jPanelMovimientos;
     private javax.swing.JPanel jPanelReportes;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPaneClientesConMasVehiculos;
