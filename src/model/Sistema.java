@@ -286,7 +286,6 @@ public class Sistema {
     }
 
     private String calcularDiferenciaTiempo(String fechaEntrada, String horaEntrada, String fechaSalida, String horaSalida){
-
         // Parsear la fecha entrada a formato: dd/mm/yyyy
         String[] partesFechaEntrada = fechaEntrada.split("/");
         int diaEntrada = Integer.parseInt(partesFechaEntrada[0]);
@@ -315,13 +314,70 @@ public class Sistema {
         java.time.LocalDateTime fechaHoraSalida = java.time.LocalDateTime.of(
             añoSalida, mesSalida, diaSalida, horasSalida, minutosSalida);
 
-        // Calcular diferencia
-        java.time.Duration duracion = java.time.Duration.between(fechaHoraEntrada, fechaHoraSalida);
-
+        // Calcular diferencia usando Period y Duration
+        java.time.Period periodo = java.time.Period.between(fechaHoraEntrada.toLocalDate(), fechaHoraSalida.toLocalDate());
+        java.time.Duration duracion = java.time.Duration.between(fechaHoraEntrada.toLocalTime(), fechaHoraSalida.toLocalTime());
+        
+        // Si la duración es negativa, ajustar
+        if (duracion.isNegative()) {
+            periodo = periodo.minusDays(1);
+            duracion = duracion.plusDays(1);
+        }
+        
+        int años = periodo.getYears();
+        int meses = periodo.getMonths();
+        int dias = periodo.getDays();
         long horas = duracion.toHours();
         long minutos = duracion.toMinutes() % 60;
-
-        return String.format("%d:%02d", horas, minutos);
+        
+        // Formatear el resultado usando concatenación de strings
+        String resultado = "";
+        
+        if (años > 0) {
+            if (años == 1) {
+                resultado = resultado + años + " año";
+            } else {
+                resultado = resultado + años + " años";
+            }
+        }
+        
+        if (meses > 0) {
+            if (!resultado.equals("")) {
+                resultado = resultado + ", ";
+            }
+            if (meses == 1) {
+                resultado = resultado + meses + " mes";
+            } else {
+                resultado = resultado + meses + " meses";
+            }
+        }
+        
+        if (dias > 0) {
+            if (!resultado.equals("")) {
+                resultado = resultado + ", ";
+            }
+            if (dias == 1) {
+                resultado = resultado + dias + " día";
+            } else {
+                resultado = resultado + dias + " días";
+            }
+        }
+        
+        // Siempre mostrar las horas y minutos
+        if (!resultado.equals("")) {
+            resultado = resultado + ", ";
+        }
+        
+        String minutosFormateados;
+        if (minutos < 10) {
+            minutosFormateados = "0" + minutos;
+        } else {
+            minutosFormateados = "" + minutos;
+        }
+        
+        resultado = resultado + horas + ":" + minutosFormateados;
+        
+        return resultado;
     }
 
     public ArrayList<Contrato> getListaContratos() {
@@ -435,6 +491,18 @@ public class Sistema {
     public ArrayList<ServicioAdicional> getListaServiciosAdicionales() {
         return listaServiciosAdicionales;
     }
+    
+    public ServicioAdicional buscarServicioPorMatricula(String matricula) {
+        ServicioAdicional servicioEncontrado = null;
+        Iterator<ServicioAdicional> it = listaServiciosAdicionales.iterator();
+        while (it.hasNext() && servicioEncontrado == null) {
+            ServicioAdicional servicio = it.next();
+            if (servicio.getVehiculo().getMatricula().equals(matricula)) {
+                servicioEncontrado = servicio;
+            }
+        }
+        return servicioEncontrado;
+    }
 
     public int getProxNumContrato() {
         return proxNumContrato;
@@ -513,4 +581,85 @@ public class Sistema {
             observer.onContratoCreado();
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    public void cargarDatosPrueba() {
+        // Crear algunos clientes
+        Cliente cliente1 = new Cliente("Juan Pérez", 12345678, "Av. Italia 1234", 99123456, 2020);
+        Cliente cliente2 = new Cliente("María López", 23456789, "Rivera 567", 98765432, 2021);
+        Cliente cliente3 = new Cliente("Carlos Rodríguez", 34567890, "18 de Julio 890", 97654321, 2019);
+        Cliente cliente4 = new Cliente("Ana Martínez", 45678901, "Luis A. de Herrera 1234", 96543210, 2022);
+
+        // Registrar clientes en el sistema
+        registrarCliente(cliente1);
+        registrarCliente(cliente2);
+        registrarCliente(cliente3);
+        registrarCliente(cliente4);
+
+        // Crear algunos vehículos
+        Vehiculo vehiculo1 = new Vehiculo("ABC123", "Toyota", "Corolla", "Bueno");
+        Vehiculo vehiculo2 = new Vehiculo("DEF456", "Honda", "Civic", "Excelente");
+        Vehiculo vehiculo3 = new Vehiculo("GHI789", "Ford", "Focus", "Regular");
+        Vehiculo vehiculo4 = new Vehiculo("JKL012", "Chevrolet", "Onix", "Bueno");
+        Vehiculo vehiculo5 = new Vehiculo("MNO345", "Volkswagen", "Golf", "Excelente");
+        Vehiculo vehiculo6 = new Vehiculo("PQR678", "Fiat", "Uno", "Bueno");
+
+        // Registrar vehículos en el sistema
+        registrarVehiculo(vehiculo1);
+        registrarVehiculo(vehiculo2);
+        registrarVehiculo(vehiculo3);
+        registrarVehiculo(vehiculo4);
+        registrarVehiculo(vehiculo5);
+        registrarVehiculo(vehiculo6);
+
+        // Crear algunos empleados
+        Empleado empleado1 = new Empleado("Roberto Gómez", 56789012, "Bulevar Artigas 456", 101);
+        Empleado empleado2 = new Empleado("Laura Benítez", 67890123, "Propios 789", 102);
+        Empleado empleado3 = new Empleado("Sergio Torres", 78901234, "Av. Brasil 234", 103);
+
+        // Registrar empleados en el sistema
+        registrarEmpleado(empleado1);
+        registrarEmpleado(empleado2);
+        registrarEmpleado(empleado3);
+
+        // Crear algunos contratos
+        Contrato contrato1 = new Contrato(5000, empleado1, cliente1, vehiculo1, proxNumContrato, "10/11/2023");
+        Contrato contrato2 = new Contrato(6000, empleado2, cliente2, vehiculo2, proxNumContrato, "15/11/2023");
+
+        // Registrar contratos en el sistema
+        registrarContrato(contrato1);
+        registrarContrato(contrato2);
+
+        // Crear algunas entradas (sin salida aún)
+        Entrada entrada1 = new Entrada(proxNumEntrada, "20/11/2023", "08:30", "Vehículo con rayón lateral", empleado1, vehiculo3);
+        Entrada entrada2 = new Entrada(proxNumEntrada, "20/11/2023", "09:45", "Sin observaciones", empleado2, vehiculo4);
+
+        // Registrar entradas en el sistema
+        registrarEntrada(entrada1);
+        registrarEntrada(entrada2);
+
+        // Crear algunas entradas con salidas asociadas
+        Entrada entrada3 = new Entrada(proxNumEntrada, "19/11/2023", "10:15", "Neumático delantero bajo", empleado3, vehiculo5);
+        registrarEntrada(entrada3);
+
+        // Crear salidas para algunas entradas
+        Salida salida1 = new Salida(proxNumSalida, "19/11/2023", "16:45", "Sin observaciones", empleado1, vehiculo5);
+        registrarSalida(salida1, entrada3);
+
+        // Registrar servicios adicionales
+        ServicioAdicional servicio1 = new ServicioAdicional(proxNumServicio, "Lavado", "20/11/2023", "11:30", "Lavado completo", vehiculo1, empleado2, 1200);
+        ServicioAdicional servicio2 = new ServicioAdicional(proxNumServicio, "Cambio de aceite", "20/11/2023", "14:00", "Aceite sintético", vehiculo2, empleado3, 2500);
+
+        registrarServicio(servicio1);
+        registrarServicio(servicio2);
+
+        System.out.println("Datos de prueba cargados exitosamente.");
+    }
+    
 }

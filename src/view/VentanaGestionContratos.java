@@ -31,6 +31,8 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         actualizarListaClientes();
         actualizarListaEmpleados();
         actualizarListaVehiculos();
+        
+        jButtonEliminar.setVisible(false);
 
         ClaroOscuro.aplicarModo(this);
         
