@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaEntradas.java</file>
-            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaGestionClientes.java</file>
-            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/model/Entrada.java</file>
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/model/Sistema.java</file>
-            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/ClienteControlador.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/observer/SistemaObserver.java</file>
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaGestionContratos.java</file>
             <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/ContratoControlador.java</file>
-            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaPrincipal.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/view/VentanaServiciosAdicionales.java</file>
+            <file>file:/C:/Users/matip/Documents/NetBeansProjects/OBLIGATORIO-2-P2-SHARED/src/controlador/SalidaControlador.java</file>
         </group>
     </open-files>
 </project-private>

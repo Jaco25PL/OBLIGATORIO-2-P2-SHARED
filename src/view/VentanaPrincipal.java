@@ -8,9 +8,11 @@ import controlador.ContratoControlador;
 import controlador.EmpleadoControlador;
 import controlador.EntradaControlador;
 import controlador.SalidaControlador;
+import controlador.ServicioAdicionalControlador;
 import controlador.VehiculoControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import model.ServicioAdicional;
 import model.Sistema;
 
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
@@ -22,6 +24,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     private ContratoControlador contratoControlador;
     private EntradaControlador entradaControlador;
     private SalidaControlador salidaControlador;
+    private ServicioAdicionalControlador servicioAdicionalControlador;
     
     /**
      * Creates new form VentanaPrincipal
@@ -34,6 +37,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
         this.contratoControlador = new ContratoControlador(sistema);
         this.entradaControlador = new EntradaControlador(sistema);
         this.salidaControlador = new SalidaControlador(sistema);
+        this.servicioAdicionalControlador = new ServicioAdicionalControlador(sistema);
         
         initComponents();
         jPanelMain.setBounds(0,0, this.getWidth(), this.getHeight());
@@ -259,7 +263,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemSalidasActionPerformed
 
     private void jMenuItemServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemServiciosActionPerformed
-        VentanaServiciosAdicionales ventanaServiciosAdicionales = new VentanaServiciosAdicionales();
+        VentanaServiciosAdicionales ventanaServiciosAdicionales = new VentanaServiciosAdicionales(servicioAdicionalControlador);
         ventanaServiciosAdicionales.setVisible(true);
     }//GEN-LAST:event_jMenuItemServiciosActionPerformed
 

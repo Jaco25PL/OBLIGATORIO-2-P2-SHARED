@@ -1,22 +1,49 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+/**
+ * Autores: [Matias Piedra 354007] y [Joaquin Piedra 304804]
  */
 package view;
 
-/**
- *
- * @author matip
- */
+import controlador.ServicioAdicionalControlador;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import model.Empleado;
+import model.ServicioAdicional;
+import model.Vehiculo;
+
 public class VentanaServiciosAdicionales extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaServiciosAdicionales
-     */
-    public VentanaServiciosAdicionales() {
+    private ServicioAdicionalControlador controlador;
+    
+    public VentanaServiciosAdicionales(ServicioAdicionalControlador controlador) {
+        this.controlador = controlador;
+        
         initComponents();
-
+        
+        jComboBoxServicio.removeAllItems();
+        jComboBoxServicio.addItem("Lavado");
+        jComboBoxServicio.addItem("Cambio de rueda");
+        jComboBoxServicio.addItem("Limpieza de tapizado");
+        jComboBoxServicio.addItem("Cambio de luces");
+        jComboBoxServicio.addItem("Otro");
+        
+        jTextFieldFecha.setText(controlador.getFechaActual());
+        jTextFieldHora.setText(controlador.getHoraActual());
+        
+        actualizarListaVehiculos();
+        actualizarListaEmpleados();
+        actualizarListaServicios();
+        
         ClaroOscuro.aplicarModo(this);
+        
+        //Listener para la Lista
+        jListServiciosRealizados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    mostrarServicioSeleccionado();
+                }
+            }
+        });
     }
 
     /**
@@ -49,6 +76,8 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         jLabelServiciosRealizados = new javax.swing.JLabel();
         jLabelCosto = new javax.swing.JLabel();
         jTextFieldCosto = new javax.swing.JTextField();
+        jTextFieldVehiculo = new javax.swing.JTextField();
+        jTextFieldEmpleado = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Servicios Adicionales");
@@ -61,14 +90,29 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         jLabelFecha.setBounds(30, 70, 50, 16);
 
         jButtonVaciar.setText("Vaciar");
+        jButtonVaciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVaciarActionPerformed(evt);
+            }
+        });
         jPanelServiciosAdicionales.add(jButtonVaciar);
         jButtonVaciar.setBounds(40, 290, 90, 27);
 
         jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
         jPanelServiciosAdicionales.add(jButtonAgregar);
         jButtonAgregar.setBounds(150, 290, 170, 27);
 
         jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
         jPanelServiciosAdicionales.add(jButtonEliminar);
         jButtonEliminar.setBounds(340, 290, 130, 27);
         jPanelServiciosAdicionales.add(jTextFieldFecha);
@@ -135,12 +179,139 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         jLabelCosto.setBounds(30, 190, 50, 16);
         jPanelServiciosAdicionales.add(jTextFieldCosto);
         jTextFieldCosto.setBounds(80, 190, 70, 26);
+        jPanelServiciosAdicionales.add(jTextFieldVehiculo);
+        jTextFieldVehiculo.setBounds(160, 250, 100, 26);
+        jPanelServiciosAdicionales.add(jTextFieldEmpleado);
+        jTextFieldEmpleado.setBounds(270, 250, 100, 26);
 
         getContentPane().add(jPanelServiciosAdicionales);
         jPanelServiciosAdicionales.setBounds(0, 0, 500, 350);
 
         setBounds(0, 0, 514, 358);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void mostrarServicioSeleccionado(){
+        String seleccionado = jListServiciosRealizados.getSelectedValue();
+
+        if (seleccionado != null) {
+            try {
+                String matricula = seleccionado.split(" - ")[1];
+                ServicioAdicional servicio = controlador.buscarServicioPorMatricula(matricula);
+
+                if (servicio != null) {
+                    jTextFieldVehiculo.setText(servicio.getVehiculo().getMarca() + " "
+                            + servicio.getVehiculo().getModelo() + " - "
+                            + servicio.getVehiculo().getMatricula());
+
+                    jTextFieldEmpleado.setText(servicio.getEmpleado().getNombre() + " - "
+                            + servicio.getEmpleado().getCedula());
+                    
+                    jComboBoxServicio.setSelectedItem(servicio.getTipoServicio());
+                    jTextFieldFecha.setText(servicio.getFecha());
+                    jTextFieldHora.setText(servicio.getHora());
+                    jTextFieldCosto.setText(String.valueOf(servicio.getCostoServicio()));
+                    
+                }
+            } catch (Exception e) {
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del servicio: " 
+                    + e.getMessage(), "Error");
+            }
+        }
+    }
+    
+    private void actualizarListaVehiculos(){
+        ArrayList<Vehiculo> vehiculos = controlador.getListaVehiculos();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < vehiculos.size(); i++) {
+            Vehiculo vehiculo = vehiculos.get(i);
+            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() 
+                + " - " + vehiculo.getMatricula());
+        }
+
+        jListVehiculos.setModel(modelo);
+    }
+    
+    private void actualizarListaEmpleados(){
+        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado empleado = empleados.get(i);
+            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
+        }
+
+        jListEmpleados.setModel(modelo);
+    }
+    private void actualizarListaServicios(){
+        ArrayList<ServicioAdicional> serviciosAdicionales = controlador.getListaServicios();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < serviciosAdicionales.size(); i++) {
+            ServicioAdicional servicioAdicional = serviciosAdicionales.get(i);
+            modelo.addElement(servicioAdicional.getTipoServicio() + " - " + servicioAdicional.getVehiculo().getMatricula());
+        }
+
+        jListServiciosRealizados.setModel(modelo);
+    }
+    
+    private void limpiarCampos(){
+        jTextFieldFecha.setText("");
+        jTextFieldHora.setText("");
+        jTextFieldCosto.setText("");
+        jTextFieldVehiculo.setText("");
+        jTextFieldEmpleado.setText("");
+        jComboBoxServicio.setSelectedIndex(0);
+        jListVehiculos.clearSelection();
+        jListEmpleados.clearSelection();
+        jListServiciosRealizados.clearSelection();
+    }
+    
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        
+        try {
+            String tipoServicio = (String) jComboBoxServicio.getSelectedItem();
+            String fecha = jTextFieldFecha.getText();
+            String hora = jTextFieldHora.getText();
+            String costo = jTextFieldCosto.getText();
+
+            String empleadoSeleccionado = jListEmpleados.getSelectedValue();
+            String vehiculoSeleccionado = jListVehiculos.getSelectedValue();
+
+            String cedulaEmpleado = "";
+            String matriculaVehiculo = "";
+
+            if (empleadoSeleccionado != null) {
+                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+            }
+            if (vehiculoSeleccionado != null) {
+                matriculaVehiculo = vehiculoSeleccionado.split(" - ")[1];
+            }
+
+            controlador.registrarServicio(tipoServicio, fecha, hora, cedulaEmpleado, matriculaVehiculo, costo);
+
+            actualizarListaServicios();
+
+            // JOptionPane.showMessageDialog(this, "Entrada agregada con éxito");
+            ClaroOscuro.mostrarMensaje(this, "Servicio adicional agregado con éxito", "Éxito");
+
+            limpiarCampos();
+
+        } catch (Exception e) {
+            // JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
+
+        }
+        
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
+    private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_jButtonVaciarActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -163,7 +334,9 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneServiciosRealizadps;
     private javax.swing.JScrollPane jScrollPaneVehiculos;
     private javax.swing.JTextField jTextFieldCosto;
+    private javax.swing.JTextField jTextFieldEmpleado;
     private javax.swing.JTextField jTextFieldFecha;
     private javax.swing.JTextField jTextFieldHora;
+    private javax.swing.JTextField jTextFieldVehiculo;
     // End of variables declaration//GEN-END:variables
 }

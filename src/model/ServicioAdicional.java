@@ -25,7 +25,7 @@ public class ServicioAdicional extends RegistroMovimientos{
     public double getCostoServicio() {
         return costoServicio;
     }
-
+    
     @Override
     public String toString(){
         return "Movimiento: Servicio Adicional | " + super.toString() + " | Tipo: " + getTipoServicio() + " | Costo: $" + getCostoServicio();
