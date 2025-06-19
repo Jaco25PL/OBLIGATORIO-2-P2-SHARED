@@ -4,19 +4,36 @@
  */
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import model.Minijuego;
+
 /**
  *
- * @author matip
+ * @author 59894
  */
 public class VentanaMiniJuego extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VentanaMiniJuego
-     */
+    private Minijuego minijuego;
+    private int filaActual = 0;
+    private Color[][] backgroundColors = new Color[6][5];  // Almacena los colores de fondo
+    private DefaultTableCellRenderer wordleRenderer;  // Renderizador personalizado
+    
     public VentanaMiniJuego() {
+        
         initComponents();
+        configurarRenderizador();
 
+        minijuego = new Minijuego();
         ClaroOscuro.aplicarModo(this);
+
+        System.out.println(minijuego.getPalabraSecreta());
+
     }
 
     /**
@@ -28,28 +45,281 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelMiniJuego = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableWordle = new javax.swing.JTable();
+        jLabelEscribirPalabra = new javax.swing.JLabel();
+        jTextFieldPalabra = new javax.swing.JTextField();
+        jButtonProbar = new javax.swing.JButton();
+        jButtonRendirse = new javax.swing.JButton();
+        jButtonReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("MiniJuego");
-        getContentPane().setLayout(null);
 
-        jPanelMiniJuego.setLayout(null);
+        jTableWordle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "1", "2", "3", "4", "5"
+            }
+        ));
+        jTableWordle.setRowHeight(25);
+        jTableWordle.setTableHeader(null);
+        jScrollPane1.setViewportView(jTableWordle);
 
-        jLabel1.setText("MiniJuego");
-        jPanelMiniJuego.add(jLabel1);
-        jLabel1.setBounds(190, 170, 70, 16);
+        jLabelEscribirPalabra.setText("Escriba una palabra: ");
 
-        getContentPane().add(jPanelMiniJuego);
-        jPanelMiniJuego.setBounds(0, 0, 500, 350);
+        jButtonProbar.setText("Probar");
+        jButtonProbar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonProbarActionPerformed(evt);
+            }
+        });
 
-        setBounds(0, 0, 514, 358);
+        jButtonRendirse.setText("Rendirse");
+        jButtonRendirse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRendirseActionPerformed(evt);
+            }
+        });
+
+        jButtonReset.setText("Reiniciar");
+        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResetActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextFieldPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonProbar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonRendirse)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonReset))
+                    .addComponent(jLabelEscribirPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelEscribirPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(jTextFieldPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonProbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonRendirse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonReset))
+                .addGap(30, 30, 30))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void limpiarField() {
+        this.jTextFieldPalabra.setText("");
+    }
+    
+    private void jButtonProbarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProbarActionPerformed
+
+        String palabra = this.jTextFieldPalabra.getText().toUpperCase().replace(" ", "");
+        
+        if (minijuego.isJuegoTerminado()){
+            ClaroOscuro.mostrarMensaje(this, "El juego termino. Renicia para volver a jugar", "Juego finalizado");
+        } else if (palabra.length() != 5){
+            ClaroOscuro.mostrarAdvertencia(this, "La palabra debe tener 5 letras", "Error de palabra");
+        } else {
+
+            boolean intentoValido = minijuego.intentarPalabra(palabra);
+            if(intentoValido && this.filaActual <= 5){
+                colocarPalabraEnTabla(this.jTableWordle, palabra, this.filaActual);
+                filaActual++;
+               if (minijuego.isVictoria()) {
+                   ClaroOscuro.mostrarMensaje(this, "¡Felicidades! Has adivinado la palabra", "Victoria");
+                   minijuego.setJuegoTerminado(true);
+                   minijuego.setVictoria(true);
+                } else if (minijuego.isJuegoTerminado()) {
+                    ClaroOscuro.mostrarMensaje(this, "Juego terminado. La palabra era: " + 
+                    minijuego.getPalabraSecreta(), "Fin del juego");
+                    
+                }
+            }
+        }
+        
+        limpiarField();
+    }//GEN-LAST:event_jButtonProbarActionPerformed
+    
+    // colorerar las celdas se las pregunte al chat
+    // config renderizador de celdas
+    private void configurarRenderizador() {
+            wordleRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, 
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component cell = super.getTableCellRendererComponent(
+                        table, value, isSelected, hasFocus, row, column);
+                    
+                // Aplicar el color almacenado para esta celda
+                if (backgroundColors[row][column] != null) {
+                    cell.setBackground(backgroundColors[row][column]);
+                    cell.setForeground(Color.WHITE);
+                } else {
+                    cell.setBackground(table.getBackground());
+                    cell.setForeground(table.getForeground());
+                }
+
+                setHorizontalAlignment(SwingConstants.CENTER);  // Centrar texto
+                return cell;
+            }
+        };
+
+        // Aplicar el renderizador a todas las celdas
+        for (int i = 0; i < jTableWordle.getColumnCount(); i++) {
+            jTableWordle.getColumnModel().getColumn(i).setCellRenderer(wordleRenderer);
+        }
+
+        jTableWordle.setRowHeight(25);
+    }
+
+    private class CeldaColoreada extends DefaultTableCellRenderer {
+        private Color backgroundColor;
+        private Color foregroundColor;
+        
+        public CeldaColoreada(Color backgroundColor, Color foregroundColor) {
+            this.backgroundColor = backgroundColor;
+            this.foregroundColor = foregroundColor;
+        }
+        
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, 
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            Component cell = super.getTableCellRendererComponent(
+                    table, value, isSelected, hasFocus, row, column);
+                
+            // Si estamos en la fila actual y la columna contiene el valor
+            if (row == filaActual - 1 && column < 5) {
+                cell.setBackground(backgroundColor);
+                cell.setForeground(foregroundColor);
+                setHorizontalAlignment(CENTER);
+                setFont(new Font("Arial", Font.BOLD, 16));
+            } else {
+                // Para las demás celdas, restaurar el color por defecto
+                cell.setBackground(table.getBackground());
+                cell.setForeground(table.getForeground());
+            }
+            
+            return cell;
+        }
+    }
+    
+    private void colocarPalabraEnTabla(JTable tabla, String palabra, int fila) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        
+        // Obtener el estado de cada letra
+        int[] resultados = minijuego.verificarLetras(palabra);
+        
+        // Definir colores
+        Color colorCorrecto = new Color(106, 170, 100);     // Verde para letra correcta en posición correcta
+        Color colorPosicionIncorrecta = new Color(201, 180, 88); // Amarillo para letra correcta en posición incorrecta
+        Color colorIncorrecto = new Color(120, 124, 126);     // Gris para letra incorrecta
+        
+        for (int col = 0; col < palabra.length() && col < tabla.getColumnCount(); col++) {
+            String letra = Character.toString(palabra.charAt(col));
+            modelo.setValueAt(letra, fila, col);
+            
+            // Guardar el color según el resultado
+            switch (resultados[col]) {
+                case 2: // Letra correcta en posición correcta
+                    backgroundColors[fila][col] = colorCorrecto;
+                    break;
+                case 1: // Letra correcta en posición incorrecta
+                    backgroundColors[fila][col] = colorPosicionIncorrecta;
+                    break;
+                case 0: // Letra incorrecta
+                    backgroundColors[fila][col] = colorIncorrecto;
+                    break;
+            }
+        }
+        
+        tabla.repaint();
+    }
+    
+    private void reiniciarTablero() {
+        DefaultTableModel modelo = (DefaultTableModel) jTableWordle.getModel();
+        
+        // Limpiar los valores y colores
+        for (int fila = 0; fila < modelo.getRowCount(); fila++) {
+            for (int col = 0; col < modelo.getColumnCount(); col++) {
+                modelo.setValueAt("", fila, col);
+                backgroundColors[fila][col] = null;  // Quitar el color
+            }
+        }
+        jTableWordle.repaint();
+    }
+    
+    private void jButtonRendirseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRendirseActionPerformed
+        
+        if(minijuego.isVictoria()){
+            ClaroOscuro.mostrarMensaje(this, "Ya ganastes! Reinicia para jugar otra vez", "Sos un ganador");
+        } else {
+            minijuego.setJuegoTerminado(true);
+            ClaroOscuro.mostrarMensaje(this, "La palabra era: " + minijuego.getPalabraSecreta(), "Juego terminado");
+        }
+
+    }//GEN-LAST:event_jButtonRendirseActionPerformed
+
+    private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
+        if( minijuego.isJuegoTerminado()){
+            reiniciarTablero();
+            minijuego.reiniciarJuego();
+            this.filaActual = 0;
+        } else {
+            ClaroOscuro.mostrarAdvertencia(this, "Debes rendirte primero", "Reiniciar");
+        }
+        limpiarField();
+    }//GEN-LAST:event_jButtonResetActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanelMiniJuego;
+    private javax.swing.JButton jButtonProbar;
+    private javax.swing.JButton jButtonRendirse;
+    private javax.swing.JButton jButtonReset;
+    private javax.swing.JLabel jLabelEscribirPalabra;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableWordle;
+    private javax.swing.JTextField jTextFieldPalabra;
     // End of variables declaration//GEN-END:variables
 }

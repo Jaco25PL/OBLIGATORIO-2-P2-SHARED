@@ -26,6 +26,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     private SalidaControlador salidaControlador;
     private ServicioAdicionalControlador servicioAdicionalControlador;
     
+    
     /**
      * Creates new form VentanaPrincipal
      */
