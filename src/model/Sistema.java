@@ -515,14 +515,18 @@ public class Sistema {
         ArrayList<Object> movimientos = new ArrayList<>();
     
         // Agregar entradas
-        for (Entrada entrada : listaEntradas) {
+        Iterator<Entrada> itEntradas = listaEntradas.iterator();
+        while (itEntradas.hasNext()) {
+            Entrada entrada = itEntradas.next();
             if (entrada.getVehiculo().getMatricula().equals(matricula)) {
                 movimientos.add(entrada);
             }
         }
     
         // Agregar salidas
-        for (Salida salida : listaSalidas) {
+        Iterator<Salida> itSalidas = listaSalidas.iterator();
+        while (itSalidas.hasNext()) {
+            Salida salida = itSalidas.next();
             // Verificar que la entrada no sea nula antes de acceder a ella
             if (salida.getEntrada() != null && 
                 salida.getEntrada().getVehiculo().getMatricula().equals(matricula)) {
@@ -534,7 +538,9 @@ public class Sistema {
         }
     
         // Agregar servicios adicionales
-        for (ServicioAdicional servicio : listaServiciosAdicionales) {
+        Iterator<ServicioAdicional> itServicios = listaServiciosAdicionales.iterator();
+        while (itServicios.hasNext()) {
+            ServicioAdicional servicio = itServicios.next();
             if (servicio.getVehiculo().getMatricula().equals(matricula)) {
                 movimientos.add(servicio);
             }
@@ -548,7 +554,9 @@ public class Sistema {
 
         ArrayList<Object> movimientosFiltrados = new ArrayList<>();
 
-        for (Object movimiento : movimientos) {
+        Iterator<Object> it = movimientos.iterator();
+        while(it.hasNext()) {
+            Object movimiento = it.next();
             if (incluirEntradas && movimiento instanceof Entrada) {
                 movimientosFiltrados.add(movimiento);
             } else if (incluirSalidas && movimiento instanceof Salida) {
@@ -565,7 +573,11 @@ public class Sistema {
         Collections.sort(movimientos, new Comparator<Object>() {
             @Override
             public int compare(Object o1, Object o2) {
-                String fecha1 = "", hora1 = "", fecha2 = "", hora2 = "";
+                String fecha1 = "";
+                String hora1 = "";
+                String fecha2 = "";
+                String hora2 = "";
+                int resultado = 0;
 
                 if (o1 instanceof Entrada) {
                     Entrada entrada = (Entrada) o1;
@@ -600,23 +612,33 @@ public class Sistema {
                 String[] partesFecha1 = fecha1.split("/");
                 String[] partesFecha2 = fecha2.split("/");
                 LocalDate localDate1 = LocalDate.of(
-                        Integer.parseInt(partesFecha1[2]),
-                        Integer.parseInt(partesFecha1[1]),
-                        Integer.parseInt(partesFecha1[0])
+                    Integer.parseInt(partesFecha1[2]),
+                    Integer.parseInt(partesFecha1[1]),
+                    Integer.parseInt(partesFecha1[0])
                 );
                 LocalDate localDate2 = LocalDate.of(
-                        Integer.parseInt(partesFecha2[2]),
-                        Integer.parseInt(partesFecha2[1]),
-                        Integer.parseInt(partesFecha2[0])
+                    Integer.parseInt(partesFecha2[2]),
+                    Integer.parseInt(partesFecha2[1]),
+                    Integer.parseInt(partesFecha2[0])
                 );
 
                 int comparacionFecha = localDate1.compareTo(localDate2);
                 if (comparacionFecha != 0) {
-                    return ascendente ? comparacionFecha : -comparacionFecha;
+                    if (ascendente) {
+                        resultado = comparacionFecha;
+                    } else {
+                        resultado = -comparacionFecha;
+                    }
+                } else {
+                    // Si las fechas son iguales, comparar horas
+                    if (ascendente) {
+                        resultado = hora1.compareTo(hora2);
+                    } else {
+                        resultado = -hora1.compareTo(hora2);
+                    }
                 }
-
-                // Si las fechas son iguales, comparar horas
-                return ascendente ? hora1.compareTo(hora2) : -hora1.compareTo(hora2);
+                
+                return resultado;
             }
         });
 
@@ -633,7 +655,8 @@ public class Sistema {
             printWriter.println("========================================================");
             printWriter.println();
 
-            for (Object movimiento : movimientos) {
+            for (int i = 0; i<movimientos.size(); i++) {
+                Object movimiento = movimientos.get(i);
                 String tipo = "";
                 String fecha = "";
                 String hora = "";

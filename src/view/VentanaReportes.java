@@ -3,7 +3,6 @@
  */
 package view;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
@@ -12,7 +11,6 @@ import model.Entrada;
 import model.Salida;
 import model.ServicioAdicional;
 import model.Vehiculo;
-import view.ClaroOscuro;
 
 public class VentanaReportes extends javax.swing.JFrame {
 
