@@ -272,7 +272,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemServiciosActionPerformed
 
     private void jMenuItemReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReportesActionPerformed
-        VentanaReportes ventanaReportes = new VentanaReportes();
+        VentanaReportes ventanaReportes = new VentanaReportes(sistema);
         ventanaReportes.setVisible(true);
     }//GEN-LAST:event_jMenuItemReportesActionPerformed
 
