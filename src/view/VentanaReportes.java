@@ -75,19 +75,6 @@ public class VentanaReportes extends javax.swing.JFrame {
         jLabelMovimientosDelVehiculo = new javax.swing.JLabel();
         jRadioButtonFechaHoraCreciente = new javax.swing.JRadioButton();
         jRadioButtonFechaHoraDecreciente = new javax.swing.JRadioButton();
-        jPanelMovimientos = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jPanelEstadisticas = new javax.swing.JPanel();
         jLabelServiciosMasUtilizados = new javax.swing.JLabel();
         jScrollPaneServiciosMasUtilizados = new javax.swing.JScrollPane();
@@ -100,6 +87,30 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneClientesConMasVehiculos = new javax.swing.JScrollPane();
         jListClientesConMasVehiculos = new javax.swing.JList<>();
         jLabelEstadia = new javax.swing.JLabel();
+        jPanelMovimientos = new javax.swing.JPanel();
+        jLabelSeleccionFecha = new javax.swing.JLabel();
+        jButtonActualizar = new javax.swing.JButton();
+        jTextFieldFecha = new javax.swing.JTextField();
+        jPanelBotones = new javax.swing.JPanel();
+        jButtonHora1Dia1 = new javax.swing.JButton();
+        jButtonHora1Dia2 = new javax.swing.JButton();
+        jButtonHora1Dia3 = new javax.swing.JButton();
+        jButtonHora2Dia1 = new javax.swing.JButton();
+        jButtonHora2Dia2 = new javax.swing.JButton();
+        jButtonHora2Dia3 = new javax.swing.JButton();
+        jButtonHora3Dia1 = new javax.swing.JButton();
+        jButtonHora3Dia2 = new javax.swing.JButton();
+        jButtonHora3Dia3 = new javax.swing.JButton();
+        jButtonHora4Dia1 = new javax.swing.JButton();
+        jButtonHora4Dia2 = new javax.swing.JButton();
+        jButtonHora4Dia3 = new javax.swing.JButton();
+        jLabelHora18a00 = new javax.swing.JLabel();
+        jLabelDia3 = new javax.swing.JLabel();
+        jLabelDia2 = new javax.swing.JLabel();
+        jLabelDia1 = new javax.swing.JLabel();
+        jLabelHora0a6 = new javax.swing.JLabel();
+        jLabelHora6a12 = new javax.swing.JLabel();
+        jLabelHora12a18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reportes");
@@ -203,46 +214,6 @@ public class VentanaReportes extends javax.swing.JFrame {
 
         jTabbedPaneReportes.addTab("Historial", jPanelHistorial);
 
-        jPanelMovimientos.setLayout(new java.awt.GridLayout(4, 3));
-
-        jLabel1.setText("jLabel1");
-        jPanelMovimientos.add(jLabel1);
-
-        jLabel2.setText("jLabel2");
-        jPanelMovimientos.add(jLabel2);
-
-        jLabel3.setText("jLabel3");
-        jPanelMovimientos.add(jLabel3);
-
-        jLabel4.setText("jLabel4");
-        jPanelMovimientos.add(jLabel4);
-
-        jLabel5.setText("jLabel5");
-        jPanelMovimientos.add(jLabel5);
-
-        jLabel6.setText("jLabel6");
-        jPanelMovimientos.add(jLabel6);
-
-        jLabel7.setText("jLabel7");
-        jPanelMovimientos.add(jLabel7);
-
-        jLabel8.setText("jLabel8");
-        jPanelMovimientos.add(jLabel8);
-
-        jLabel9.setText("jLabel9");
-        jPanelMovimientos.add(jLabel9);
-
-        jLabel10.setText("jLabel10");
-        jPanelMovimientos.add(jLabel10);
-
-        jLabel11.setText("jLabel11");
-        jPanelMovimientos.add(jLabel11);
-
-        jLabel12.setText("jLabel12");
-        jPanelMovimientos.add(jLabel12);
-
-        jTabbedPaneReportes.addTab("Movimientos", jPanelMovimientos);
-
         jPanelEstadisticas.setLayout(null);
 
         jLabelServiciosMasUtilizados.setText("Servicios más utilizados:");
@@ -296,6 +267,89 @@ public class VentanaReportes extends javax.swing.JFrame {
         jLabelEstadia.setBounds(110, 180, 100, 16);
 
         jTabbedPaneReportes.addTab("Estadísticas Generales", jPanelEstadisticas);
+
+        jPanelMovimientos.setLayout(null);
+
+        jLabelSeleccionFecha.setText("Selección fecha:");
+        jPanelMovimientos.add(jLabelSeleccionFecha);
+        jLabelSeleccionFecha.setBounds(20, 20, 100, 16);
+
+        jButtonActualizar.setText("Actualizar");
+        jPanelMovimientos.add(jButtonActualizar);
+        jButtonActualizar.setBounds(210, 20, 100, 27);
+        jPanelMovimientos.add(jTextFieldFecha);
+        jTextFieldFecha.setBounds(120, 20, 75, 26);
+
+        jPanelBotones.setLayout(new java.awt.GridLayout(4, 3, 5, 5));
+
+        jButtonHora1Dia1.setText("Hora 1 - Dia 1");
+        jPanelBotones.add(jButtonHora1Dia1);
+
+        jButtonHora1Dia2.setText("Hora 1 - Dia 2");
+        jPanelBotones.add(jButtonHora1Dia2);
+
+        jButtonHora1Dia3.setText("Hora 1 - Dia 3");
+        jPanelBotones.add(jButtonHora1Dia3);
+
+        jButtonHora2Dia1.setText("Hora 2 - Dia 1");
+        jPanelBotones.add(jButtonHora2Dia1);
+
+        jButtonHora2Dia2.setText("Hora 2 - Dia 2");
+        jPanelBotones.add(jButtonHora2Dia2);
+
+        jButtonHora2Dia3.setText("Hora 2 - Dia 3");
+        jPanelBotones.add(jButtonHora2Dia3);
+
+        jButtonHora3Dia1.setText("Hora 3 - Dia 1");
+        jPanelBotones.add(jButtonHora3Dia1);
+
+        jButtonHora3Dia2.setText("Hora 3 - Dia 2");
+        jPanelBotones.add(jButtonHora3Dia2);
+
+        jButtonHora3Dia3.setText("Hora 3 - Dia 3");
+        jPanelBotones.add(jButtonHora3Dia3);
+
+        jButtonHora4Dia1.setText("Hora 4 - Dia 1");
+        jPanelBotones.add(jButtonHora4Dia1);
+
+        jButtonHora4Dia2.setText("Hora 4 - Dia 2");
+        jPanelBotones.add(jButtonHora4Dia2);
+
+        jButtonHora4Dia3.setText("Hora 4 - Dia 3");
+        jPanelBotones.add(jButtonHora4Dia3);
+
+        jPanelMovimientos.add(jPanelBotones);
+        jPanelBotones.setBounds(90, 90, 430, 160);
+
+        jLabelHora18a00.setText("18:00-23:59");
+        jPanelMovimientos.add(jLabelHora18a00);
+        jLabelHora18a00.setBounds(10, 220, 80, 16);
+
+        jLabelDia3.setText("Día 3");
+        jPanelMovimientos.add(jLabelDia3);
+        jLabelDia3.setBounds(430, 60, 140, 16);
+
+        jLabelDia2.setText("Día 2");
+        jPanelMovimientos.add(jLabelDia2);
+        jLabelDia2.setBounds(290, 60, 140, 16);
+
+        jLabelDia1.setText("Día 1");
+        jPanelMovimientos.add(jLabelDia1);
+        jLabelDia1.setBounds(140, 60, 140, 16);
+
+        jLabelHora0a6.setText("00:00-05:59");
+        jPanelMovimientos.add(jLabelHora0a6);
+        jLabelHora0a6.setBounds(10, 100, 80, 16);
+
+        jLabelHora6a12.setText("06:00-11:59");
+        jPanelMovimientos.add(jLabelHora6a12);
+        jLabelHora6a12.setBounds(10, 140, 80, 16);
+
+        jLabelHora12a18.setText("12:00-17:59");
+        jPanelMovimientos.add(jLabelHora12a18);
+        jLabelHora12a18.setBounds(10, 180, 80, 16);
+
+        jTabbedPaneReportes.addTab("Movimientos", jPanelMovimientos);
 
         jPanelReportes.add(jTabbedPaneReportes);
         jTabbedPaneReportes.setBounds(40, 50, 610, 300);
@@ -459,34 +513,44 @@ public class VentanaReportes extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonExportar;
+    private javax.swing.JButton jButtonHora1Dia1;
+    private javax.swing.JButton jButtonHora1Dia2;
+    private javax.swing.JButton jButtonHora1Dia3;
+    private javax.swing.JButton jButtonHora2Dia1;
+    private javax.swing.JButton jButtonHora2Dia2;
+    private javax.swing.JButton jButtonHora2Dia3;
+    private javax.swing.JButton jButtonHora3Dia1;
+    private javax.swing.JButton jButtonHora3Dia2;
+    private javax.swing.JButton jButtonHora3Dia3;
+    private javax.swing.JButton jButtonHora4Dia1;
+    private javax.swing.JButton jButtonHora4Dia2;
+    private javax.swing.JButton jButtonHora4Dia3;
     private javax.swing.JCheckBox jCheckBoxEntradas;
     private javax.swing.JCheckBox jCheckBoxSalidas;
     private javax.swing.JCheckBox jCheckBoxServicios;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelClientesConMasVehiculos;
+    private javax.swing.JLabel jLabelDia1;
+    private javax.swing.JLabel jLabelDia2;
+    private javax.swing.JLabel jLabelDia3;
     private javax.swing.JLabel jLabelEmpleadosConMenosMovimientos;
     private javax.swing.JLabel jLabelEstadia;
     private javax.swing.JLabel jLabelEstadiaMasLarga;
     private javax.swing.JLabel jLabelFiltrar;
+    private javax.swing.JLabel jLabelHora0a6;
+    private javax.swing.JLabel jLabelHora12a18;
+    private javax.swing.JLabel jLabelHora18a00;
+    private javax.swing.JLabel jLabelHora6a12;
     private javax.swing.JLabel jLabelListaDeVehiculos;
     private javax.swing.JLabel jLabelMovimientosDelVehiculo;
+    private javax.swing.JLabel jLabelSeleccionFecha;
     private javax.swing.JLabel jLabelServiciosMasUtilizados;
     private javax.swing.JList<String> jListClientesConMasVehiculos;
     private javax.swing.JList<String> jListEmpleadosConMenosMovimientos;
     private javax.swing.JList<String> jListServiciosMasUtilizados;
     private javax.swing.JList<String> jListVehiculos;
+    private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelEstadisticas;
     private javax.swing.JPanel jPanelHistorial;
     private javax.swing.JPanel jPanelMovimientos;
@@ -500,5 +564,6 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneVehiculos;
     private javax.swing.JTabbedPane jTabbedPaneReportes;
     private javax.swing.JTable jTable;
+    private javax.swing.JTextField jTextFieldFecha;
     // End of variables declaration//GEN-END:variables
 }
