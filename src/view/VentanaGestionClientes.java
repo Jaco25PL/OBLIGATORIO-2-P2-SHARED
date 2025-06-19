@@ -164,7 +164,6 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
                     jTextFieldAñoCliente.setText(String.valueOf(cliente.getAñoCliente()));
                 }
             } catch (Exception e) {
-                // JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 ClaroOscuro.mostrarError(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error");
             }
         }
