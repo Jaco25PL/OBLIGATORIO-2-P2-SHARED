@@ -86,7 +86,8 @@ public class VentanaReportes extends javax.swing.JFrame {
         jLabelClientesConMasVehiculos = new javax.swing.JLabel();
         jScrollPaneClientesConMasVehiculos = new javax.swing.JScrollPane();
         jListClientesConMasVehiculos = new javax.swing.JList<>();
-        jLabelEstadia = new javax.swing.JLabel();
+        jScrollPaneClientesConMasVehiculos1 = new javax.swing.JScrollPane();
+        jListClientesConMasVehiculos1 = new javax.swing.JList<>();
         jPanelMovimientos = new javax.swing.JPanel();
         jLabelSeleccionFecha = new javax.swing.JLabel();
         jButtonActualizar = new javax.swing.JButton();
@@ -218,7 +219,7 @@ public class VentanaReportes extends javax.swing.JFrame {
 
         jLabelServiciosMasUtilizados.setText("Servicios más utilizados:");
         jPanelEstadisticas.add(jLabelServiciosMasUtilizados);
-        jLabelServiciosMasUtilizados.setBounds(0, 40, 150, 16);
+        jLabelServiciosMasUtilizados.setBounds(10, 10, 150, 16);
 
         jListServiciosMasUtilizados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -228,11 +229,11 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneServiciosMasUtilizados.setViewportView(jListServiciosMasUtilizados);
 
         jPanelEstadisticas.add(jScrollPaneServiciosMasUtilizados);
-        jScrollPaneServiciosMasUtilizados.setBounds(0, 60, 120, 100);
+        jScrollPaneServiciosMasUtilizados.setBounds(10, 30, 180, 100);
 
         jLabelEmpleadosConMenosMovimientos.setText("Empleados con menos movimientos:");
         jPanelEstadisticas.add(jLabelEmpleadosConMenosMovimientos);
-        jLabelEmpleadosConMenosMovimientos.setBounds(160, 40, 210, 16);
+        jLabelEmpleadosConMenosMovimientos.setBounds(220, 10, 210, 16);
 
         jListEmpleadosConMenosMovimientos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -242,15 +243,15 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneEmpleadosConMenosMovimientos.setViewportView(jListEmpleadosConMenosMovimientos);
 
         jPanelEstadisticas.add(jScrollPaneEmpleadosConMenosMovimientos);
-        jScrollPaneEmpleadosConMenosMovimientos.setBounds(160, 60, 120, 100);
+        jScrollPaneEmpleadosConMenosMovimientos.setBounds(220, 30, 190, 100);
 
-        jLabelEstadiaMasLarga.setText("Estadía más larga:");
+        jLabelEstadiaMasLarga.setText("Estadías más largas:");
         jPanelEstadisticas.add(jLabelEstadiaMasLarga);
-        jLabelEstadiaMasLarga.setBounds(0, 180, 110, 16);
+        jLabelEstadiaMasLarga.setBounds(220, 140, 190, 16);
 
         jLabelClientesConMasVehiculos.setText("Clientes con más vehículos:");
         jPanelEstadisticas.add(jLabelClientesConMasVehiculos);
-        jLabelClientesConMasVehiculos.setBounds(400, 40, 150, 16);
+        jLabelClientesConMasVehiculos.setBounds(10, 140, 180, 16);
 
         jListClientesConMasVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -260,11 +261,17 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneClientesConMasVehiculos.setViewportView(jListClientesConMasVehiculos);
 
         jPanelEstadisticas.add(jScrollPaneClientesConMasVehiculos);
-        jScrollPaneClientesConMasVehiculos.setBounds(400, 60, 120, 100);
+        jScrollPaneClientesConMasVehiculos.setBounds(220, 160, 190, 100);
 
-        jLabelEstadia.setText("Ninguna estadía");
-        jPanelEstadisticas.add(jLabelEstadia);
-        jLabelEstadia.setBounds(110, 180, 100, 16);
+        jListClientesConMasVehiculos1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPaneClientesConMasVehiculos1.setViewportView(jListClientesConMasVehiculos1);
+
+        jPanelEstadisticas.add(jScrollPaneClientesConMasVehiculos1);
+        jScrollPaneClientesConMasVehiculos1.setBounds(10, 160, 180, 100);
 
         jTabbedPaneReportes.addTab("Estadísticas Generales", jPanelEstadisticas);
 
@@ -535,7 +542,6 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDia2;
     private javax.swing.JLabel jLabelDia3;
     private javax.swing.JLabel jLabelEmpleadosConMenosMovimientos;
-    private javax.swing.JLabel jLabelEstadia;
     private javax.swing.JLabel jLabelEstadiaMasLarga;
     private javax.swing.JLabel jLabelFiltrar;
     private javax.swing.JLabel jLabelHora0a6;
@@ -547,6 +553,7 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSeleccionFecha;
     private javax.swing.JLabel jLabelServiciosMasUtilizados;
     private javax.swing.JList<String> jListClientesConMasVehiculos;
+    private javax.swing.JList<String> jListClientesConMasVehiculos1;
     private javax.swing.JList<String> jListEmpleadosConMenosMovimientos;
     private javax.swing.JList<String> jListServiciosMasUtilizados;
     private javax.swing.JList<String> jListVehiculos;
@@ -558,6 +565,7 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButtonFechaHoraCreciente;
     private javax.swing.JRadioButton jRadioButtonFechaHoraDecreciente;
     private javax.swing.JScrollPane jScrollPaneClientesConMasVehiculos;
+    private javax.swing.JScrollPane jScrollPaneClientesConMasVehiculos1;
     private javax.swing.JScrollPane jScrollPaneEmpleadosConMenosMovimientos;
     private javax.swing.JScrollPane jScrollPaneServiciosMasUtilizados;
     private javax.swing.JScrollPane jScrollPaneTable;
