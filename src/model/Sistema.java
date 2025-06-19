@@ -3,7 +3,13 @@
  */
 package model;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import observer.SistemaObserver;
@@ -285,7 +291,7 @@ public class Sistema {
         return tiempo;
     }
 
-    private String calcularDiferenciaTiempo(String fechaEntrada, String horaEntrada, String fechaSalida, String horaSalida){
+    public String calcularDiferenciaTiempo(String fechaEntrada, String horaEntrada, String fechaSalida, String horaSalida){
         // Parsear la fecha entrada a formato: dd/mm/yyyy
         String[] partesFechaEntrada = fechaEntrada.split("/");
         int diaEntrada = Integer.parseInt(partesFechaEntrada[0]);
@@ -468,8 +474,9 @@ public class Sistema {
     }
 
     //SALIDAS
-    public boolean registrarSalida(Salida salida, Entrada entrada){ //REGISTRAR
+    public boolean registrarSalida(Salida salida, Entrada entrada) {
         salida.setNumMovimiento(proxNumSalida);
+        salida.setEntrada(entrada); // Asegurarse de establecer la entrada en la salida
         entrada.setSalidaAsociada(salida);
         listaSalidas.add(salida);
         proxNumSalida++;
@@ -502,6 +509,185 @@ public class Sistema {
             }
         }
         return servicioEncontrado;
+    }
+    
+    public ArrayList<Object> getMovimientosVehiculo(String matricula) {
+        ArrayList<Object> movimientos = new ArrayList<>();
+    
+        // Agregar entradas
+        for (Entrada entrada : listaEntradas) {
+            if (entrada.getVehiculo().getMatricula().equals(matricula)) {
+                movimientos.add(entrada);
+            }
+        }
+    
+        // Agregar salidas
+        for (Salida salida : listaSalidas) {
+            // Verificar que la entrada no sea nula antes de acceder a ella
+            if (salida.getEntrada() != null && 
+                salida.getEntrada().getVehiculo().getMatricula().equals(matricula)) {
+                movimientos.add(salida);
+            } else if (salida.getVehiculo().getMatricula().equals(matricula)) {
+                // Si la entrada es nula, verificamos el vehículo directamente en la salida
+                movimientos.add(salida);
+            }
+        }
+    
+        // Agregar servicios adicionales
+        for (ServicioAdicional servicio : listaServiciosAdicionales) {
+            if (servicio.getVehiculo().getMatricula().equals(matricula)) {
+                movimientos.add(servicio);
+            }
+        }
+    
+        return movimientos;
+    }
+    
+    public ArrayList<Object> filtrarMovimientos(ArrayList<Object> movimientos,
+            boolean incluirEntradas, boolean incluirSalidas, boolean incluirServicios) {
+
+        ArrayList<Object> movimientosFiltrados = new ArrayList<>();
+
+        for (Object movimiento : movimientos) {
+            if (incluirEntradas && movimiento instanceof Entrada) {
+                movimientosFiltrados.add(movimiento);
+            } else if (incluirSalidas && movimiento instanceof Salida) {
+                movimientosFiltrados.add(movimiento);
+            } else if (incluirServicios && movimiento instanceof ServicioAdicional) {
+                movimientosFiltrados.add(movimiento);
+            }
+        }
+
+        return movimientosFiltrados;
+    }
+    
+    public ArrayList<Object> ordenarMovimientos(ArrayList<Object> movimientos, boolean ascendente) {
+        Collections.sort(movimientos, new Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                String fecha1 = "", hora1 = "", fecha2 = "", hora2 = "";
+
+                if (o1 instanceof Entrada) {
+                    Entrada entrada = (Entrada) o1;
+                    fecha1 = entrada.getFecha();
+                    hora1 = entrada.getHora();
+                } else if (o1 instanceof Salida) {
+                    Salida salida = (Salida) o1;
+                    fecha1 = salida.getFecha();
+                    hora1 = salida.getHora();
+                } else if (o1 instanceof ServicioAdicional) {
+                    ServicioAdicional servicio = (ServicioAdicional) o1;
+                    fecha1 = servicio.getFecha();
+                    hora1 = servicio.getHora();
+                }
+
+                if (o2 instanceof Entrada) {
+                    Entrada entrada = (Entrada) o2;
+                    fecha2 = entrada.getFecha();
+                    hora2 = entrada.getHora();
+                } else if (o2 instanceof Salida) {
+                    Salida salida = (Salida) o2;
+                    fecha2 = salida.getFecha();
+                    hora2 = salida.getHora();
+                } else if (o2 instanceof ServicioAdicional) {
+                    ServicioAdicional servicio = (ServicioAdicional) o2;
+                    fecha2 = servicio.getFecha();
+                    hora2 = servicio.getHora();
+                }
+                
+                // Comparar fechas primero (en formato dd/mm/yyyy)
+                // Convertir a LocalDate para comparar correctamente
+                String[] partesFecha1 = fecha1.split("/");
+                String[] partesFecha2 = fecha2.split("/");
+                LocalDate localDate1 = LocalDate.of(
+                        Integer.parseInt(partesFecha1[2]),
+                        Integer.parseInt(partesFecha1[1]),
+                        Integer.parseInt(partesFecha1[0])
+                );
+                LocalDate localDate2 = LocalDate.of(
+                        Integer.parseInt(partesFecha2[2]),
+                        Integer.parseInt(partesFecha2[1]),
+                        Integer.parseInt(partesFecha2[0])
+                );
+
+                int comparacionFecha = localDate1.compareTo(localDate2);
+                if (comparacionFecha != 0) {
+                    return ascendente ? comparacionFecha : -comparacionFecha;
+                }
+
+                // Si las fechas son iguales, comparar horas
+                return ascendente ? hora1.compareTo(hora2) : -hora1.compareTo(hora2);
+            }
+        });
+
+        return movimientos;
+    }
+
+    public void exportarMovimientosATxt(ArrayList<Object> movimientos, String matricula) {
+        try {
+            String nombreArchivo = matricula + ".txt";
+            FileWriter fileWriter = new FileWriter(nombreArchivo);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            printWriter.println("HISTORIAL DE MOVIMIENTOS PARA VEHÍCULO: " + matricula);
+            printWriter.println("========================================================");
+            printWriter.println();
+
+            for (Object movimiento : movimientos) {
+                String tipo = "";
+                String fecha = "";
+                String hora = "";
+                String detalles = "";
+
+                if (movimiento instanceof Entrada) {
+                    Entrada entrada = (Entrada) movimiento;
+                    tipo = "ENTRADA";
+                    fecha = entrada.getFecha();
+                    hora = entrada.getHora();
+                    detalles = "Empleado: " + entrada.getEmpleado().getNombre();
+                    if (!entrada.getNota().isEmpty()) {
+                        detalles += " - Notas: " + entrada.getNota();
+                    }
+                } else if (movimiento instanceof Salida) {
+                    Salida salida = (Salida) movimiento;
+                    tipo = "SALIDA";
+                    fecha = salida.getFecha();
+                    hora = salida.getHora();
+                    detalles = "Empleado: " + salida.getEmpleado().getNombre();
+                    if (!salida.getNota().isEmpty()) {
+                        detalles += " - Notas: " + salida.getNota();
+                    }
+                    
+                    // Agregar tiempo en parking con manejo de error
+                    try {
+                        if (salida.getEntrada() != null) {
+                            detalles += " - Tiempo en parking: " + calcularDiferenciaTiempo(
+                                    salida.getEntrada().getFecha(),
+                                    salida.getEntrada().getHora(),
+                                    salida.getFecha(),
+                                    salida.getHora());
+                        } else {
+                            detalles += " - Tiempo en parking: No disponible";
+                        }
+                    } catch (Exception e) {
+                        detalles += " - Tiempo en parking: No disponible";
+                    }
+                } else if (movimiento instanceof ServicioAdicional) {
+                    ServicioAdicional servicio = (ServicioAdicional) movimiento;
+                    tipo = "SERVICIO: " + servicio.getTipoServicio();
+                    fecha = servicio.getFecha();
+                    hora = servicio.getHora();
+                    detalles = "Empleado: " + servicio.getEmpleado().getNombre()
+                            + " - Costo: $" + servicio.getCostoServicio();
+                }
+
+                printWriter.println(tipo + " | Fecha: " + fecha + " | Hora: " + hora + " | " + detalles);
+            }
+
+            printWriter.close();
+        } catch (IOException e) {
+            System.err.println("Error al exportar movimientos: " + e.getMessage());
+        }
     }
 
     public int getProxNumContrato() {

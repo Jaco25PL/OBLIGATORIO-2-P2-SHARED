@@ -3,18 +3,53 @@
  */
 package view;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+import model.Sistema;
+import model.Entrada;
+import model.Salida;
+import model.ServicioAdicional;
+import model.Vehiculo;
+import view.ClaroOscuro;
 
 public class VentanaReportes extends javax.swing.JFrame {
 
-    public VentanaReportes() {
+    private Sistema sistema;
+    private ArrayList<Object> movimientosActuales;
+    private String matricula;
+    private javax.swing.ButtonGroup buttonGroupOrdenamiento;
+
+    public VentanaReportes(Sistema sistema) {  
+        this.sistema = sistema;
+
         initComponents();
+        
+        // Crear ButtonGroup para los radio buttons
+        buttonGroupOrdenamiento = new javax.swing.ButtonGroup();
+        buttonGroupOrdenamiento.add(jRadioButtonFechaHoraCreciente);
+        buttonGroupOrdenamiento.add(jRadioButtonFechaHoraDecreciente);
+        
+        iniciarTabla();
+        actualizarListaVehiculos();
+        
+        jCheckBoxEntradas.setSelected(true);
+        jCheckBoxSalidas.setSelected(true);
+        jCheckBoxServicios.setSelected(true);
+        jRadioButtonFechaHoraCreciente.setSelected(true);
 
         ClaroOscuro.aplicarModo(this);
+        
+        //Listener para la Lista
+        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    mostrarVehiculoSeleccionado();
+                }
+            }
+        });
     }
 
     /**
@@ -29,19 +64,19 @@ public class VentanaReportes extends javax.swing.JFrame {
         jPanelReportes = new javax.swing.JPanel();
         jTabbedPaneReportes = new javax.swing.JTabbedPane();
         jPanelHistorial = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel13 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel14 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jScrollPaneVehiculos = new javax.swing.JScrollPane();
+        jListVehiculos = new javax.swing.JList<>();
+        jLabelListaDeVehiculos = new javax.swing.JLabel();
+        jScrollPaneTable = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
+        jLabelFiltrar = new javax.swing.JLabel();
+        jCheckBoxEntradas = new javax.swing.JCheckBox();
+        jCheckBoxSalidas = new javax.swing.JCheckBox();
+        jCheckBoxServicios = new javax.swing.JCheckBox();
+        jButtonExportar = new javax.swing.JButton();
+        jLabelMovimientosDelVehiculo = new javax.swing.JLabel();
+        jRadioButtonFechaHoraCreciente = new javax.swing.JRadioButton();
+        jRadioButtonFechaHoraDecreciente = new javax.swing.JRadioButton();
         jPanelMovimientos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -76,21 +111,21 @@ public class VentanaReportes extends javax.swing.JFrame {
 
         jPanelHistorial.setLayout(null);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jListVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
-        jPanelHistorial.add(jScrollPane1);
-        jScrollPane1.setBounds(30, 50, 100, 170);
+        jPanelHistorial.add(jScrollPaneVehiculos);
+        jScrollPaneVehiculos.setBounds(30, 50, 100, 170);
 
-        jLabel13.setText("Lista de vehículos:");
-        jPanelHistorial.add(jLabel13);
-        jLabel13.setBounds(30, 20, 120, 16);
+        jLabelListaDeVehiculos.setText("Lista de vehículos:");
+        jPanelHistorial.add(jLabelListaDeVehiculos);
+        jLabelListaDeVehiculos.setBounds(30, 20, 120, 16);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -101,42 +136,72 @@ public class VentanaReportes extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPaneTable.setViewportView(jTable);
 
-        jPanelHistorial.add(jScrollPane2);
-        jScrollPane2.setBounds(160, 50, 320, 170);
+        jPanelHistorial.add(jScrollPaneTable);
+        jScrollPaneTable.setBounds(160, 50, 320, 170);
 
-        jLabel14.setText("Filtrar:");
-        jPanelHistorial.add(jLabel14);
-        jLabel14.setBounds(500, 20, 80, 16);
+        jLabelFiltrar.setText("Filtrar:");
+        jPanelHistorial.add(jLabelFiltrar);
+        jLabelFiltrar.setBounds(500, 20, 80, 16);
 
-        jCheckBox1.setText("Entradas");
-        jPanelHistorial.add(jCheckBox1);
-        jCheckBox1.setBounds(500, 50, 90, 20);
+        jCheckBoxEntradas.setText("Entradas");
+        jCheckBoxEntradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxEntradasActionPerformed(evt);
+            }
+        });
+        jPanelHistorial.add(jCheckBoxEntradas);
+        jCheckBoxEntradas.setBounds(500, 50, 90, 20);
 
-        jCheckBox2.setText("Salidas");
-        jPanelHistorial.add(jCheckBox2);
-        jCheckBox2.setBounds(500, 80, 90, 20);
+        jCheckBoxSalidas.setText("Salidas");
+        jCheckBoxSalidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxSalidasActionPerformed(evt);
+            }
+        });
+        jPanelHistorial.add(jCheckBoxSalidas);
+        jCheckBoxSalidas.setBounds(500, 80, 90, 20);
 
-        jCheckBox3.setText("Servicios");
-        jPanelHistorial.add(jCheckBox3);
-        jCheckBox3.setBounds(500, 110, 90, 20);
+        jCheckBoxServicios.setText("Servicios");
+        jCheckBoxServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxServiciosActionPerformed(evt);
+            }
+        });
+        jPanelHistorial.add(jCheckBoxServicios);
+        jCheckBoxServicios.setBounds(500, 110, 90, 20);
 
-        jButton1.setText("Exportar");
-        jPanelHistorial.add(jButton1);
-        jButton1.setBounds(500, 187, 90, 30);
+        jButtonExportar.setText("Exportar");
+        jButtonExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExportarActionPerformed(evt);
+            }
+        });
+        jPanelHistorial.add(jButtonExportar);
+        jButtonExportar.setBounds(500, 187, 90, 30);
 
-        jLabel15.setText("Movimientos del vehículo:");
-        jPanelHistorial.add(jLabel15);
-        jLabel15.setBounds(160, 20, 210, 16);
+        jLabelMovimientosDelVehiculo.setText("Movimientos del vehículo:");
+        jPanelHistorial.add(jLabelMovimientosDelVehiculo);
+        jLabelMovimientosDelVehiculo.setBounds(160, 20, 210, 16);
 
-        jRadioButton1.setText("Fecha/Hora Creciente");
-        jPanelHistorial.add(jRadioButton1);
-        jRadioButton1.setBounds(160, 230, 150, 21);
+        jRadioButtonFechaHoraCreciente.setText("Fecha/Hora Creciente");
+        jRadioButtonFechaHoraCreciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonFechaHoraCrecienteActionPerformed(evt);
+            }
+        });
+        jPanelHistorial.add(jRadioButtonFechaHoraCreciente);
+        jRadioButtonFechaHoraCreciente.setBounds(160, 230, 150, 21);
 
-        jRadioButton2.setText("Fecha/Hora Decreciente");
-        jPanelHistorial.add(jRadioButton2);
-        jRadioButton2.setBounds(320, 230, 160, 21);
+        jRadioButtonFechaHoraDecreciente.setText("Fecha/Hora Decreciente");
+        jRadioButtonFechaHoraDecreciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonFechaHoraDecrecienteActionPerformed(evt);
+            }
+        });
+        jPanelHistorial.add(jRadioButtonFechaHoraDecreciente);
+        jRadioButtonFechaHoraDecreciente.setBounds(320, 230, 160, 21);
 
         jTabbedPaneReportes.addTab("Historial", jPanelHistorial);
 
@@ -243,19 +308,167 @@ public class VentanaReportes extends javax.swing.JFrame {
         setBounds(0, 0, 663, 378);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void iniciarTabla(){
+        String[] columnas = {"Tipo", "Fecha", "Hora", "Detalles"};
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // esto hace que la table no se pueda editar
+            }
+        };
+        jTable.setModel(modelo);
+        
+    }
+    
+    private void actualizarListaVehiculos() {
+        ArrayList<Vehiculo> vehiculos = sistema.getListaVehiculos();
+        DefaultListModel<String> modelo = new DefaultListModel<>();
+
+        for (int i = 0; i < vehiculos.size(); i++) {
+            Vehiculo vehiculo = vehiculos.get(i);
+            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() + " - " + vehiculo.getMatricula());
+        }
+
+        jListVehiculos.setModel(modelo);
+    }
+    
+    public void mostrarVehiculoSeleccionado(){
+        String seleccionado = jListVehiculos.getSelectedValue();
+        
+        if (seleccionado != null) {
+            try {
+                matricula = seleccionado.split(" - ")[1];
+                actualizarTabla();
+            } catch (Exception e) {
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del vehiculo: " + e.getMessage(), "Error");
+            }
+        }
+    }
+    
+    public void actualizarTabla(){
+        ArrayList<Object> movimientos = sistema.getMovimientosVehiculo(matricula);
+        
+        // Fitrar
+        boolean entradas = jCheckBoxEntradas.isSelected();
+        boolean salidas = jCheckBoxSalidas.isSelected();
+        boolean servicios = jCheckBoxServicios.isSelected();
+        movimientos = sistema.filtrarMovimientos(movimientos, entradas, salidas, servicios);
+        
+        //Ordenar
+        boolean ascendente = jRadioButtonFechaHoraCreciente.isSelected();
+        movimientos = sistema.ordenarMovimientos(movimientos, ascendente);
+        
+        // Guarda movimientos para exportar
+        this.movimientosActuales = movimientos;
+        
+        //Actualiza la tabla
+        DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
+        modelo.setRowCount(0); // esto limpia la tabla
+        
+        for (int i = 0; i < movimientos.size(); i++) {
+            Object movimiento = movimientos.get(i);
+            
+            String tipo = "";
+            String fecha = "";
+            String hora = "";
+            String detalles = "";
+            
+            if (movimiento instanceof Entrada) {
+                Entrada entrada = (Entrada) movimiento;
+                tipo = "ENTRADA";
+                fecha = entrada.getFecha();
+                hora = entrada.getHora();
+                detalles = "Empleado: " + entrada.getEmpleado().getNombre();
+                if (!entrada.getNota().isEmpty()) {
+                    detalles += " - Notas: " + entrada.getNota();
+                }
+            } else if (movimiento instanceof Salida) {
+                Salida salida = (Salida) movimiento;
+                tipo = "SALIDA";
+                fecha = salida.getFecha();
+                hora = salida.getHora();
+                detalles = "Empleado: " + salida.getEmpleado().getNombre();
+                if (!salida.getNota().isEmpty()) {
+                    detalles += " - Notas: " + salida.getNota();
+                }
+                
+                // Agregar tiempo en parking con manejo de error
+                try {
+                    // Verificar que la entrada no sea nula
+                    if (salida.getEntrada() != null) {
+                        detalles += " - Tiempo en parking: " + 
+                                sistema.calcularDiferenciaTiempo(
+                                    salida.getEntrada().getFecha(),
+                                    salida.getEntrada().getHora(),
+                                    salida.getFecha(),
+                                    salida.getHora());
+                    }
+                } catch (Exception e) {
+                    detalles += " - Tiempo en parking: No disponible";
+                    System.err.println("Error al calcular tiempo en parking: " + e.getMessage());
+                }
+            } else if (movimiento instanceof ServicioAdicional) {
+                ServicioAdicional servicio = (ServicioAdicional) movimiento;
+                tipo = "SERVICIO";
+                fecha = servicio.getFecha();
+                hora = servicio.getHora();
+                detalles = servicio.getTipoServicio() + " $" + servicio.getCostoServicio() 
+                        + " Empleado: " + servicio.getEmpleado().getNombre();
+            }
+            
+            modelo.addRow(new Object[]{tipo, fecha, hora, detalles});
+        }
+    }
+    
+    private void jRadioButtonFechaHoraDecrecienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFechaHoraDecrecienteActionPerformed
+        if (matricula != null) {
+            actualizarTabla();
+        }
+    }//GEN-LAST:event_jRadioButtonFechaHoraDecrecienteActionPerformed
+
+    private void jRadioButtonFechaHoraCrecienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFechaHoraCrecienteActionPerformed
+        if (matricula != null) {
+            actualizarTabla();
+        }
+    }//GEN-LAST:event_jRadioButtonFechaHoraCrecienteActionPerformed
+
+    private void jCheckBoxEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxEntradasActionPerformed
+        if (matricula != null) {
+            actualizarTabla();
+        }
+    }//GEN-LAST:event_jCheckBoxEntradasActionPerformed
+
+    private void jCheckBoxSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSalidasActionPerformed
+        if (matricula != null) {
+            actualizarTabla();
+        }
+    }//GEN-LAST:event_jCheckBoxSalidasActionPerformed
+
+    private void jCheckBoxServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxServiciosActionPerformed
+        if (matricula != null) {
+            actualizarTabla();
+        }
+    }//GEN-LAST:event_jCheckBoxServiciosActionPerformed
+
+    private void jButtonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarActionPerformed
+        if (matricula != null && movimientosActuales != null && !movimientosActuales.isEmpty()) {
+            sistema.exportarMovimientosATxt(movimientosActuales, matricula);
+            ClaroOscuro.mostrarMensaje(this, "Archivo " + matricula + ".txt generado con éxito", "Exportación Exitosa");
+        } else {
+            ClaroOscuro.mostrarError(this, "No hay datos para exportar", "Error");
+        }
+    }//GEN-LAST:event_jButtonExportarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JButton jButtonExportar;
+    private javax.swing.JCheckBox jCheckBoxEntradas;
+    private javax.swing.JCheckBox jCheckBoxSalidas;
+    private javax.swing.JCheckBox jCheckBoxServicios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -268,23 +481,26 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEmpleadosConMenosMovimientos;
     private javax.swing.JLabel jLabelEstadia;
     private javax.swing.JLabel jLabelEstadiaMasLarga;
+    private javax.swing.JLabel jLabelFiltrar;
+    private javax.swing.JLabel jLabelListaDeVehiculos;
+    private javax.swing.JLabel jLabelMovimientosDelVehiculo;
     private javax.swing.JLabel jLabelServiciosMasUtilizados;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jListClientesConMasVehiculos;
     private javax.swing.JList<String> jListEmpleadosConMenosMovimientos;
     private javax.swing.JList<String> jListServiciosMasUtilizados;
+    private javax.swing.JList<String> jListVehiculos;
     private javax.swing.JPanel jPanelEstadisticas;
     private javax.swing.JPanel jPanelHistorial;
     private javax.swing.JPanel jPanelMovimientos;
     private javax.swing.JPanel jPanelReportes;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JRadioButton jRadioButtonFechaHoraCreciente;
+    private javax.swing.JRadioButton jRadioButtonFechaHoraDecreciente;
     private javax.swing.JScrollPane jScrollPaneClientesConMasVehiculos;
     private javax.swing.JScrollPane jScrollPaneEmpleadosConMenosMovimientos;
     private javax.swing.JScrollPane jScrollPaneServiciosMasUtilizados;
+    private javax.swing.JScrollPane jScrollPaneTable;
+    private javax.swing.JScrollPane jScrollPaneVehiculos;
     private javax.swing.JTabbedPane jTabbedPaneReportes;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 }
