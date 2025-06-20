@@ -42,7 +42,10 @@ public class Minijuego {
             "EMPAS",
             "FRITA",
             "YERBA",
-            "MANGO"
+            "MANGO",
+            "PATAS",
+            "TERMO",
+            "MILAS"
         };
         
         int random = (int) (Math.random() * palabras.length); 
@@ -51,9 +54,9 @@ public class Minijuego {
 
     public void reiniciarJuego() {
         this.intentos.clear();
-        this.juegoTerminado = false;
-        this.victoria = false;
-        this.palabraSecreta = palabraAleatoria();
+        setJuegoTerminado(false);
+        setVictoria(false);
+        setPalabraSecreta(palabraAleatoria());
     }
     
     public boolean intentarPalabra(String intento) {
@@ -79,14 +82,13 @@ public class Minijuego {
     public int[] verificarLetras(String intento) {
         int[] resultados = new int[5];
 
-        // Convertir palabras a arreglos de caracteres para manipularlas más fácil
+        // Convertir palabras a arrat de caracteres 
         char[] intentoChars = intento.toCharArray();
-        char[] secretaChars = palabraSecreta.toCharArray();
+        char[] secretaChars = getPalabraSecreta().toCharArray();
 
-        // Crear una copia para marcar letras ya usadas
         boolean[] letraSecretaUsada = new boolean[5];
 
-        // Primero verificar letras en posiciones correctas (prioridad)
+        // letras en pos correcta
         for (int i = 0; i < 5; i++) {
             if (intentoChars[i] == secretaChars[i]) {
                 resultados[i] = 2; // Verde - posición correcta
@@ -94,35 +96,31 @@ public class Minijuego {
             }
         }
 
-        // Después verificar letras presentes pero en posiciones incorrectas
+        //  posiciones incorrectas
         for (int i = 0; i < 5; i++) {
-            // Si ya se marcó como posición correcta, continuar
-            if (resultados[i] == 2) continue;
-
-            // Buscar la letra en la palabra secreta
-            boolean encontrada = false;
-            for (int j = 0; j < 5 && !encontrada; j++) {
-                if (!letraSecretaUsada[j] && intentoChars[i] == secretaChars[j]) {
-                    resultados[i] = 1; // Amarillo - letra correcta, posición incorrecta
-                    letraSecretaUsada[j] = true;
-                    encontrada = true;
+        // Procesar solo si la letra no está ya marcada como correcta en posición correcta
+            if (resultados[i] != 2) {
+                // Buscar la letra en la palabra secreta
+                boolean encontrada = false;
+                for (int j = 0; j < 5 && !encontrada; j++) {
+                    if (!letraSecretaUsada[j] && intentoChars[i] == secretaChars[j]) {
+                        resultados[i] = 1; // Amarillo - letra correcta, posición incorrecta
+                        letraSecretaUsada[j] = true;
+                        encontrada = true;
+                    }
                 }
-            }
 
             // Si no se encontró la letra, marcar como ausente
-            if (!encontrada) {
-                resultados[i] = 0; // Gris - letra no está en la palabra
+                if (!encontrada) {
+                    resultados[i] = 0; // Gris - letra no está en la palabra
+                }
             }
         }
 
         return resultados;
     }
     
-    
-    
-    
-
-    public String getPalabraSecreta() {
+        public String getPalabraSecreta() {
         return palabraSecreta;
     }
 

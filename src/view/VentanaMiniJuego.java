@@ -163,16 +163,13 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
 
             boolean intentoValido = minijuego.intentarPalabra(palabra);
             if(intentoValido && this.filaActual <= 5){
-                colocarPalabraEnTabla(this.jTableWordle, palabra, this.filaActual);
+                colocarPalabraEnTabla(palabra, this.filaActual);
                 filaActual++;
                if (minijuego.isVictoria()) {
                    ClaroOscuro.mostrarMensaje(this, "¡Felicidades! Has adivinado la palabra", "Victoria");
-                   minijuego.setJuegoTerminado(true);
-                   minijuego.setVictoria(true);
                 } else if (minijuego.isJuegoTerminado()) {
                     ClaroOscuro.mostrarMensaje(this, "Juego terminado. La palabra era: " + 
                     minijuego.getPalabraSecreta(), "Fin del juego");
-                    
                 }
             }
         }
@@ -180,7 +177,7 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         limpiarField();
     }//GEN-LAST:event_jButtonProbarActionPerformed
     
-    // colorerar las celdas se las pregunte al chat
+    // colorerar las celdas se las pregunte a claude
     // config renderizador de celdas
     private void configurarRenderizador() {
             wordleRenderer = new DefaultTableCellRenderer() {
@@ -188,7 +185,7 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
             public Component getTableCellRendererComponent(JTable table, Object value, 
                     boolean isSelected, boolean hasFocus, int row, int column) {
                 Component cell = super.getTableCellRendererComponent(
-                        table, value, isSelected, hasFocus, row, column);
+                        table, value, false, false, row, column);
                     
                 // Aplicar el color almacenado para esta celda
                 if (backgroundColors[row][column] != null) {
@@ -203,6 +200,8 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
                 return cell;
             }
         };
+            
+        jTableWordle.setDefaultEditor(Object.class, null);
 
         // Aplicar el renderizador a todas las celdas
         for (int i = 0; i < jTableWordle.getColumnCount(); i++) {
@@ -243,10 +242,10 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         }
     }
     
-    private void colocarPalabraEnTabla(JTable tabla, String palabra, int fila) {
+    private void colocarPalabraEnTabla(String palabra, int fila) {
+        JTable tabla = this.jTableWordle;
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         
-        // Obtener el estado de cada letra
         int[] resultados = minijuego.verificarLetras(palabra);
         
         // Definir colores

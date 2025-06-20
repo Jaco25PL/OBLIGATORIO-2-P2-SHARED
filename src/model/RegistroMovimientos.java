@@ -3,7 +3,9 @@
  */
 package model;
 
-public abstract class RegistroMovimientos {
+import java.io.Serializable;
+
+public abstract class RegistroMovimientos implements Serializable{
     
     //Atributos
 

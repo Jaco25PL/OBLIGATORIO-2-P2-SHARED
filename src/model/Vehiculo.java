@@ -3,7 +3,9 @@
  */
 package model;
 
-public class Vehiculo {
+import java.io.Serializable;
+
+public class Vehiculo implements Serializable{
     
     //Atributos
     private String matricula;
