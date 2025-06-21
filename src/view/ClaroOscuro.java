@@ -132,6 +132,8 @@ public class ClaroOscuro {
     public static int mostrarConfirmacion(Component parent, String mensaje, String titulo) {
         return mostrarDialogo(parent, mensaje, titulo, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
     }
+
+
     
     // (Sí/No/Cancelar)
     public static int mostrarConfirmacionConCancelar(Component parent, String mensaje, String titulo) {

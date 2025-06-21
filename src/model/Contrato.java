@@ -3,7 +3,9 @@
  */
 package model;
 
-public class Contrato {
+import java.io.Serializable;
+
+public class Contrato implements Serializable{
     
     //Atributos
     private double valorMensual;

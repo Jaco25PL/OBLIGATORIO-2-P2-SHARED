@@ -8,10 +8,12 @@ import controlador.ContratoControlador;
 import controlador.EmpleadoControlador;
 import controlador.EntradaControlador;
 import controlador.SalidaControlador;
+import controlador.SerializacionControlador;
 import controlador.ServicioAdicionalControlador;
 import controlador.VehiculoControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.JOptionPane;
 import model.ServicioAdicional;
 import model.Sistema;
 
@@ -21,10 +23,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     private ClienteControlador clienteControlador;
     private EmpleadoControlador empleadoControlador;
     private VehiculoControlador vehiculoControlador;
-    private ContratoControlador contratoControlador;
+    private ContratoControlador contratoControlador;    
     private EntradaControlador entradaControlador;
     private SalidaControlador salidaControlador;
     private ServicioAdicionalControlador servicioAdicionalControlador;
+    private SerializacionControlador serializacionControlador;
+    
     
     /**
      * Creates new form VentanaPrincipal
@@ -33,11 +37,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
         this.sistema = sistema;
         this.clienteControlador = new ClienteControlador(sistema);
         this.empleadoControlador = new EmpleadoControlador(sistema);
-        this.vehiculoControlador = new VehiculoControlador(sistema);
+        this.vehiculoControlador = new VehiculoControlador(sistema);        
         this.contratoControlador = new ContratoControlador(sistema);
         this.entradaControlador = new EntradaControlador(sistema);
         this.salidaControlador = new SalidaControlador(sistema);
         this.servicioAdicionalControlador = new ServicioAdicionalControlador(sistema);
+        this.serializacionControlador = new SerializacionControlador(sistema);
         
         initComponents();
         jPanelMain.setBounds(0,0, this.getWidth(), this.getHeight());
@@ -281,17 +286,47 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemInfoAutoresActionPerformed
 
     private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
-        this.dispose();     
+        int opcion = ClaroOscuro.mostrarConfirmacion(this, "Seguro que quieres terminar?", "Salir del programa");
         
-        // TODO add your handling code here:
+        if (opcion == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
     private void jMenuItemRecuperacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRecuperacionDatosActionPerformed
-        // TODO add your handling code here:
+        
+        int opcion = ClaroOscuro.mostrarConfirmacion(this, "Al recuperar datos se borraran los actuales. Continuar?", "Recuperar datos");
+        if (opcion == JOptionPane.YES_OPTION) {
+            boolean resultado = serializacionControlador.cargarSistema();
+            if (resultado) {
+                JOptionPane.showMessageDialog(this, "Datos recuperados correctamente.", "Recuperación exitosa", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Actualizar el sistema en todos los controladores
+                this.sistema = serializacionControlador.getSistema();
+                this.clienteControlador = new ClienteControlador(this.sistema);
+                this.empleadoControlador = new EmpleadoControlador(this.sistema);
+                this.vehiculoControlador = new VehiculoControlador(this.sistema);
+                this.contratoControlador = new ContratoControlador(this.sistema);
+                this.entradaControlador = new EntradaControlador(this.sistema);
+                this.salidaControlador = new SalidaControlador(this.sistema);
+                this.servicioAdicionalControlador = new ServicioAdicionalControlador(this.sistema);
+            } else {
+                ClaroOscuro.mostrarMensaje(this, "No se pudieron recuperar los datos.\nPosiblemente no existe un archivo de datos o está corrupto.", "Error");
+            }
+        }
+        
     }//GEN-LAST:event_jMenuItemRecuperacionDatosActionPerformed
 
     private void jMenuItemGrabacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGrabacionDatosActionPerformed
-        // TODO add your handling code here:
+        int opcion = ClaroOscuro.mostrarConfirmacion(this, "Desea guardar los datos actuales?", "Guardar datos");
+        if (opcion == JOptionPane.YES_OPTION) {
+            boolean resultado = serializacionControlador.guardarSistema();
+            if (resultado) {
+                ClaroOscuro.mostrarMensaje(this, "Los datos se han guardado correctamente.", "Guardado exitoso");
+            } else {
+                ClaroOscuro.mostrarMensaje(this, "No se pudieron guardar los datos.\nPor favor, verifique los permisos de escritura.", "Error");
+            }
+        }
     }//GEN-LAST:event_jMenuItemGrabacionDatosActionPerformed
 
 
