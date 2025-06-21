@@ -1186,6 +1186,10 @@ public class Sistema implements Serializable{
         Vehiculo vehiculo4 = new Vehiculo("JKL012", "Chevrolet", "Onix", "Bueno");
         Vehiculo vehiculo5 = new Vehiculo("MNO345", "Volkswagen", "Golf", "Excelente");
         Vehiculo vehiculo6 = new Vehiculo("PQR678", "Fiat", "Uno", "Bueno");
+        Vehiculo vehiculo7 = new Vehiculo("STU901", "Renault", "Logan", "Regular");
+        Vehiculo vehiculo8 = new Vehiculo("VWX234", "Peugeot", "208", "Bueno");
+        Vehiculo vehiculo9 = new Vehiculo("YZA567", "Hyundai", "Accent", "Excelente");
+        Vehiculo vehiculo10 = new Vehiculo("BCD890", "Kia", "Rio", "Bueno");
 
         // Registrar vehículos en el sistema
         registrarVehiculo(vehiculo1);
@@ -1194,6 +1198,10 @@ public class Sistema implements Serializable{
         registrarVehiculo(vehiculo4);
         registrarVehiculo(vehiculo5);
         registrarVehiculo(vehiculo6);
+        registrarVehiculo(vehiculo7);
+        registrarVehiculo(vehiculo8);
+        registrarVehiculo(vehiculo9);
+        registrarVehiculo(vehiculo10);
 
         // Crear algunos empleados
         Empleado empleado1 = new Empleado("Roberto Gómez", 56789012, "Bulevar Artigas 456", 101);
@@ -1208,34 +1216,215 @@ public class Sistema implements Serializable{
         // Crear algunos contratos
         Contrato contrato1 = new Contrato(5000, empleado1, cliente1, vehiculo1, proxNumContrato, "10/11/2023");
         Contrato contrato2 = new Contrato(6000, empleado2, cliente2, vehiculo2, proxNumContrato, "15/11/2023");
+        Contrato contrato3 = new Contrato(4500, empleado3, cliente3, vehiculo3, proxNumContrato, "18/11/2023");
+        Contrato contrato4 = new Contrato(5500, empleado1, cliente4, vehiculo4, proxNumContrato, "20/11/2023");
+        Contrato contrato5 = new Contrato(6500, empleado2, cliente1, vehiculo5, proxNumContrato, "22/11/2023");
+        Contrato contrato6 = new Contrato(7000, empleado3, cliente2, vehiculo6, proxNumContrato, "25/11/2023");
+        Contrato contrato7 = new Contrato(5800, empleado1, cliente3, vehiculo7, proxNumContrato, "27/11/2023");
+        Contrato contrato8 = new Contrato(6200, empleado2, cliente4, vehiculo8, proxNumContrato, "29/11/2023");
+        Contrato contrato9 = new Contrato(5300, empleado3, cliente1, vehiculo9, proxNumContrato, "01/12/2023");
+        Contrato contrato10 = new Contrato(5900, empleado1, cliente2, vehiculo10, proxNumContrato, "03/12/2023");
 
         // Registrar contratos en el sistema
         registrarContrato(contrato1);
         registrarContrato(contrato2);
+        registrarContrato(contrato3);
+        registrarContrato(contrato4);
+        registrarContrato(contrato5);
+        registrarContrato(contrato6);
+        registrarContrato(contrato7);
+        registrarContrato(contrato8);
+        registrarContrato(contrato9);
+        registrarContrato(contrato10);
 
-        // Crear algunas entradas (sin salida aún)
-        Entrada entrada1 = new Entrada(proxNumEntrada, "20/11/2023", "08:30", "Vehículo con rayón lateral", empleado1, vehiculo3);
-        Entrada entrada2 = new Entrada(proxNumEntrada, "20/11/2023", "09:45", "Sin observaciones", empleado2, vehiculo4);
+        // Obtener la fecha actual
+        java.time.LocalDate hoy = java.time.LocalDate.now();
+        
+        // Formatear la fecha actual y las fechas de los días siguientes
+        String fechaHoy = String.format("%02d/%02d/%04d", hoy.getDayOfMonth(), hoy.getMonthValue(), hoy.getYear());
+        String fechaMañana = String.format("%02d/%02d/%04d", hoy.plusDays(1).getDayOfMonth(), hoy.plusDays(1).getMonthValue(), hoy.plusDays(1).getYear());
+        String fechaPasadoMañana = String.format("%02d/%02d/%04d", hoy.plusDays(2).getDayOfMonth(), hoy.plusDays(2).getMonthValue(), hoy.plusDays(2).getYear());
 
-        // Registrar entradas en el sistema
-        registrarEntrada(entrada1);
-        registrarEntrada(entrada2);
+    // --- CREAR MOVIMIENTOS PARA HOY ---
+    
+    // Movimientos en la franja 00:00-05:59 (pocos movimientos - verde)
+    Entrada entradaHoy1 = new Entrada(proxNumEntrada, fechaHoy, "01:30", "Entrada nocturna", empleado1, vehiculo1);
+    Entrada entradaHoy2 = new Entrada(proxNumEntrada, fechaHoy, "03:45", "Sin observaciones", empleado2, vehiculo2);
+    registrarEntrada(entradaHoy1);
+    registrarEntrada(entradaHoy2);
+    
+    // Movimientos en la franja 06:00-11:59 (cantidad media - amarillo)
+    Entrada entradaHoy3 = new Entrada(proxNumEntrada, fechaHoy, "07:15", "Ingreso matutino", empleado3, vehiculo3);
+    Entrada entradaHoy4 = new Entrada(proxNumEntrada, fechaHoy, "08:30", "Vidrio trasero sucio", empleado1, vehiculo4);
+    Entrada entradaHoy5 = new Entrada(proxNumEntrada, fechaHoy, "09:45", "Sin observaciones", empleado2, vehiculo5);
+    registrarEntrada(entradaHoy3);
+    registrarEntrada(entradaHoy4);
+    registrarEntrada(entradaHoy5);
+    
+    Salida salidaHoy1 = new Salida(proxNumSalida, fechaHoy, "10:30", "Salida normal", empleado3, vehiculo1);
+    Salida salidaHoy2 = new Salida(proxNumSalida, fechaHoy, "11:15", "Sin observaciones", empleado1, vehiculo2);
+    registrarSalida(salidaHoy1, entradaHoy1);
+    registrarSalida(salidaHoy2, entradaHoy2);
+    
+    // Movimientos en la franja 12:00-17:59 (muchos movimientos - rojo)
+    Entrada entradaHoy6 = new Entrada(proxNumEntrada, fechaHoy, "12:10", "Ingreso mediodía", empleado2, vehiculo6);
+    Entrada entradaHoy7 = new Entrada(proxNumEntrada, fechaHoy, "13:25", "Abolladura leve", empleado3, vehiculo7);
+    Entrada entradaHoy8 = new Entrada(proxNumEntrada, fechaHoy, "14:40", "Sin observaciones", empleado1, vehiculo8);
+    registrarEntrada(entradaHoy6);
+    registrarEntrada(entradaHoy7);
+    registrarEntrada(entradaHoy8);
+    
+    Salida salidaHoy3 = new Salida(proxNumSalida, fechaHoy, "15:05", "Salida normal", empleado2, vehiculo3);
+    Salida salidaHoy4 = new Salida(proxNumSalida, fechaHoy, "16:20", "Conforme", empleado3, vehiculo4);
+    Salida salidaHoy5 = new Salida(proxNumSalida, fechaHoy, "17:35", "Sin observaciones", empleado1, vehiculo5);
+    registrarSalida(salidaHoy3, entradaHoy3);
+    registrarSalida(salidaHoy4, entradaHoy4);
+    registrarSalida(salidaHoy5, entradaHoy5);
+    
+    ServicioAdicional servicioHoy1 = new ServicioAdicional(proxNumServicio, "Lavado", fechaHoy, "13:00", "Lavado completo", vehiculo6, empleado2, 1200);
+    ServicioAdicional servicioHoy2 = new ServicioAdicional(proxNumServicio, "Cambio de aceite", fechaHoy, "14:30", "Aceite sintético", vehiculo7, empleado3, 2500);
+    ServicioAdicional servicioHoy3 = new ServicioAdicional(proxNumServicio, "Encerado", fechaHoy, "16:00", "Encerado completo", vehiculo8, empleado1, 1800);
+    registrarServicio(servicioHoy1);
+    registrarServicio(servicioHoy2);
+    registrarServicio(servicioHoy3);
+    
+    // Movimientos en la franja 18:00-23:59 (cantidad media - amarillo)
+    Entrada entradaHoy9 = new Entrada(proxNumEntrada, fechaHoy, "18:50", "Entrada vespertina", empleado2, vehiculo9);
+    Entrada entradaHoy10 = new Entrada(proxNumEntrada, fechaHoy, "20:05", "Sin observaciones", empleado3, vehiculo10);
+    registrarEntrada(entradaHoy9);
+    registrarEntrada(entradaHoy10);
+    
+    Salida salidaHoy6 = new Salida(proxNumSalida, fechaHoy, "19:30", "Salida normal", empleado1, vehiculo6);
+    Salida salidaHoy7 = new Salida(proxNumSalida, fechaHoy, "21:45", "Sin observaciones", empleado2, vehiculo7);
+    registrarSalida(salidaHoy6, entradaHoy6);
+    registrarSalida(salidaHoy7, entradaHoy7);
+    
+    ServicioAdicional servicioHoy4 = new ServicioAdicional(proxNumServicio, "Limpieza interior", fechaHoy, "20:30", "Aspirado completo", vehiculo9, empleado3, 1500);
+    registrarServicio(servicioHoy4);
+    
+    // --- CREAR MOVIMIENTOS PARA MAÑANA ---
+    
+    // Movimientos en la franja 00:00-05:59 (cantidad media - amarillo)
+    Entrada entradaMañana1 = new Entrada(proxNumEntrada, fechaMañana, "00:20", "Entrada madrugada", empleado1, vehiculo1);
+    Entrada entradaMañana2 = new Entrada(proxNumEntrada, fechaMañana, "02:35", "Sin observaciones", empleado2, vehiculo2);
+    registrarEntrada(entradaMañana1);
+    registrarEntrada(entradaMañana2);
+    
+    Salida salidaMañana1 = new Salida(proxNumSalida, fechaMañana, "04:50", "Salida normal", empleado3, vehiculo8);
+    registrarSalida(salidaMañana1, entradaHoy8);
+    
+    ServicioAdicional servicioMañana1 = new ServicioAdicional(proxNumServicio, "Revisión eléctrica", fechaMañana, "03:15", "Revisión completa", vehiculo1, empleado1, 2000);
+    ServicioAdicional servicioMañana2 = new ServicioAdicional(proxNumServicio, "Cambio de filtro", fechaMañana, "05:30", "Filtro de aire", vehiculo2, empleado2, 1000);
+    registrarServicio(servicioMañana1);
+    registrarServicio(servicioMañana2);
+    
+    // Movimientos en la franja 06:00-11:59 (muchos movimientos - rojo)
+    Entrada entradaMañana3 = new Entrada(proxNumEntrada, fechaMañana, "06:10", "Ingreso matutino", empleado3, vehiculo3);
+    Entrada entradaMañana4 = new Entrada(proxNumEntrada, fechaMañana, "07:25", "Sin observaciones", empleado1, vehiculo4);
+    Entrada entradaMañana5 = new Entrada(proxNumEntrada, fechaMañana, "08:40", "Rayón en puerta", empleado2, vehiculo5);
+    Entrada entradaMañana6 = new Entrada(proxNumEntrada, fechaMañana, "09:55", "Sin observaciones", empleado3, vehiculo6);
+    registrarEntrada(entradaMañana3);
+    registrarEntrada(entradaMañana4);
+    registrarEntrada(entradaMañana5);
+    registrarEntrada(entradaMañana6);
+    
+    Salida salidaMañana2 = new Salida(proxNumSalida, fechaMañana, "10:15", "Salida normal", empleado1, vehiculo9);
+    Salida salidaMañana3 = new Salida(proxNumSalida, fechaMañana, "11:30", "Sin observaciones", empleado2, vehiculo10);
+    registrarSalida(salidaMañana2, entradaHoy9);
+    registrarSalida(salidaMañana3, entradaHoy10);
+    
+    ServicioAdicional servicioMañana3 = new ServicioAdicional(proxNumServicio, "Lavado", fechaMañana, "07:00", "Lavado básico", vehiculo3, empleado3, 800);
+    ServicioAdicional servicioMañana4 = new ServicioAdicional(proxNumServicio, "Cambio de aceite", fechaMañana, "09:30", "Aceite mineral", vehiculo4, empleado1, 1800);
+    ServicioAdicional servicioMañana5 = new ServicioAdicional(proxNumServicio, "Pulido", fechaMañana, "11:00", "Pulido completo", vehiculo5, empleado2, 2200);
+    registrarServicio(servicioMañana3);
+    registrarServicio(servicioMañana4);
+    registrarServicio(servicioMañana5);
+    
+    // Movimientos en la franja 12:00-17:59 (pocos movimientos - verde)
+    Entrada entradaMañana7 = new Entrada(proxNumEntrada, fechaMañana, "13:05", "Ingreso mediodía", empleado3, vehiculo7);
+    registrarEntrada(entradaMañana7);
+    
+    Salida salidaMañana4 = new Salida(proxNumSalida, fechaMañana, "15:20", "Salida normal", empleado1, vehiculo1);
+    registrarSalida(salidaMañana4, entradaMañana1);
+    
+    ServicioAdicional servicioMañana6 = new ServicioAdicional(proxNumServicio, "Revisión de frenos", fechaMañana, "16:40", "Revisión completa", vehiculo2, empleado2, 1700);
+    registrarServicio(servicioMañana6);
+    
+    // Movimientos en la franja 18:00-23:59 (muchos movimientos - rojo)
+    Entrada entradaMañana8 = new Entrada(proxNumEntrada, fechaMañana, "18:15", "Entrada vespertina", empleado3, vehiculo8);
+    Entrada entradaMañana9 = new Entrada(proxNumEntrada, fechaMañana, "19:30", "Abolladura leve", empleado1, vehiculo9);
+    Entrada entradaMañana10 = new Entrada(proxNumEntrada, fechaMañana, "20:45", "Sin observaciones", empleado2, vehiculo10);
+    registrarEntrada(entradaMañana8);
+    registrarEntrada(entradaMañana9);
+    registrarEntrada(entradaMañana10);
+    
+    Salida salidaMañana5 = new Salida(proxNumSalida, fechaMañana, "21:00", "Salida normal", empleado3, vehiculo2);
+    Salida salidaMañana6 = new Salida(proxNumSalida, fechaMañana, "22:15", "Sin observaciones", empleado1, vehiculo3);
+    Salida salidaMañana7 = new Salida(proxNumSalida, fechaMañana, "23:30", "Conforme", empleado2, vehiculo4);
+    registrarSalida(salidaMañana5, entradaMañana2);
+    registrarSalida(salidaMañana6, entradaMañana3);
+    registrarSalida(salidaMañana7, entradaMañana4);
+    
+    ServicioAdicional servicioMañana7 = new ServicioAdicional(proxNumServicio, "Lavado", fechaMañana, "19:00", "Lavado premium", vehiculo8, empleado3, 1500);
+    ServicioAdicional servicioMañana8 = new ServicioAdicional(proxNumServicio, "Encerado", fechaMañana, "21:30", "Encerado especial", vehiculo9, empleado1, 2000);
+    registrarServicio(servicioMañana7);
+    registrarServicio(servicioMañana8);
+    
+    // --- CREAR MOVIMIENTOS PARA PASADO MAÑANA ---
+    
+    // Movimientos en la franja 00:00-05:59 (muchos movimientos - rojo)
+    Entrada entradaPasado1 = new Entrada(proxNumEntrada, fechaPasadoMañana, "00:10", "Entrada madrugada", empleado1, vehiculo1);
+    Entrada entradaPasado2 = new Entrada(proxNumEntrada, fechaPasadoMañana, "01:25", "Sin observaciones", empleado2, vehiculo2);
+    Entrada entradaPasado3 = new Entrada(proxNumEntrada, fechaPasadoMañana, "02:40", "Falla en luces", empleado3, vehiculo3);
+    registrarEntrada(entradaPasado1);
+    registrarEntrada(entradaPasado2);
+    registrarEntrada(entradaPasado3);
+    
+    Salida salidaPasado1 = new Salida(proxNumSalida, fechaPasadoMañana, "03:55", "Salida normal", empleado1, vehiculo5);
+    Salida salidaPasado2 = new Salida(proxNumSalida, fechaPasadoMañana, "05:10", "Sin observaciones", empleado2, vehiculo6);
+    registrarSalida(salidaPasado1, entradaMañana5);
+    registrarSalida(salidaPasado2, entradaMañana6);
+    
+    ServicioAdicional servicioPasado1 = new ServicioAdicional(proxNumServicio, "Revisión de luces", fechaPasadoMañana, "01:00", "Revisión completa", vehiculo1, empleado1, 1000);
+    ServicioAdicional servicioPasado2 = new ServicioAdicional(proxNumServicio, "Cambio de batería", fechaPasadoMañana, "03:30", "Batería nueva", vehiculo2, empleado2, 3500);
+    ServicioAdicional servicioPasado3 = new ServicioAdicional(proxNumServicio, "Revisión de ruedas", fechaPasadoMañana, "05:00", "Presión y estado", vehiculo3, empleado3, 800);
+    registrarServicio(servicioPasado1);
+    registrarServicio(servicioPasado2);
+    registrarServicio(servicioPasado3);
+    
+    // Movimientos en la franja 06:00-11:59 (pocos movimientos - verde)
+    Entrada entradaPasado4 = new Entrada(proxNumEntrada, fechaPasadoMañana, "08:05", "Ingreso matutino", empleado1, vehiculo4);
+    registrarEntrada(entradaPasado4);
+    
+    Salida salidaPasado3 = new Salida(proxNumSalida, fechaPasadoMañana, "10:20", "Salida normal", empleado2, vehiculo7);
+    registrarSalida(salidaPasado3, entradaMañana7);
+    
+    ServicioAdicional servicioPasado4 = new ServicioAdicional(proxNumServicio, "Lavado", fechaPasadoMañana, "09:15", "Lavado rápido", vehiculo4, empleado1, 500);
+    registrarServicio(servicioPasado4);
+    
+    // Movimientos en la franja 12:00-17:59 (cantidad media - amarillo)
+    Entrada entradaPasado5 = new Entrada(proxNumEntrada, fechaPasadoMañana, "12:30", "Ingreso mediodía", empleado2, vehiculo5);
+    Entrada entradaPasado6 = new Entrada(proxNumEntrada, fechaPasadoMañana, "14:45", "Espejo roto", empleado3, vehiculo6);
+    registrarEntrada(entradaPasado5);
+    registrarEntrada(entradaPasado6);
+    
+    Salida salidaPasado4 = new Salida(proxNumSalida, fechaPasadoMañana, "13:00", "Salida normal", empleado1, vehiculo8);
+    Salida salidaPasado5 = new Salida(proxNumSalida, fechaPasadoMañana, "15:15", "Sin observaciones", empleado2, vehiculo9);
+    Salida salidaPasado6 = new Salida(proxNumSalida, fechaPasadoMañana, "17:30", "Conforme", empleado3, vehiculo10);
+    registrarSalida(salidaPasado4, entradaMañana8);
+    registrarSalida(salidaPasado5, entradaMañana9);
+    registrarSalida(salidaPasado6, entradaMañana10);
+    
+    // Movimientos en la franja 18:00-23:59 (pocos movimientos - verde)
+    Entrada entradaPasado7 = new Entrada(proxNumEntrada, fechaPasadoMañana, "19:40", "Entrada vespertina", empleado1, vehiculo7);
+    registrarEntrada(entradaPasado7);
+    
+    Salida salidaPasado7 = new Salida(proxNumSalida, fechaPasadoMañana, "20:55", "Salida normal", empleado2, vehiculo1);
+    registrarSalida(salidaPasado7, entradaPasado1);
+    
+    ServicioAdicional servicioPasado5 = new ServicioAdicional(proxNumServicio, "Lavado interior", fechaPasadoMañana, "22:10", "Lavado completo", vehiculo7, empleado1, 1800);
+    registrarServicio(servicioPasado5);
 
-        // Crear algunas entradas con salidas asociadas
-        Entrada entrada3 = new Entrada(proxNumEntrada, "19/11/2023", "10:15", "Neumático delantero bajo", empleado3, vehiculo5);
-        registrarEntrada(entrada3);
-
-        // Crear salidas para algunas entradas
-        Salida salida1 = new Salida(proxNumSalida, "19/11/2023", "16:45", "Sin observaciones", empleado1, vehiculo5);
-        registrarSalida(salida1, entrada3);
-
-        // Registrar servicios adicionales
-        ServicioAdicional servicio1 = new ServicioAdicional(proxNumServicio, "Lavado", "20/11/2023", "11:30", "Lavado completo", vehiculo1, empleado2, 1200);
-        ServicioAdicional servicio2 = new ServicioAdicional(proxNumServicio, "Cambio de aceite", "20/11/2023", "14:00", "Aceite sintético", vehiculo2, empleado3, 2500);
-
-        registrarServicio(servicio1);
-        registrarServicio(servicio2);
-
-        System.out.println("Datos de prueba cargados exitosamente.");
-    }   
+    System.out.println("Datos de prueba cargados exitosamente.");
+}
 }

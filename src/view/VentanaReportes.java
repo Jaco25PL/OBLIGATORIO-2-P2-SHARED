@@ -11,6 +11,7 @@ import model.Entrada;
 import model.Salida;
 import model.ServicioAdicional;
 import model.Vehiculo;
+import util.ValidadorFechaHora;
 
 public class VentanaReportes extends javax.swing.JFrame {
 
@@ -52,6 +53,9 @@ public class VentanaReportes extends javax.swing.JFrame {
                 }
             }
         });
+        
+        // Agregar listeners a todos los botones de la grilla
+        agregarListenersBotonesmovimientos();
     }
 
     /**
@@ -286,6 +290,11 @@ public class VentanaReportes extends javax.swing.JFrame {
         jLabelSeleccionFecha.setBounds(20, 20, 100, 16);
 
         jButtonActualizar.setText("Actualizar");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
         jPanelMovimientos.add(jButtonActualizar);
         jButtonActualizar.setBounds(210, 20, 100, 27);
         jPanelMovimientos.add(jTextFieldFecha);
@@ -336,17 +345,21 @@ public class VentanaReportes extends javax.swing.JFrame {
         jPanelMovimientos.add(jLabelHora18a00);
         jLabelHora18a00.setBounds(10, 220, 80, 16);
 
+        jLabelDia3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDia3.setText("Día 3");
         jPanelMovimientos.add(jLabelDia3);
-        jLabelDia3.setBounds(430, 60, 140, 16);
+        jLabelDia3.setBounds(380, 60, 140, 16);
 
+        jLabelDia2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDia2.setText("Día 2");
         jPanelMovimientos.add(jLabelDia2);
-        jLabelDia2.setBounds(290, 60, 140, 16);
+        jLabelDia2.setBounds(240, 60, 130, 16);
 
+        jLabelDia1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDia1.setText("Día 1");
+        jLabelDia1.setToolTipText("");
         jPanelMovimientos.add(jLabelDia1);
-        jLabelDia1.setBounds(140, 60, 140, 16);
+        jLabelDia1.setBounds(90, 60, 140, 16);
 
         jLabelHora0a6.setText("00:00-05:59");
         jPanelMovimientos.add(jLabelHora0a6);
@@ -566,6 +579,277 @@ public class VentanaReportes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonExportarActionPerformed
 
+    //MOVIMIENTOS
+
+    
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        try {
+            String fecha = jTextFieldFecha.getText().trim();
+            
+            // Validar formato de fecha usando ValidadorFechaHora
+            ValidadorFechaHora.validarFecha(fecha);
+            
+            // Actualizar los botones con los datos de movimientos
+            actualizarBotonesMovimientos(fecha);
+            
+        } catch (Exception e) {
+            ClaroOscuro.mostrarError(this, "Error: " + e.getMessage(), "Error");
+        }
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
+    
+    private void actualizarBotonesMovimientos(String fecha) {
+        // Calcular las fechas para las tres columnas
+        String fecha1 = fecha;
+        String fecha2 = calcularFechaSiguiente(fecha, 1);
+        String fecha3 = calcularFechaSiguiente(fecha, 2);
+
+        // Actualizar cada botón con su color correspondiente
+        actualizarBoton(jButtonHora1Dia1, fecha1, 0);
+        actualizarBoton(jButtonHora1Dia2, fecha2, 0);
+        actualizarBoton(jButtonHora1Dia3, fecha3, 0);
+
+        actualizarBoton(jButtonHora2Dia1, fecha1, 1);
+        actualizarBoton(jButtonHora2Dia2, fecha2, 1);
+        actualizarBoton(jButtonHora2Dia3, fecha3, 1);
+
+        actualizarBoton(jButtonHora3Dia1, fecha1, 2);
+        actualizarBoton(jButtonHora3Dia2, fecha2, 2);
+        actualizarBoton(jButtonHora3Dia3, fecha3, 2);
+
+        actualizarBoton(jButtonHora4Dia1, fecha1, 3);
+        actualizarBoton(jButtonHora4Dia2, fecha2, 3);
+        actualizarBoton(jButtonHora4Dia3, fecha3, 3);
+
+        // Actualizar etiquetas de días
+        jLabelDia1.setText("Día 1: " + fecha1);
+        jLabelDia2.setText("Día 2: " + fecha2);
+        jLabelDia3.setText("Día 3: " + fecha3);
+    }
+    
+    private void actualizarBoton(javax.swing.JButton boton, String fecha, int indiceHora) {
+        // Obtener rango de horas
+        int horaInicio = obtenerHoraInicio(indiceHora);
+        int horaFin = obtenerHoraFin(indiceHora);
+
+        // Obtener movimientos para este período
+        ArrayList<Object> movimientos = obtenerMovimientosPorPeriodo(fecha, horaInicio, horaFin);
+
+        // Determinar color según cantidad de movimientos
+        int cantidadMovimientos = movimientos.size();
+        java.awt.Color color;
+
+        if (cantidadMovimientos < 5) {
+            color = java.awt.Color.GREEN;
+        } else if (cantidadMovimientos <= 8) {
+            color = java.awt.Color.YELLOW;
+        } else {
+            color = java.awt.Color.RED;
+        }
+
+        // Actualizar texto y color del botón
+        boton.setText(cantidadMovimientos + " mov.");
+        boton.setBackground(color);
+
+        // Guardar los datos del botón para usarlos cuando se haga clic
+        boton.putClientProperty("fecha", fecha);
+        boton.putClientProperty("indiceHora", indiceHora);
+        boton.putClientProperty("movimientos", movimientos);
+    }
+    
+    private ArrayList<Object> obtenerMovimientosPorPeriodo(String fecha, int horaInicio, int horaFin) {
+        ArrayList<Object> movimientosPeriodo = new ArrayList<>();
+        ArrayList<Object> todosLosMovimientos = obtenerTodosLosMovimientos();
+        
+        for (int i = 0; i < todosLosMovimientos.size(); i++) {
+            Object movimiento = todosLosMovimientos.get(i);
+            
+            String fechaMovimiento = "";
+            String horaMovimiento = "";
+            
+            if (movimiento instanceof Entrada) {
+                Entrada entrada = (Entrada) movimiento;
+                fechaMovimiento = entrada.getFecha();
+                horaMovimiento = entrada.getHora();
+            } else if (movimiento instanceof Salida) {
+                Salida salida = (Salida) movimiento;
+                fechaMovimiento = salida.getFecha();
+                horaMovimiento = salida.getHora();
+            } else if (movimiento instanceof ServicioAdicional) {
+                ServicioAdicional servicio = (ServicioAdicional) movimiento;
+                fechaMovimiento = servicio.getFecha();
+                horaMovimiento = servicio.getHora();
+            }
+            
+            // Verificar si la fecha coincide
+            if (fechaMovimiento.equals(fecha)) {
+                // Obtener hora como entero
+                int hora = Integer.parseInt(horaMovimiento.split(":")[0]);
+                
+                // Verificar si está en el rango horario
+                if (hora >= horaInicio && hora < horaFin) {
+                    movimientosPeriodo.add(movimiento);
+                }
+            }
+        }
+        
+        // Ordenar los movimientos por fecha y hora
+        movimientosPeriodo = sistema.ordenarMovimientos(movimientosPeriodo, true);
+        
+        return movimientosPeriodo;
+    }
+
+    private ArrayList<Object> obtenerTodosLosMovimientos() {
+        ArrayList<Object> movimientos = new ArrayList<>();
+        
+        // Agregar todas las entradas
+        for (int i = 0; i < sistema.getListaEntradas().size(); i++) {
+            movimientos.add(sistema.getListaEntradas().get(i));
+        }
+        
+        // Agregar todas las salidas
+        for (int i = 0; i < sistema.getListaSalidas().size(); i++) {
+            movimientos.add(sistema.getListaSalidas().get(i));
+        }
+        
+        // Agregar todos los servicios adicionales
+        for (int i = 0; i < sistema.getListaServiciosAdicionales().size(); i++) {
+            movimientos.add(sistema.getListaServiciosAdicionales().get(i));
+        }
+        
+        return movimientos;
+    }
+
+    private String calcularFechaSiguiente(String fecha, int diasSumar) {
+        // Parsear la fecha entrada a formato: dd/mm/yyyy
+        String[] partesFecha = fecha.split("/");
+        int dia = Integer.parseInt(partesFecha[0]);
+        int mes = Integer.parseInt(partesFecha[1]);
+        int anio = Integer.parseInt(partesFecha[2]);
+        
+        // Crear objeto LocalDate y sumar los días
+        java.time.LocalDate fechaLocal = java.time.LocalDate.of(anio, mes, dia);
+        java.time.LocalDate fechaSiguiente = fechaLocal.plusDays(diasSumar);
+        
+        // Formatear la fecha resultado a dd/mm/yyyy
+        return String.format("%02d/%02d/%04d", 
+                fechaSiguiente.getDayOfMonth(), 
+                fechaSiguiente.getMonthValue(), 
+                fechaSiguiente.getYear());
+    }
+
+    private String obtenerRangoHorario(int indiceHora) {
+        String rangoHorario = "";
+        
+        if (indiceHora == 0) {
+            rangoHorario = "00:00-05:59";
+        } else if (indiceHora == 1) {
+            rangoHorario = "06:00-11:59";
+        } else if (indiceHora == 2) {
+            rangoHorario = "12:00-17:59";
+        } else if (indiceHora == 3) {
+            rangoHorario = "18:00-23:59";
+        }
+        
+        return rangoHorario;
+    }
+
+    private int obtenerHoraInicio(int indiceHora) {
+        int horaInicio = 0;
+        
+        if (indiceHora == 0) {
+            horaInicio = 0;
+        } else if (indiceHora == 1) {
+            horaInicio = 6;
+        } else if (indiceHora == 2) {
+            horaInicio = 12;
+        } else if (indiceHora == 3) {
+            horaInicio = 18;
+        }
+        
+        return horaInicio;
+    }
+
+    private int obtenerHoraFin(int indiceHora) {
+        int horaFin = 0;
+        
+        if (indiceHora == 0) {
+            horaFin = 6;
+        } else if (indiceHora == 1) {
+            horaFin = 12;
+        } else if (indiceHora == 2) {
+            horaFin = 18;
+        } else if (indiceHora == 3) {
+            horaFin = 24;
+        }
+        
+        return horaFin;
+    }
+
+    // Método para agregar listeners a los botones
+    private void agregarListenersBotonesmovimientos() {
+        // Primera fila
+        jButtonHora1Dia1.addActionListener(new MovListener());
+        jButtonHora1Dia2.addActionListener(new MovListener());
+        jButtonHora1Dia3.addActionListener(new MovListener());
+        
+        // Segunda fila
+        jButtonHora2Dia1.addActionListener(new MovListener());
+        jButtonHora2Dia2.addActionListener(new MovListener());
+        jButtonHora2Dia3.addActionListener(new MovListener());
+        
+        // Tercera fila
+        jButtonHora3Dia1.addActionListener(new MovListener());
+        jButtonHora3Dia2.addActionListener(new MovListener());
+        jButtonHora3Dia3.addActionListener(new MovListener());
+        
+        // Cuarta fila
+        jButtonHora4Dia1.addActionListener(new MovListener());
+        jButtonHora4Dia2.addActionListener(new MovListener());
+        jButtonHora4Dia3.addActionListener(new MovListener());
+    }
+
+    // Clase interna para manejar los eventos de los botones, según la consigna
+    private class MovListener implements java.awt.event.ActionListener {
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            // este código se ejecutará al presionar el botón, obtengo cuál botón
+            javax.swing.JButton cual = ((javax.swing.JButton) e.getSource());
+            
+            try {
+                // Recuperar datos guardados en el botón
+                String fecha = (String) cual.getClientProperty("fecha");
+                Integer indiceHoraObj = (Integer) cual.getClientProperty("indiceHora");
+                ArrayList<Object> movimientos = (ArrayList<Object>) cual.getClientProperty("movimientos");
+                
+                // Verificar que todos los datos necesarios estén presentes
+                if (fecha == null || indiceHoraObj == null || movimientos == null) {
+                    ClaroOscuro.mostrarAdvertencia(VentanaReportes.this, 
+                            "Por favor, ingrese una fecha y presione 'Actualizar' antes de usar los botones de la grilla.", 
+                            "Datos no inicializados");
+                    return;
+                }
+                
+                int indiceHora = indiceHoraObj.intValue();
+                
+                // Mostrar ventana emergente con los movimientos
+                mostrarVentanaMovimientos(fecha, indiceHora, movimientos);
+                
+            } catch (Exception ex) {
+                ClaroOscuro.mostrarError(VentanaReportes.this, 
+                        "Error al mostrar los movimientos: " + ex.getMessage(), 
+                        "Error");
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void mostrarVentanaMovimientos(String fecha, int indiceHora, ArrayList<Object> movimientos) {
+        String rangoHorario = obtenerRangoHorario(indiceHora);
+        
+        // Crear y mostrar la ventana de movimientos
+        VentanaMovimientos ventana = new VentanaMovimientos(
+                this, true, movimientos, fecha, rangoHorario);
+        ventana.setVisible(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActualizar;
