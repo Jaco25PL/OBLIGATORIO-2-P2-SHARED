@@ -511,6 +511,345 @@ public class Sistema {
         return servicioEncontrado;
     }
     
+    public ArrayList<String> getServiciosMasUtilizados(){
+        // Lista donde guardaremos los resultados finales
+        ArrayList<String> resultado = new ArrayList<>();
+
+        // Crear listas para almacenar los tipos de servicios y sus contadores
+        ArrayList<String> tiposServicios = new ArrayList<>();
+        ArrayList<Integer> contadores = new ArrayList<>();
+
+        // Recorrer todos los servicios y contar cuántas veces aparece cada tipo
+        for (int i = 0; i < listaServiciosAdicionales.size(); i++) {
+            ServicioAdicional servicio = listaServiciosAdicionales.get(i);
+            String tipo = servicio.getTipoServicio();
+
+            // Verificar si este tipo ya está en nuestra lista
+            boolean encontrado = false;
+            int posicion = -1;
+
+            for (int j = 0; j < tiposServicios.size(); j++) {
+                if (tiposServicios.get(j).equals(tipo)) {
+                    encontrado = true;
+                    posicion = j;
+                }
+            }
+            
+            // Si ya existe el tipo, incrementar su contador
+            if (encontrado) {
+                int valorActual = contadores.get(posicion);
+                contadores.set(posicion, valorActual + 1);
+            } // Si no existe, añadirlo con contador 1
+            else {
+                tiposServicios.add(tipo);
+                contadores.add(1);
+            }
+        }
+
+        // Ordenar los servicios por frecuencia (de mayor a menor)
+        // Usando ordenamiento burbuja simple
+        for (int i = 0; i < tiposServicios.size() - 1; i++) {
+            for (int j = 0; j < tiposServicios.size() - i - 1; j++) {
+                if (contadores.get(j) < contadores.get(j + 1)) {
+                    // Intercambiar contadores
+                    int tempContador = contadores.get(j);
+                    contadores.set(j, contadores.get(j + 1));
+                    contadores.set(j + 1, tempContador);
+
+                    // Intercambiar tipos de servicios
+                    String tempTipo = tiposServicios.get(j);
+                    tiposServicios.set(j, tiposServicios.get(j + 1));
+                    tiposServicios.set(j + 1, tempTipo);
+                }
+            }
+        }
+        
+        // Formatear y agregar todos los resultados
+        for (int i = 0; i < tiposServicios.size(); i++) {
+            String texto = tiposServicios.get(i) + " - " + contadores.get(i) + " veces";
+            resultado.add(texto);
+        }
+
+        return resultado;
+    }
+    
+    public ArrayList<String> getEmpleadosConMenosMovimientos() {
+        // Lista donde guardaremos los resultados finales
+        ArrayList<String> resultado = new ArrayList<>();
+
+        // Crear listas para almacenar los empleados y sus contadores de movimientos
+        ArrayList<Empleado> empleados = new ArrayList<>();
+        ArrayList<Integer> contadores = new ArrayList<>();
+
+        // Primero, agregar todos los empleados a la lista
+        for (int i = 0; i < listaEmpleados.size(); i++) {
+            empleados.add(listaEmpleados.get(i));
+            contadores.add(0); // Inicializar contadores en 0
+        }
+
+        // Contar movimientos para cada empleado
+        // 1. Contar entradas
+        for (int i = 0; i < listaEntradas.size(); i++) {
+            Entrada entrada = listaEntradas.get(i);
+            int cedulaEmpleado = entrada.getEmpleado().getCedula();
+            
+            // Buscar el empleado en nuestra lista
+            boolean encontrado = false;
+            int posicion = -1;
+            int j = 0;
+            
+            while (j < empleados.size() && !encontrado) {
+                if (empleados.get(j).getCedula() == cedulaEmpleado) {
+                    encontrado = true;
+                    posicion = j;
+                }
+                j++;
+            }
+            
+            // Si encontramos al empleado, incrementar su contador
+            if (encontrado) {
+                contadores.set(posicion, contadores.get(posicion) + 1);
+            }
+        }
+        
+        // 2. Contar salidas
+        for (int i = 0; i < listaSalidas.size(); i++) {
+            Salida salida = listaSalidas.get(i);
+            int cedulaEmpleado = salida.getEmpleado().getCedula();
+            
+            boolean encontrado = false;
+            int posicion = -1;
+            int j = 0;
+            
+            while (j < empleados.size() && !encontrado) {
+                if (empleados.get(j).getCedula() == cedulaEmpleado) {
+                    encontrado = true;
+                    posicion = j;
+                }
+                j++;
+            }
+            
+            if (encontrado) {
+                contadores.set(posicion, contadores.get(posicion) + 1);
+            }
+        }
+        
+        // 3. Contar servicios adicionales
+        for (int i = 0; i < listaServiciosAdicionales.size(); i++) {
+            ServicioAdicional servicio = listaServiciosAdicionales.get(i);
+            int cedulaEmpleado = servicio.getEmpleado().getCedula();
+            
+            boolean encontrado = false;
+            int posicion = -1;
+            int j = 0;
+            
+            while (j < empleados.size() && !encontrado) {
+                if (empleados.get(j).getCedula() == cedulaEmpleado) {
+                    encontrado = true;
+                    posicion = j;
+                }
+                j++;
+            }
+            
+            if (encontrado) {
+                contadores.set(posicion, contadores.get(posicion) + 1);
+            }
+        }
+
+        // Ordenar los empleados por cantidad de movimientos (de menor a mayor)
+        for (int i = 0; i < empleados.size() - 1; i++) {
+            for (int j = 0; j < empleados.size() - i - 1; j++) {
+                if (contadores.get(j) > contadores.get(j + 1)) {
+                    // Intercambiar contadores
+                    int tempContador = contadores.get(j);
+                    contadores.set(j, contadores.get(j + 1));
+                    contadores.set(j + 1, tempContador);
+
+                    // Intercambiar empleados
+                    Empleado tempEmpleado = empleados.get(j);
+                    empleados.set(j, empleados.get(j + 1));
+                    empleados.set(j + 1, tempEmpleado);
+                }
+            }
+        }
+        
+        // Formatear y agregar todos los resultados
+        for (int i = 0; i < empleados.size(); i++) {
+            String texto = empleados.get(i).getNombre() + " - " + contadores.get(i) + " movimientos";
+            resultado.add(texto);
+        }
+
+        return resultado;
+    }
+    
+    public ArrayList<String> getEstadiasMasLargas(){
+        // Lista donde guardaremos los resultados finales
+        ArrayList<String> resultado = new ArrayList<>();
+
+        // Crear listas para almacenar los datos
+        ArrayList<String> matriculasVehiculos = new ArrayList<>();
+        ArrayList<String> duraciones = new ArrayList<>();
+        ArrayList<Long> minutosEstadia = new ArrayList<>(); // Para ordenar
+
+        // Recorrer todas las salidas para encontrar estadías completas
+        for (int i = 0; i < listaSalidas.size(); i++) {
+            Salida salida = listaSalidas.get(i);
+            
+            if (salida.getEntrada() != null) {
+                Entrada entrada = salida.getEntrada();
+                Vehiculo vehiculo = entrada.getVehiculo();
+                
+                // Calcular la duración de la estadía usando el método existente
+                String duracion = calcularDiferenciaTiempo(
+                    entrada.getFecha(), entrada.getHora(),
+                    salida.getFecha(), salida.getHora()
+                );
+                
+                // Convertir la duración a un valor numérico para ordenar
+                long minutos = convertirDuracionAMinutos(duracion);
+                
+                String infoVehiculo = vehiculo.getMarca() + " " + vehiculo.getModelo() + 
+                                     " - " + vehiculo.getMatricula();
+                
+                matriculasVehiculos.add(infoVehiculo);
+                duraciones.add(duracion);
+                minutosEstadia.add(minutos);
+            }
+        }
+
+        // Ordenar las estadías por duración (de mayor a menor)
+        for (int i = 0; i < minutosEstadia.size() - 1; i++) {
+            for (int j = 0; j < minutosEstadia.size() - i - 1; j++) {
+                if (minutosEstadia.get(j) < minutosEstadia.get(j + 1)) {
+                    // Intercambiar los tres arrays
+                    long tempMinutos = minutosEstadia.get(j);
+                    minutosEstadia.set(j, minutosEstadia.get(j + 1));
+                    minutosEstadia.set(j + 1, tempMinutos);
+
+                    String tempMatricula = matriculasVehiculos.get(j);
+                    matriculasVehiculos.set(j, matriculasVehiculos.get(j + 1));
+                    matriculasVehiculos.set(j + 1, tempMatricula);
+                    
+                    String tempDuracion = duraciones.get(j);
+                    duraciones.set(j, duraciones.get(j + 1));
+                    duraciones.set(j + 1, tempDuracion);
+                }
+            }
+        }
+        
+        // Formatear y agregar todos los resultados
+        for (int i = 0; i < matriculasVehiculos.size(); i++) {
+            String texto = matriculasVehiculos.get(i) + " - " + duraciones.get(i);
+            resultado.add(texto);
+        }
+
+        return resultado;
+    }
+
+    // Método auxiliar para convertir la duración formateada a minutos totales
+    private long convertirDuracionAMinutos(String duracion) {
+        long minutosTotales = 0;
+        
+        // Primero, separar por comas para obtener cada componente de tiempo
+        String[] componentes = duracion.split(", ");
+        
+        for (int i = 0; i < componentes.length; i++) {
+            String componente = componentes[i];
+            
+            if (componente.contains(":")) {
+                // Es el componente de horas:minutos
+                String[] partesHorasMinutos = componente.split(":");
+                int horas = Integer.parseInt(partesHorasMinutos[0]);
+                int minutos = Integer.parseInt(partesHorasMinutos[1]);
+                minutosTotales += horas * 60 + minutos;
+            } else {
+                // Es un componente de años, meses o días
+                // Extraer el valor numérico
+                String numeroStr = componente.replaceAll("[^0-9]", "");
+                if (!numeroStr.isEmpty()) {
+                    int valor = Integer.parseInt(numeroStr);
+                    
+                    if (componente.contains("año") || componente.contains("años")) {
+                        minutosTotales += valor * 365 * 24 * 60L; // Uso 365L para evitar desbordamiento
+                    } else if (componente.contains("mes") || componente.contains("meses")) {
+                        minutosTotales += valor * 30 * 24 * 60L;
+                    } else if (componente.contains("día") || componente.contains("días") || 
+                              componente.contains("dia") || componente.contains("dias")) {
+                        minutosTotales += valor * 24 * 60L;
+                    }
+                }
+            }
+        }
+        
+        return minutosTotales;
+    }
+
+    public ArrayList<String> getClientesConMasVehiculos(){
+        // Lista donde guardaremos los resultados finales
+        ArrayList<String> resultado = new ArrayList<>();
+
+        // Crear listas para almacenar los clientes y sus contadores de vehículos
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        ArrayList<Integer> contadores = new ArrayList<>();
+
+        // Recorrer todos los contratos y contar cuántos vehículos tiene cada cliente
+        for (int i = 0; i < listaContratos.size(); i++) {
+            Contrato contrato = listaContratos.get(i);
+            Cliente cliente = contrato.getClienteContrato();
+
+            // Verificar si este cliente ya está en nuestra lista
+            boolean encontrado = false;
+            int posicion = -1;
+
+            for (int j = 0; j < clientes.size(); j++) {
+                if (clientes.get(j).getCedula() == cliente.getCedula()) {
+                    encontrado = true;
+                    posicion = j;
+                }
+            }
+            
+            // Si ya existe el cliente, incrementar su contador
+            if (encontrado) {
+                int valorActual = contadores.get(posicion);
+                contadores.set(posicion, valorActual + 1);
+            } 
+            // Si no existe, añadirlo con contador 1
+            else {
+                clientes.add(cliente);
+                contadores.add(1);
+            }
+        }
+
+        // Ordenar los clientes por cantidad de vehículos (de mayor a menor)
+        // Usando ordenamiento burbuja simple
+        for (int i = 0; i < clientes.size() - 1; i++) {
+            for (int j = 0; j < clientes.size() - i - 1; j++) {
+                if (contadores.get(j) < contadores.get(j + 1)) {
+                    // Intercambiar contadores
+                    int tempContador = contadores.get(j);
+                    contadores.set(j, contadores.get(j + 1));
+                    contadores.set(j + 1, tempContador);
+
+                    // Intercambiar clientes
+                    Cliente tempCliente = clientes.get(j);
+                    clientes.set(j, clientes.get(j + 1));
+                    clientes.set(j + 1, tempCliente);
+                }
+            }
+        }
+        
+        // Formatear y agregar todos los resultados
+        for (int i = 0; i < clientes.size(); i++) {
+            String texto = clientes.get(i).getNombre() + " - " + contadores.get(i) + " vehículo";
+            if (contadores.get(i) > 1) {
+                texto += "s";
+            }
+            resultado.add(texto);
+        }
+
+        return resultado;
+    }
+    
     public ArrayList<Object> getMovimientosVehiculo(String matricula) {
         ArrayList<Object> movimientos = new ArrayList<>();
     
@@ -550,7 +889,7 @@ public class Sistema {
     }
     
     public ArrayList<Object> filtrarMovimientos(ArrayList<Object> movimientos,
-            boolean incluirEntradas, boolean incluirSalidas, boolean incluirServicios) {
+    boolean incluirEntradas, boolean incluirSalidas, boolean incluirServicios) {
 
         ArrayList<Object> movimientosFiltrados = new ArrayList<>();
 
