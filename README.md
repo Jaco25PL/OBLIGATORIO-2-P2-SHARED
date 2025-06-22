@@ -61,10 +61,10 @@
 
 ## Fase 5: Reportes (15%)
 
-10. Ventana de Reportes con Pestañas (2-3 días)
-1. Historial por vehículo: Tabla, ordenamiento, filtros, exportación TXT
-1. Grilla de movimientos: Botones 4x3, colores según cantidad, ventanas emergentes
-1. Estadísticas generales: Cálculos y visualización
+10. **LISTO** Ventana de Reportes con Pestañas (2-3 días)
+1. **LISTO** Historial por vehículo: Tabla, ordenamiento, filtros, exportación TXT
+1. **LISTO** Grilla de movimientos: Botones 4x3, colores según cantidad, ventanas emergentes
+1. **LISTO** Estadísticas generales: Cálculos y visualización
 
 ## Fase 6: Funcionalidades Complementarias (10%)
 
@@ -73,18 +73,18 @@
 - Serialización en DATOS.ser
 - Recuperación y grabación con confirmación
 
-12. Mini Juego (1 día)
+12. **LISTO** Mini Juego (1 día)
 
-- Implementa algo simple (puede usar ChatGPT)
-- Uso de mouse/teclado
+- **LISTO** Implementa algo simple (puede usar ChatGPT)
+- **LISTO** Uso de mouse/teclado
 
-13. Información de Autores (medio día)
+13. **LISTO** Información de Autores (medio día)
 
-- Ventana con datos completos y fotos
+- **LISTO** Ventana con datos completos y fotos
 
-14. Modo Oscuro (medio día)
+14. **LISTO** Modo Oscuro (medio día)
 
-- Implementa cambio de tema en todas las ventanas
+- **LISTO** Implementa cambio de tema en todas las ventanas
 
 ## Fase 7: Documentación y Entrega (tiempo paralelo)
 
@@ -96,7 +96,7 @@
 
 16. Documentación PDF (1 día)
 
-- Carátula con fotos
+- **LISTO** Carátula con fotos
 - Diagrama UML
 - Link del video
 
