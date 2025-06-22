@@ -3,6 +3,8 @@
  */
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,7 +20,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import observer.SistemaObserver;
+// import observer.SistemaObserver;
 
 public class Sistema implements Serializable{
 
@@ -42,7 +44,9 @@ public class Sistema implements Serializable{
     
     // Lista de observers
     // transitent para que no se serializen los observers
-    private transient List<SistemaObserver> observers = new ArrayList<>();
+    private transient PropertyChangeSupport manejador;
+    // private transient List<SistemaObserver> observers = new ArrayList<>();
+
 
     //Constructor
     public Sistema() {
@@ -61,6 +65,15 @@ public class Sistema implements Serializable{
         this.proxNumSalida = 1;
         this.proxNumServicio = 1;
 
+        this.manejador = new PropertyChangeSupport(this);
+    }
+
+    // Métodos para manejar listeners
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        if (manejador == null) {
+            manejador = new PropertyChangeSupport(this);
+        }
+        manejador.addPropertyChangeListener(listener);
     }
 
     //Metodos
@@ -70,7 +83,8 @@ public class Sistema implements Serializable{
         if (!existeClienteConCedula(cliente.getCedula())) {
             registrado = true;
             listaClientes.add(cliente);
-            notificarClienteCreado();
+            // notificarClienteCreado();
+            manejador.firePropertyChange("clienteCreado", null, null);
         }
         return registrado;
     }
@@ -91,7 +105,9 @@ public class Sistema implements Serializable{
             listaClientes.remove(cliente);
             eliminado = true;
             
-            notificarClienteEliminado();
+            // notificarClienteEliminado();
+
+            manejador.firePropertyChange("clienteEliminado", null, null);
         }
         return eliminado;
     }
@@ -126,7 +142,9 @@ public class Sistema implements Serializable{
         if (!existeVehiculoConMatricula(vehiculo.getMatricula())) {
             registrado = true;
             listaVehiculos.add(vehiculo);
-            notificarVehiculoCreado();
+            // notificarVehiculoCreado();
+
+            manejador.firePropertyChange("vehiculoCreado", null, null);
         }
         return registrado;
     }
@@ -138,7 +156,9 @@ public class Sistema implements Serializable{
             
             listaVehiculos.remove(vehiculo);
             eliminado = true;
-            notificarVehiculoEliminado();
+            // notificarVehiculoEliminado();
+
+            manejador.firePropertyChange("vehiculoEliminado", null, null);
         }
         return eliminado;
     }
@@ -173,7 +193,9 @@ public class Sistema implements Serializable{
         if (!existeEmpleadoConCedula(empleado.getCedula())) {
             registrado = true;
             listaEmpleados.add(empleado);
-            notificarEmpleadoCreado();
+            // notificarEmpleadoCreado();
+
+            manejador.firePropertyChange("empleadoCreado", null, null);
         }
         return registrado;
     }
@@ -185,7 +207,9 @@ public class Sistema implements Serializable{
             
             listaEmpleados.remove(empleado);
             eliminado = true;
-            notificarEmpleadoEliminado();
+            // notificarEmpleadoEliminado();
+
+            manejador.firePropertyChange("empleadoEliminado", null, null);
         }
         return eliminado;
     }
@@ -219,7 +243,9 @@ public class Sistema implements Serializable{
         contrato.setNumContrato(proxNumContrato);
         listaContratos.add(contrato);
         proxNumContrato++;
-        notificarContratoCreado();
+        // notificarContratoCreado();
+
+        manejador.firePropertyChange("contratoCreado", null, null);
         return true;
     }
 
@@ -230,7 +256,8 @@ public class Sistema implements Serializable{
             
             listaContratos.remove(contrato);
             eliminado = true;
-            notificarContratoEliminado();
+            // notificarContratoEliminado();
+            manejador.firePropertyChange("contratoEliminado", null, null);
         }
         return eliminado;
     }
@@ -404,7 +431,8 @@ public class Sistema implements Serializable{
         entrada.setNumMovimiento(proxNumEntrada);
         listaEntradas.add(entrada);
         proxNumEntrada++;
-        notificarEntradaCreada();                
+        // notificarEntradaCreada();  
+        manejador.firePropertyChange("entradaCreada", null, null);              
         return true;
     }
 
@@ -490,7 +518,8 @@ public class Sistema implements Serializable{
         entrada.setSalidaAsociada(salida);
         listaSalidas.add(salida);
         proxNumSalida++;
-        notificarSalidaCreada();
+        // notificarSalidaCreada();
+        manejador.firePropertyChange("salidaCreada", null, null);
         return true;
     }
     
@@ -503,6 +532,7 @@ public class Sistema implements Serializable{
         servicio.setNumMovimiento(proxNumServicio);
         listaServiciosAdicionales.add(servicio);
         proxNumServicio++;
+        manejador.firePropertyChange("servicioCreado", null, null);
         return true;
     }
     
@@ -1080,125 +1110,131 @@ public class Sistema implements Serializable{
     }
     
     // Registrar observer
-    public void addObserver(SistemaObserver observer) {
-        if (observers == null) {
-            observers = new ArrayList<>();
-        }
-        observers.add(observer);
-    }
+    // public void addObserver(SistemaObserver observer) {
+        // if (observers == null) {
+        //     observers = new ArrayList<>();
+        // }
+        // observers.add(observer);
+    // }
     
     // Notificar cambios
-    private void notificarClienteEliminado() {
-        // Verificar que observers no sea null antes de iterar
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onClienteEliminado();
-            }
-        }
-    }
+    // private void notificarClienteEliminado() {
+    //     // Verificar que observers no sea null antes de iterar
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onClienteEliminado();
+    //     //     }
+    //     // }
+    // }
 
-    private void notificarClienteCreado() {
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onClienteCreado();
-            }
-        }
-    }
+    // private void notificarClienteCreado() {
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onClienteCreado();
+    //     //     }
+    //     // }
+    // }
     
-    // Aplicar el mismo patrón a TODOS los métodos de notificación...
-    private void notificarVehiculoEliminado() {
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onVehiculoEliminado();
-            }
-        }
-    }
+    // // Aplicar el mismo patrón a TODOS los métodos de notificación...
+    // private void notificarVehiculoEliminado() {
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onVehiculoEliminado();
+    //     //     }
+    //     // }
+    // }
 
-    private void notificarVehiculoCreado() {
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onVehiculoCreado();
-            }
-        }
-    }
+    // private void notificarVehiculoCreado() {
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onVehiculoCreado();
+    //     //     }
+    //     // }
+    // }
 
-    private void notificarEmpleadoEliminado() {
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onEmpleadoEliminado();
-            }
-        }
-    }
+    // private void notificarEmpleadoEliminado() {
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onEmpleadoEliminado();
+    //     //     }
+    //     // }
+    // }
 
-    private void notificarEmpleadoCreado() {
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onEmpleadoCreado();
-            }
-        }
-    }
+    // private void notificarEmpleadoCreado() {
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onEmpleadoCreado();
+    //     //     }
+    //     // }
+    // }
 
-    private void notificarContratoEliminado() {
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onContratoEliminado();
-            }
-        }
-    }
+    // private void notificarContratoEliminado() {
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onContratoEliminado();
+    //     //     }
+    //     // }
+    // }
 
-    private void notificarContratoCreado() {
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onContratoCreado();
-            }
-        }
-    }
+    // private void notificarContratoCreado() {
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onContratoCreado();
+    //     //     }
+    //     // }
+    // }
 
-    private void notificarEntradaCreada(){
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onEntradaCreada();
-            }
-        }
-    }
+    // private void notificarEntradaCreada(){
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onEntradaCreada();
+    //     //     }
+    //     // }
+    // }
 
-    private void notificarSalidaCreada(){
-        if (observers != null) {
-            for (int i = 0; i < observers.size(); i++) {
-                SistemaObserver observer = observers.get(i);
-                observer.onSalidaCreada();
-            }
-        }
-    }
+    // private void notificarSalidaCreada(){
+    //     // if (observers != null) {
+    //     //     for (int i = 0; i < observers.size(); i++) {
+    //     //         SistemaObserver observer = observers.get(i);
+    //     //         observer.onSalidaCreada();
+    //     //     }
+    //     // }
+    // }
 
     public boolean existenDatosGuardados() {
         java.io.File archivo = new java.io.File("DATOS.ser");
         return archivo.exists();
     }
 
-
     public void guardarDatos() throws IOException{
+        // try catch con recursos, cierra automaticamente el ObjectOutputStream (out.close())
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("DATOS.ser"))) {
-            out.writeObject(this);
+            out.writeObject(this); // serializamos el sistema que contiene todas las listas, implementamos serializable en las clases para serializar correctamente
+        } catch (FileNotFoundException e) {
+            System.err.println("No se pudo encontrar el archivo para guardar los datos: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("Error al guardar los datos: " + e.getMessage());
         }
     }
 
-    public Sistema cargarDatos() throws IOException, ClassNotFoundException {
+    public Sistema cargarDatos() throws IOException, ClassNotFoundException, FileNotFoundException {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("DATOS.ser"))) {
-            return (Sistema) in.readObject(); // ← Debe retornar el sistema cargado
+            return (Sistema) in.readObject(); // retornar el sistema cargado
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("No hay datos guardados previamente");
+        } catch (IOException e) {
+            throw new IOException("Error al cargar los datos: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            throw new ClassNotFoundException("Clase no encontrada al cargar los datos: " + e.getMessage());
         }
     }
 

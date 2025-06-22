@@ -4,14 +4,18 @@
 package view;
 
 import controlador.EntradaControlador;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 // import javax.swing.JOptionPane;
 import model.Empleado;
 import model.Vehiculo;
-import observer.SistemaObserver;
+// import observer.SistemaObserver;
 
-public class VentanaEntradas extends javax.swing.JFrame implements SistemaObserver{
+// public class VentanaEntradas extends javax.swing.JFrame implements SistemaObserver{
+public class VentanaEntradas extends javax.swing.JFrame implements PropertyChangeListener{
 
     private EntradaControlador controlador;
     
@@ -20,7 +24,8 @@ public class VentanaEntradas extends javax.swing.JFrame implements SistemaObserv
         
         initComponents();
 
-        controlador.getSistema().addObserver(this);
+        // controlador.getSistema().addObserver(this);
+        controlador.getSistema().addPropertyChangeListener(this);
         
         actualizarListaVehiculos();
         actualizarListaEmpleados();
@@ -294,52 +299,70 @@ public class VentanaEntradas extends javax.swing.JFrame implements SistemaObserv
     private javax.swing.JTextField jTextFieldNotas;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+        String propertyName = evt.getPropertyName();
+
+        if ("vehiculoCreado".equals(propertyName) || "vehiculoEliminado".equals(propertyName)) {
+            actualizarListaVehiculos(); // Actualizar lista de vehículos
+        } else if ("empleadoCreado".equals(propertyName) || "empleadoEliminado".equals(propertyName)) {
+            actualizarListaEmpleados(); // Actualizar lista de empleados
+        } else if ("entradaCreada".equals(propertyName)) {
+            actualizarListaVehiculos(); // Actualizar cuando se crea una entrada
+        } else if ("salidaCreada".equals(propertyName)) {
+            actualizarListaVehiculos(); // Actualizar cuando se crea una salida
+        } else if ("contratoCreado".equals(propertyName) || "contratoEliminado".equals(propertyName)) {
+            if (jListVehiculos.getSelectedValue() != null) {
+                vehiculoTieneContrato(); // Actualizar si se crea o elimina un contrato
+            }
+        }
+    }
+
     // Implementar todos los métodos de SistemaObserver:
-    @Override
-    public void onClienteEliminado() {
-    }
+    // @Override
+    // public void onClienteEliminado() {
+    // }
 
-    @Override
-    public void onClienteCreado() {
-    }
+    // @Override
+    // public void onClienteCreado() {
+    // }
 
-    @Override
-    public void onVehiculoEliminado() {
-        actualizarListaVehiculos(); // Actualizar si se elimina un vehículo
-    }
+    // @Override
+    // public void onVehiculoEliminado() {
+    //     actualizarListaVehiculos(); // Actualizar si se elimina un vehículo
+    // }
 
-    @Override
-    public void onVehiculoCreado() {
-        actualizarListaVehiculos(); // Actualizar si se crea un vehículo
-    }
+    // @Override
+    // public void onVehiculoCreado() {
+    //     actualizarListaVehiculos(); // Actualizar si se crea un vehículo
+    // }
 
-    @Override
-    public void onEmpleadoEliminado() {
-        actualizarListaEmpleados(); // Actualizar si se elimina un empleado
-    }
+    // @Override
+    // public void onEmpleadoEliminado() {
+    //     actualizarListaEmpleados(); // Actualizar si se elimina un empleado
+    // }
 
-    @Override
-    public void onEmpleadoCreado() {
-        actualizarListaEmpleados(); // Actualizar si se crea un empleado
-    }
+    // @Override
+    // public void onEmpleadoCreado() {
+    //     actualizarListaEmpleados(); // Actualizar si se crea un empleado
+    // }
 
-    @Override
-    public void onContratoEliminado() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onContratoEliminado() {
+    // }
 
-    @Override
-    public void onContratoCreado() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onContratoCreado() {
+    // }
 
-    @Override
-    public void onEntradaCreada() {
-        actualizarListaVehiculos(); // Actualizar cuando se crea una entrada (el vehículo ya no está disponible)
-    }
+    // @Override
+    // public void onEntradaCreada() {
+    //     actualizarListaVehiculos(); // Actualizar cuando se crea una entrada (el vehículo ya no está disponible)
+    // }
 
-    @Override
-    public void onSalidaCreada() {
-        actualizarListaVehiculos(); // ¡ESTA ES LA CLAVE! Actualizar cuando se crea una salida (el vehículo vuelve a estar disponible)
-    }
+    // @Override
+    // public void onSalidaCreada() {
+    //     actualizarListaVehiculos(); // ¡ESTA ES LA CLAVE! Actualizar cuando se crea una salida (el vehículo vuelve a estar disponible)
+    // }
 }

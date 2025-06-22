@@ -56,6 +56,10 @@ public class VehiculoControlador {
         }
     }
     
+    public Sistema getSistema(){
+        return sistema;
+    }
+
     public ArrayList<Vehiculo> getListaVehiculos(){
         return sistema.getListaVehiculos();
     }

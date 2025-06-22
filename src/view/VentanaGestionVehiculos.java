@@ -4,12 +4,15 @@
 package view;
 
 import controlador.VehiculoControlador;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.Vehiculo;
 
-public class VentanaGestionVehiculos extends javax.swing.JFrame {
+public class VentanaGestionVehiculos extends javax.swing.JFrame implements PropertyChangeListener{
 
     private VehiculoControlador controlador;
     
@@ -17,6 +20,8 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
         this.controlador = controlador;
         
         initComponents();
+
+        controlador.getSistema().addPropertyChangeListener(this);
         
         actualizarListaVehiculos();
         
@@ -249,4 +254,14 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldMatricula;
     private javax.swing.JTextField jTextFieldModelo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+        String propertyName = evt.getPropertyName();
+
+        if("vehiculoCreado".equals(propertyName) || "vehiculoEliminado".equals(propertyName)) {
+            actualizarListaVehiculos();
+        } 
+    }
 }

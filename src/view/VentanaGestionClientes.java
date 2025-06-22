@@ -4,13 +4,17 @@
 package view;
 
 import controlador.ClienteControlador;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.Cliente;
-import observer.SistemaObserver;
+// import observer.SistemaObserver;
 
-public class VentanaGestionClientes extends javax.swing.JFrame implements SistemaObserver {
+// public class VentanaGestionClientes extends javax.swing.JFrame implements SistemaObserver {
+public class VentanaGestionClientes extends javax.swing.JFrame implements PropertyChangeListener{
     
     private ClienteControlador controlador;
     
@@ -20,8 +24,11 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
         initComponents();
         
         // ¡Registrarse como observer!
-        controlador.getSistema().addObserver(this);
+        // controlador.getSistema().addObserver(this);
         
+        // Registrar como listener
+        controlador.getSistema().addPropertyChangeListener(this);
+
         jPanelGestionClientes.setBounds(0,0, this.getWidth(), this.getHeight());
         
         actualizarListaClientes();
@@ -49,7 +56,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
     private void initComponents() {
 
         jPanelGestionClientes = new javax.swing.JPanel();
-        jLabelNombre = new javax.swing.JLabel();
+        jLabelNombre = new javax.swing.JLabel();    
         jLabelDireccion = new javax.swing.JLabel();
         jLabelCelular = new javax.swing.JLabel();
         jLabelCedula = new javax.swing.JLabel();
@@ -249,55 +256,55 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
     }//GEN-LAST:event_jButtonVaciarActionPerformed
 
     // Implementar todos los métodos de SistemaObserver:
-    @Override
-    public void onClienteEliminado() {
-        actualizarListaClientes(); // ¡Actualizar cuando se elimina un cliente!
-    }
+    // @Override
+    // public void onClienteEliminado() {
+    //     actualizarListaClientes(); // ¡Actualizar cuando se elimina un cliente!
+    // }
 
-    @Override
-    public void onClienteCreado() {
-        actualizarListaClientes(); // ¡Actualizar cuando se crea un cliente!
-    }
+    // @Override
+    // public void onClienteCreado() {
+    //     actualizarListaClientes(); // ¡Actualizar cuando se crea un cliente!
+    // }
 
-    @Override
-    public void onVehiculoEliminado() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onVehiculoEliminado() {
+    //     // No necesita hacer nada
+    // }
 
-    @Override
-    public void onVehiculoCreado() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onVehiculoCreado() {
+    //     // No necesita hacer nada
+    // }
 
-    @Override
-    public void onEmpleadoEliminado() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onEmpleadoEliminado() {
+    //     // No necesita hacer nada
+    // }
 
-    @Override
-    public void onEmpleadoCreado() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onEmpleadoCreado() {
+    //     // No necesita hacer nada
+    // }
 
-    @Override
-    public void onContratoEliminado() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onContratoEliminado() {
+    //     // No necesita hacer nada
+    // }
 
-    @Override
-    public void onContratoCreado() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onContratoCreado() {
+    //     // No necesita hacer nada
+    // }
 
-    @Override
-    public void onEntradaCreada() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onEntradaCreada() {
+    //     // No necesita hacer nada
+    // }
 
-    @Override
-    public void onSalidaCreada() {
-        // No necesita hacer nada
-    }
+    // @Override
+    // public void onSalidaCreada() {
+    //     // No necesita hacer nada
+    // }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -319,4 +326,12 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
     private javax.swing.JTextField jTextFieldDireccion;
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+        if ("clienteCreado".equals(evt.getPropertyName()) || "clienteEliminado".equals(evt.getPropertyName())) {
+            actualizarListaClientes();
+        }
+    }
 }

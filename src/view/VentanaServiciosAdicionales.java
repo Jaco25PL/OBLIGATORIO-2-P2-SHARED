@@ -4,14 +4,18 @@
 package view;
 
 import controlador.ServicioAdicionalControlador;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import model.Empleado;
 import model.ServicioAdicional;
 import model.Vehiculo;
-import observer.SistemaObserver;
+// import observer.SistemaObserver;
 
-public class VentanaServiciosAdicionales extends javax.swing.JFrame implements SistemaObserver{
+// public class VentanaServiciosAdicionales extends javax.swing.JFrame implements SistemaObserver{
+public class VentanaServiciosAdicionales extends javax.swing.JFrame implements PropertyChangeListener{
 
     private ServicioAdicionalControlador controlador;
     
@@ -20,7 +24,8 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements S
         
         initComponents();
         
-        controlador.getSistema().addObserver(this);
+        // controlador.getSistema().addObserver(this);
+        controlador.getSistema().addPropertyChangeListener(this);
         
         jComboBoxServicio.removeAllItems();
         jComboBoxServicio.addItem("Lavado");
@@ -173,6 +178,16 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements S
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        jListServiciosRealizados.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jListServiciosRealizadosPropertyChange(evt);
+            }
+        });
+        jListServiciosRealizados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListServiciosRealizadosValueChanged(evt);
+            }
+        });
         jScrollPaneServiciosRealizadps.setViewportView(jListServiciosRealizados);
 
         jPanelServiciosAdicionales.add(jScrollPaneServiciosRealizadps);
@@ -321,6 +336,14 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements S
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
+    private void jListServiciosRealizadosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jListServiciosRealizadosPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jListServiciosRealizadosPropertyChange
+
+    private void jListServiciosRealizadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListServiciosRealizadosValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jListServiciosRealizadosValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
@@ -349,46 +372,64 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements S
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void onClienteEliminado() {
+    public void propertyChange(PropertyChangeEvent evt) {
+        String propertyName = evt.getPropertyName();
+        
+        // Vehículos
+        if ("vehiculoCreado".equals(propertyName) || "vehiculoEliminado".equals(propertyName)) {
+            actualizarListaVehiculos();
+        } 
+        // Empleados
+        else if ("empleadoCreado".equals(propertyName) || "empleadoEliminado".equals(propertyName)) {
+            actualizarListaEmpleados();
+        }
+        // Servicios adicionales (este es el que falta implementar en Sistema)
+        else if ("servicioCreado".equals(propertyName)) {
+            actualizarListaServicios();
+        }
     }
 
-    @Override
-    public void onClienteCreado() {
-    }
+    // @Override
+    // public void onClienteEliminado() {
+    // }
 
-    @Override
-    public void onVehiculoEliminado() {
-        actualizarListaVehiculos();
-    }
+    // @Override
+    // public void onClienteCreado() {
+    // }
 
-    @Override
-    public void onVehiculoCreado() {
-        actualizarListaVehiculos();
-    }
+    // @Override
+    // public void onVehiculoEliminado() {
+    //     actualizarListaVehiculos();
+    // }
 
-    @Override
-    public void onEmpleadoEliminado() {
-        actualizarListaEmpleados();
-    }
+    // @Override
+    // public void onVehiculoCreado() {
+    //     actualizarListaVehiculos();
+    // }
 
-    @Override
-    public void onEmpleadoCreado() {
-        actualizarListaEmpleados();
-    }
+    // @Override
+    // public void onEmpleadoEliminado() {
+    //     actualizarListaEmpleados();
+    // }
 
-    @Override
-    public void onContratoEliminado() {
-    }
+    // @Override
+    // public void onEmpleadoCreado() {
+    //     actualizarListaEmpleados();
+    // }
 
-    @Override
-    public void onContratoCreado() {
-    }
+    // @Override
+    // public void onContratoEliminado() {
+    // }
 
-    @Override
-    public void onEntradaCreada() {
-    }
+    // @Override
+    // public void onContratoCreado() {
+    // }
 
-    @Override
-    public void onSalidaCreada() {
-    }
+    // @Override
+    // public void onEntradaCreada() {
+    // }
+
+    // @Override
+    // public void onSalidaCreada() {
+    // }
 }

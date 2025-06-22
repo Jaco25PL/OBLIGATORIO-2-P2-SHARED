@@ -4,14 +4,18 @@
 package view;
 
 import controlador.SalidaControlador;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import model.Empleado;
 import model.Entrada;
 import model.Vehiculo;
-import observer.SistemaObserver;
+// import observer.SistemaObserver;
 
-public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserver{
+// public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserver{
+public class VentanaSalidas extends javax.swing.JFrame implements PropertyChangeListener{
     
     private SalidaControlador controlador;
 
@@ -20,7 +24,8 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
         
         initComponents();
         
-        controlador.getSistema().addObserver(this);
+        // controlador.getSistema().addObserver(this);
+        controlador.getSistema().addPropertyChangeListener(this);
 
         actualizarListaEntradas();
         actualizarListaEmpleados();
@@ -287,6 +292,7 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
 
@@ -313,53 +319,67 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
     private javax.swing.JTextField jTextFieldNotas;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+        String propertyName = evt.getPropertyName();
+
+        if ("entradaCreada".equals(propertyName) || "salidaCreada".equals(propertyName)) {
+            actualizarListaEntradas();
+        } else if ("empleadoCreado".equals(propertyName) || "empleadoEliminado".equals(propertyName)) {
+            actualizarListaEmpleados();
+        } else if ("contratoCreado".equals(propertyName) || "contratoEliminado".equals(propertyName)){
+            if (jListEntradas.getSelectedValue() != null) {
+                vehiculoTieneContrato();
+            }
+        }
+    }
+
 
     // implememnatr todos los metodos aunque no se usen para que java no se enoje
-    @Override
-    public void onClienteEliminado() {
-    }
+    // @Override
+    // public void onClienteEliminado() {
+    // }
 
-    @Override
-    public void onClienteCreado() {
-    }
+    // @Override
+    // public void onClienteCreado() {
+    // }
 
-    @Override
-    public void onVehiculoEliminado() {
-        actualizarListaEntradas();
-    }
+    // @Override
+    // public void onVehiculoEliminado() {
+    //     actualizarListaEntradas();
+    // }
 
-    @Override
-    public void onVehiculoCreado() {
-        actualizarListaEntradas();
-    }
+    // @Override
+    // public void onVehiculoCreado() {
+    //     actualizarListaEntradas();
+    // }
 
-    @Override
-    public void onEmpleadoEliminado() {
-        actualizarListaEmpleados();
-    }
+    // @Override
+    // public void onEmpleadoEliminado() {
+    //     actualizarListaEmpleados();
+    // }
 
-    @Override
-    public void onEmpleadoCreado() {
-        actualizarListaEmpleados();
-    }
+    // @Override
+    // public void onEmpleadoCreado() {
+    //     actualizarListaEmpleados();
+    // }
 
-    @Override
-    public void onContratoEliminado() {
-    }
+    // @Override
+    // public void onContratoEliminado() {
+    // }
 
-    @Override
-    public void onContratoCreado() {
-    }
+    // @Override
+    // public void onContratoCreado() {
+    // }
 
-    @Override
-    public void onEntradaCreada() {
-        actualizarListaEntradas();
-    }
+    // @Override
+    // public void onEntradaCreada() {
+    //     actualizarListaEntradas();
+    // }
 
-    @Override
-    public void onSalidaCreada() {
-        actualizarListaEntradas();
-    }
-
-
+    // @Override
+    // public void onSalidaCreada() {
+    //     actualizarListaEntradas();
+    // }
 }
