@@ -15,7 +15,11 @@ public class SerializacionControlador {
     public SerializacionControlador(Sistema sistema) {
         this.sistema = sistema;
     }
+
     
+    public boolean existenDatosGuardados() {
+        return sistema.existenDatosGuardados();
+    }
 
     public boolean guardarSistema() {
         try {

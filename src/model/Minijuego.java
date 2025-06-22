@@ -28,7 +28,7 @@ public class Minijuego {
     
     public String palabraAleatoria() {
         String[] palabras = {
-            "MATEO",
+            "MATES",
             "ASADO",
             "CHIVO",
             "GORDO",
@@ -45,7 +45,25 @@ public class Minijuego {
             "MANGO",
             "PATAS",
             "TERMO",
-            "MILAS"
+            "MILAS",
+            "PIZZA",
+            "CHIMI",
+            "CONGA",
+            "TRUCO",
+            "GAMBA",
+            "CAMPO",
+            "CERRO",
+            "CHATO",
+            "OVEJA",
+            "VACAS",
+            "TEROS",
+            "MONTE",
+            "PIRIA",
+            "PUNTA",
+            "COMPA",
+            "GUITA",
+            "PALOS",
+            "PLAYA"
         };
         
         int random = (int) (Math.random() * palabras.length); 
@@ -151,6 +169,4 @@ public class Minijuego {
     public void setVictoria(boolean victoria) {
         this.victoria = victoria;
     }
-    
-    
 }

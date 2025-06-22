@@ -14,7 +14,6 @@ import controlador.VehiculoControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JOptionPane;
-import model.ServicioAdicional;
 import model.Sistema;
 
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
@@ -28,7 +27,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     private SalidaControlador salidaControlador;
     private ServicioAdicionalControlador servicioAdicionalControlador;
     private SerializacionControlador serializacionControlador;
-    
+  
     
     /**
      * Creates new form VentanaPrincipal
@@ -230,7 +229,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonClaroOscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClaroOscuroActionPerformed
-        // TODO add your handling code here:
         ClaroOscuro.setModo();
         ClaroOscuro.aplicarModo(this);
     }//GEN-LAST:event_jButtonClaroOscuroActionPerformed
@@ -271,8 +269,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemSalidasActionPerformed
 
     private void jMenuItemServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemServiciosActionPerformed
-        VentanaServiciosAdicionales ventanaServiciosAdicionales = new VentanaServiciosAdicionales(servicioAdicionalControlador);
-        ventanaServiciosAdicionales.setVisible(true);
+        VentanaServiciosAdicionales ventanaServicios = new VentanaServiciosAdicionales(servicioAdicionalControlador);
+        ventanaServicios.setVisible(true);
     }//GEN-LAST:event_jMenuItemServiciosActionPerformed
 
     private void jMenuItemReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemReportesActionPerformed
@@ -293,29 +291,49 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
         }
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
-    private void jMenuItemRecuperacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRecuperacionDatosActionPerformed
+    private void jMenuItemRecuperacionDatosActionPerformed(java.awt.event.ActionEvent evt) {
+    // PRIMERO verificar si existen datos guardados
+    if (!serializacionControlador.existenDatosGuardados()) {
+        ClaroOscuro.mostrarMensaje(this, 
+            "No hay datos guardados previamente", 
+            "Sin datos guardados");
+        return; // Salir sin hacer nada más
+    }
+    
+    // SI existen datos, entonces preguntar para confirmar
+    int opcion = ClaroOscuro.mostrarConfirmacion(this, 
+        "Al recuperar datos se borrarán los actuales. ¿Continuar?", 
+        "Recuperar datos");
         
-        int opcion = ClaroOscuro.mostrarConfirmacion(this, "Al recuperar datos se borraran los actuales. Continuar?", "Recuperar datos");
-        if (opcion == JOptionPane.YES_OPTION) {
-            boolean resultado = serializacionControlador.cargarSistema();
-            if (resultado) {
-                JOptionPane.showMessageDialog(this, "Datos recuperados correctamente.", "Recuperación exitosa", JOptionPane.INFORMATION_MESSAGE);
-                
-                // Actualizar el sistema en todos los controladores
-                this.sistema = serializacionControlador.getSistema();
-                this.clienteControlador = new ClienteControlador(this.sistema);
-                this.empleadoControlador = new EmpleadoControlador(this.sistema);
-                this.vehiculoControlador = new VehiculoControlador(this.sistema);
-                this.contratoControlador = new ContratoControlador(this.sistema);
-                this.entradaControlador = new EntradaControlador(this.sistema);
-                this.salidaControlador = new SalidaControlador(this.sistema);
-                this.servicioAdicionalControlador = new ServicioAdicionalControlador(this.sistema);
-            } else {
-                ClaroOscuro.mostrarMensaje(this, "No se pudieron recuperar los datos.\nPosiblemente no existe un archivo de datos o está corrupto.", "Error");
-            }
+    if (opcion == JOptionPane.YES_OPTION) {
+        boolean resultado = serializacionControlador.cargarSistema();
+        if (resultado) {
+            ClaroOscuro.mostrarMensaje(this, 
+                "Datos recuperados correctamente.", 
+                "Recuperación exitosa");
+            
+            // Obtener el sistema ANTES de crear controladores
+            this.sistema = serializacionControlador.getSistema();
+            
+            // Actualizar TODOS los controladores con el nuevo sistema
+            this.clienteControlador = new ClienteControlador(this.sistema);
+            this.empleadoControlador = new EmpleadoControlador(this.sistema);
+            this.vehiculoControlador = new VehiculoControlador(this.sistema);
+            this.contratoControlador = new ContratoControlador(this.sistema);
+            this.entradaControlador = new EntradaControlador(this.sistema);
+            this.salidaControlador = new SalidaControlador(this.sistema);
+            this.servicioAdicionalControlador = new ServicioAdicionalControlador(this.sistema);
+            
+            // ¡IMPORTANTE! También actualizar el serializacionControlador
+            this.serializacionControlador = new SerializacionControlador(this.sistema);
+            
+        } else {
+            ClaroOscuro.mostrarMensaje(this, 
+                "No se pudieron recuperar los datos.\nEl archivo puede estar corrupto.", 
+                "Error");
         }
-        
-    }//GEN-LAST:event_jMenuItemRecuperacionDatosActionPerformed
+    }
+}//GEN-LAST:event_jMenuItemRecuperacionDatosActionPerformed
 
     private void jMenuItemGrabacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGrabacionDatosActionPerformed
         int opcion = ClaroOscuro.mostrarConfirmacion(this, "Desea guardar los datos actuales?", "Guardar datos");
@@ -328,7 +346,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
             }
         }
     }//GEN-LAST:event_jMenuItemGrabacionDatosActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClaroOscuro;
@@ -352,8 +369,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     private javax.swing.JMenu jMenuVarios;
     private javax.swing.JPanel jPanelMain;
     // End of variables declaration//GEN-END:variables
-      @Override
-    public void propertyChange(PropertyChangeEvent evt) {
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
     }
 }

@@ -6,6 +6,9 @@ package model;
 import java.io.Serializable;
 
 public abstract class Persona implements Serializable{
+
+    private static final long serialVersionUID = 1L; // Para la serialización, version del objeto
+
     
     // Atributos
 

@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.Cliente;
+import observer.SistemaObserver;
 
-public class VentanaGestionClientes extends javax.swing.JFrame {
+public class VentanaGestionClientes extends javax.swing.JFrame implements SistemaObserver {
     
     private ClienteControlador controlador;
     
@@ -17,6 +18,9 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         this.controlador = controlador;
         
         initComponents();
+        
+        // ¡Registrarse como observer!
+        controlador.getSistema().addObserver(this);
         
         jPanelGestionClientes.setBounds(0,0, this.getWidth(), this.getHeight());
         
@@ -199,7 +203,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
             String añoCliente = jTextFieldAñoCliente.getText();
             
             controlador.registrarCliente(nombre, cedula, direccion, celular, añoCliente);
-              actualizarListaClientes();
+            actualizarListaClientes();
             
             ClaroOscuro.mostrarMensaje(this, "Cliente agregado con éxito", "Éxito");
             
@@ -243,6 +247,57 @@ public class VentanaGestionClientes extends javax.swing.JFrame {
         limpiarCampos();
         jListClientes.clearSelection();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
+
+    // Implementar todos los métodos de SistemaObserver:
+    @Override
+    public void onClienteEliminado() {
+        actualizarListaClientes(); // ¡Actualizar cuando se elimina un cliente!
+    }
+
+    @Override
+    public void onClienteCreado() {
+        actualizarListaClientes(); // ¡Actualizar cuando se crea un cliente!
+    }
+
+    @Override
+    public void onVehiculoEliminado() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onVehiculoCreado() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onEmpleadoEliminado() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onEmpleadoCreado() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onContratoEliminado() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onContratoCreado() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onEntradaCreada() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onSalidaCreada() {
+        // No necesita hacer nada
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

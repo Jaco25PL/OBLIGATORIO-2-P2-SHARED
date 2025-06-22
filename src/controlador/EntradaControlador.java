@@ -67,6 +67,10 @@ public class EntradaControlador {
         }
     }
     
+    public Sistema getSistema() {
+        return sistema;
+    }
+
     public ArrayList<Vehiculo> getVehiculosDisponiblesParaEntrada(){
         return sistema.getVehiculosDisponiblesParaEntrada();
     }

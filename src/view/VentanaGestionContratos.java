@@ -19,8 +19,7 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
 
     private ContratoControlador controlador;
 
-    
-    public VentanaGestionContratos(ContratoControlador controlador) {
+        public VentanaGestionContratos(ContratoControlador controlador) {
         this.controlador = controlador;
         
         initComponents();
@@ -429,5 +428,13 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
     @Override
     public void onContratoCreado() {
         actualizarListaContratos();
+    }
+
+    @Override
+    public void onEntradaCreada() {
+    }
+
+    @Override
+    public void onSalidaCreada() {
     }
 }

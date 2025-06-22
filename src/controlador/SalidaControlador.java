@@ -75,6 +75,10 @@ public class SalidaControlador {
             throw new Exception("No se pudo registrar la salida");
         }
     }
+
+    public Sistema getSistema() {
+        return sistema;
+    }
     
     public Vehiculo buscarVehiculoPorMatricula(String matricula) {
         return sistema.buscarVehiculoPorMatricula(matricula);

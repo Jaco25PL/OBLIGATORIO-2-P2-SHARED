@@ -9,8 +9,9 @@ import javax.swing.DefaultListModel;
 import model.Empleado;
 import model.ServicioAdicional;
 import model.Vehiculo;
+import observer.SistemaObserver;
 
-public class VentanaServiciosAdicionales extends javax.swing.JFrame {
+public class VentanaServiciosAdicionales extends javax.swing.JFrame implements SistemaObserver{
 
     private ServicioAdicionalControlador controlador;
     
@@ -18,6 +19,8 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
         this.controlador = controlador;
         
         initComponents();
+        
+        controlador.getSistema().addObserver(this);
         
         jComboBoxServicio.removeAllItems();
         jComboBoxServicio.addItem("Lavado");
@@ -344,4 +347,48 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldHora;
     private javax.swing.JTextField jTextFieldVehiculo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void onClienteEliminado() {
+    }
+
+    @Override
+    public void onClienteCreado() {
+    }
+
+    @Override
+    public void onVehiculoEliminado() {
+        actualizarListaVehiculos();
+    }
+
+    @Override
+    public void onVehiculoCreado() {
+        actualizarListaVehiculos();
+    }
+
+    @Override
+    public void onEmpleadoEliminado() {
+        actualizarListaEmpleados();
+    }
+
+    @Override
+    public void onEmpleadoCreado() {
+        actualizarListaEmpleados();
+    }
+
+    @Override
+    public void onContratoEliminado() {
+    }
+
+    @Override
+    public void onContratoCreado() {
+    }
+
+    @Override
+    public void onEntradaCreada() {
+    }
+
+    @Override
+    public void onSalidaCreada() {
+    }
 }

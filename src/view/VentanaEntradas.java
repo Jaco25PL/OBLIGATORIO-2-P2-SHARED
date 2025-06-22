@@ -9,8 +9,9 @@ import javax.swing.DefaultListModel;
 // import javax.swing.JOptionPane;
 import model.Empleado;
 import model.Vehiculo;
+import observer.SistemaObserver;
 
-public class VentanaEntradas extends javax.swing.JFrame {
+public class VentanaEntradas extends javax.swing.JFrame implements SistemaObserver{
 
     private EntradaControlador controlador;
     
@@ -18,6 +19,8 @@ public class VentanaEntradas extends javax.swing.JFrame {
         this.controlador = controlador;
         
         initComponents();
+
+        controlador.getSistema().addObserver(this);
         
         actualizarListaVehiculos();
         actualizarListaEmpleados();
@@ -290,4 +293,53 @@ public class VentanaEntradas extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldHora;
     private javax.swing.JTextField jTextFieldNotas;
     // End of variables declaration//GEN-END:variables
+
+    // Implementar todos los métodos de SistemaObserver:
+    @Override
+    public void onClienteEliminado() {
+    }
+
+    @Override
+    public void onClienteCreado() {
+    }
+
+    @Override
+    public void onVehiculoEliminado() {
+        actualizarListaVehiculos(); // Actualizar si se elimina un vehículo
+    }
+
+    @Override
+    public void onVehiculoCreado() {
+        actualizarListaVehiculos(); // Actualizar si se crea un vehículo
+    }
+
+    @Override
+    public void onEmpleadoEliminado() {
+        actualizarListaEmpleados(); // Actualizar si se elimina un empleado
+    }
+
+    @Override
+    public void onEmpleadoCreado() {
+        actualizarListaEmpleados(); // Actualizar si se crea un empleado
+    }
+
+    @Override
+    public void onContratoEliminado() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onContratoCreado() {
+        // No necesita hacer nada
+    }
+
+    @Override
+    public void onEntradaCreada() {
+        actualizarListaVehiculos(); // Actualizar cuando se crea una entrada (el vehículo ya no está disponible)
+    }
+
+    @Override
+    public void onSalidaCreada() {
+        actualizarListaVehiculos(); // ¡ESTA ES LA CLAVE! Actualizar cuando se crea una salida (el vehículo vuelve a estar disponible)
+    }
 }

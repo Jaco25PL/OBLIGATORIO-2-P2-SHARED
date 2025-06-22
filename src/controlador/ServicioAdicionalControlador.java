@@ -76,6 +76,10 @@ public class ServicioAdicionalControlador {
         }
     }
     
+    public Sistema getSistema() {
+        return this.sistema;
+    }
+    
     public ArrayList<Vehiculo> getListaVehiculos() {
         return sistema.getListaVehiculos();
     }

@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 public class Contrato implements Serializable{
     
+    private static final long serialVersionUID = 1L; // Para la serialización, version del objeto
+
     //Atributos
     private double valorMensual;
     private Empleado empleadoContrato;

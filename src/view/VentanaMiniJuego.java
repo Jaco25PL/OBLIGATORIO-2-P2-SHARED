@@ -32,8 +32,6 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         minijuego = new Minijuego();
         ClaroOscuro.aplicarModo(this);
 
-        System.out.println(minijuego.getPalabraSecreta());
-
     }
 
     /**
@@ -156,7 +154,7 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         String palabra = this.jTextFieldPalabra.getText().toUpperCase().replace(" ", "");
         
         if (minijuego.isJuegoTerminado()){
-            ClaroOscuro.mostrarMensaje(this, "El juego termino. Renicia para volver a jugar", "Juego finalizado");
+            ClaroOscuro.mostrarMensaje(this, "El juego terminó. Renicia para volver a jugar", "Juego finalizado");
         } else if (palabra.length() != 5){
             ClaroOscuro.mostrarAdvertencia(this, "La palabra debe tener 5 letras", "Error de palabra");
         } else {

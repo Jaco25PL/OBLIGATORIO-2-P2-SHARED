@@ -9,8 +9,9 @@ import javax.swing.DefaultListModel;
 import model.Empleado;
 import model.Entrada;
 import model.Vehiculo;
+import observer.SistemaObserver;
 
-public class VentanaSalidas extends javax.swing.JFrame {
+public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserver{
     
     private SalidaControlador controlador;
 
@@ -19,6 +20,8 @@ public class VentanaSalidas extends javax.swing.JFrame {
         
         initComponents();
         
+        controlador.getSistema().addObserver(this);
+
         actualizarListaEntradas();
         actualizarListaEmpleados();
         
@@ -309,4 +312,54 @@ public class VentanaSalidas extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldHora;
     private javax.swing.JTextField jTextFieldNotas;
     // End of variables declaration//GEN-END:variables
+
+
+    // implememnatr todos los metodos aunque no se usen para que java no se enoje
+    @Override
+    public void onClienteEliminado() {
+    }
+
+    @Override
+    public void onClienteCreado() {
+    }
+
+    @Override
+    public void onVehiculoEliminado() {
+        actualizarListaEntradas();
+    }
+
+    @Override
+    public void onVehiculoCreado() {
+        actualizarListaEntradas();
+    }
+
+    @Override
+    public void onEmpleadoEliminado() {
+        actualizarListaEmpleados();
+    }
+
+    @Override
+    public void onEmpleadoCreado() {
+        actualizarListaEmpleados();
+    }
+
+    @Override
+    public void onContratoEliminado() {
+    }
+
+    @Override
+    public void onContratoCreado() {
+    }
+
+    @Override
+    public void onEntradaCreada() {
+        actualizarListaEntradas();
+    }
+
+    @Override
+    public void onSalidaCreada() {
+        actualizarListaEntradas();
+    }
+
+
 }

@@ -5,6 +5,8 @@ package controlador;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.Flow.Subscriber;
+
 import model.Cliente;
 import model.Sistema;
 
@@ -66,7 +68,7 @@ public class ClienteControlador {
             throw new Exception("El año debe ser válido");
         }
         
-        // Verificar unicidad
+        // Verificar cliente existente
         if (sistema.existeClienteConCedula(cedula)) {
             throw new Exception("Ya existe un cliente con esa cédula");
         }
@@ -80,6 +82,10 @@ public class ClienteControlador {
         }
     }
     
+    public Sistema getSistema() {
+        return sistema;
+    }
+
     public void eliminarCliente(int cedula) throws Exception{
         if (!sistema.existeClienteConCedula(cedula)) {
             throw new Exception("No existe un cliente con esa cédula");

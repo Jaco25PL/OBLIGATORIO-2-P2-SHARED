@@ -15,5 +15,9 @@ public interface SistemaObserver {
 
     void onContratoEliminado();
     void onContratoCreado();
+
+    void onEntradaCreada();
+    void onSalidaCreada();
+
 }
     
