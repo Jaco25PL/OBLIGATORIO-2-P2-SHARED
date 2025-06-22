@@ -83,6 +83,7 @@ public class VentanaReportes extends javax.swing.JFrame {
         jLabelMovimientosDelVehiculo = new javax.swing.JLabel();
         jRadioButtonFechaHoraCreciente = new javax.swing.JRadioButton();
         jRadioButtonFechaHoraDecreciente = new javax.swing.JRadioButton();
+        jLabelFiltrar1 = new javax.swing.JLabel();
         jPanelEstadisticas = new javax.swing.JPanel();
         jLabelServiciosMasUtilizados = new javax.swing.JLabel();
         jScrollPaneServiciosMasUtilizados = new javax.swing.JScrollPane();
@@ -137,11 +138,12 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
         jPanelHistorial.add(jScrollPaneVehiculos);
-        jScrollPaneVehiculos.setBounds(30, 50, 100, 170);
+        jScrollPaneVehiculos.setBounds(10, 40, 150, 130);
 
-        jLabelListaDeVehiculos.setText("Lista de vehículos:");
+        jLabelListaDeVehiculos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelListaDeVehiculos.setText("Lista de vehículos");
         jPanelHistorial.add(jLabelListaDeVehiculos);
-        jLabelListaDeVehiculos.setBounds(30, 20, 120, 16);
+        jLabelListaDeVehiculos.setBounds(10, 10, 120, 16);
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -157,11 +159,11 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneTable.setViewportView(jTable);
 
         jPanelHistorial.add(jScrollPaneTable);
-        jScrollPaneTable.setBounds(160, 50, 320, 170);
+        jScrollPaneTable.setBounds(170, 40, 370, 130);
 
-        jLabelFiltrar.setText("Filtrar:");
+        jLabelFiltrar.setText("Ordenar:");
         jPanelHistorial.add(jLabelFiltrar);
-        jLabelFiltrar.setBounds(500, 20, 80, 16);
+        jLabelFiltrar.setBounds(10, 180, 80, 16);
 
         jCheckBoxEntradas.setText("Entradas");
         jCheckBoxEntradas.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +172,7 @@ public class VentanaReportes extends javax.swing.JFrame {
             }
         });
         jPanelHistorial.add(jCheckBoxEntradas);
-        jCheckBoxEntradas.setBounds(500, 50, 90, 20);
+        jCheckBoxEntradas.setBounds(270, 180, 90, 20);
 
         jCheckBoxSalidas.setText("Salidas");
         jCheckBoxSalidas.addActionListener(new java.awt.event.ActionListener() {
@@ -179,7 +181,7 @@ public class VentanaReportes extends javax.swing.JFrame {
             }
         });
         jPanelHistorial.add(jCheckBoxSalidas);
-        jCheckBoxSalidas.setBounds(500, 80, 90, 20);
+        jCheckBoxSalidas.setBounds(270, 200, 90, 20);
 
         jCheckBoxServicios.setText("Servicios");
         jCheckBoxServicios.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +190,7 @@ public class VentanaReportes extends javax.swing.JFrame {
             }
         });
         jPanelHistorial.add(jCheckBoxServicios);
-        jCheckBoxServicios.setBounds(500, 110, 90, 20);
+        jCheckBoxServicios.setBounds(270, 220, 90, 20);
 
         jButtonExportar.setText("Exportar");
         jButtonExportar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,11 +199,12 @@ public class VentanaReportes extends javax.swing.JFrame {
             }
         });
         jPanelHistorial.add(jButtonExportar);
-        jButtonExportar.setBounds(500, 187, 90, 30);
+        jButtonExportar.setBounds(370, 180, 170, 30);
 
-        jLabelMovimientosDelVehiculo.setText("Movimientos del vehículo:");
+        jLabelMovimientosDelVehiculo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelMovimientosDelVehiculo.setText("Movimientos del vehículo seleccionado");
         jPanelHistorial.add(jLabelMovimientosDelVehiculo);
-        jLabelMovimientosDelVehiculo.setBounds(160, 20, 210, 16);
+        jLabelMovimientosDelVehiculo.setBounds(170, 10, 220, 16);
 
         jRadioButtonFechaHoraCreciente.setText("Fecha/Hora Creciente");
         jRadioButtonFechaHoraCreciente.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +213,7 @@ public class VentanaReportes extends javax.swing.JFrame {
             }
         });
         jPanelHistorial.add(jRadioButtonFechaHoraCreciente);
-        jRadioButtonFechaHoraCreciente.setBounds(160, 230, 150, 21);
+        jRadioButtonFechaHoraCreciente.setBounds(60, 180, 150, 21);
 
         jRadioButtonFechaHoraDecreciente.setText("Fecha/Hora Decreciente");
         jRadioButtonFechaHoraDecreciente.addActionListener(new java.awt.event.ActionListener() {
@@ -219,13 +222,18 @@ public class VentanaReportes extends javax.swing.JFrame {
             }
         });
         jPanelHistorial.add(jRadioButtonFechaHoraDecreciente);
-        jRadioButtonFechaHoraDecreciente.setBounds(320, 230, 160, 21);
+        jRadioButtonFechaHoraDecreciente.setBounds(60, 200, 160, 21);
+
+        jLabelFiltrar1.setText("Filtrar:");
+        jPanelHistorial.add(jLabelFiltrar1);
+        jLabelFiltrar1.setBounds(230, 180, 50, 16);
 
         jTabbedPaneReportes.addTab("Historial", jPanelHistorial);
 
         jPanelEstadisticas.setLayout(null);
 
-        jLabelServiciosMasUtilizados.setText("Servicios más utilizados:");
+        jLabelServiciosMasUtilizados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelServiciosMasUtilizados.setText("Servicios más utilizados");
         jPanelEstadisticas.add(jLabelServiciosMasUtilizados);
         jLabelServiciosMasUtilizados.setBounds(10, 10, 150, 16);
 
@@ -237,11 +245,12 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneServiciosMasUtilizados.setViewportView(jListServiciosMasUtilizados);
 
         jPanelEstadisticas.add(jScrollPaneServiciosMasUtilizados);
-        jScrollPaneServiciosMasUtilizados.setBounds(10, 30, 180, 100);
+        jScrollPaneServiciosMasUtilizados.setBounds(10, 30, 250, 90);
 
-        jLabelEmpleadosConMenosMovimientos.setText("Empleados con menos movimientos:");
+        jLabelEmpleadosConMenosMovimientos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelEmpleadosConMenosMovimientos.setText("Empleados con menos movimientos");
         jPanelEstadisticas.add(jLabelEmpleadosConMenosMovimientos);
-        jLabelEmpleadosConMenosMovimientos.setBounds(220, 10, 210, 16);
+        jLabelEmpleadosConMenosMovimientos.setBounds(280, 10, 210, 16);
 
         jListEmpleadosConMenosMovimientos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -251,15 +260,17 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneEmpleadosConMenosMovimientos.setViewportView(jListEmpleadosConMenosMovimientos);
 
         jPanelEstadisticas.add(jScrollPaneEmpleadosConMenosMovimientos);
-        jScrollPaneEmpleadosConMenosMovimientos.setBounds(220, 30, 190, 100);
+        jScrollPaneEmpleadosConMenosMovimientos.setBounds(280, 30, 260, 90);
 
-        jLabelEstadiaMasLarga.setText("Estadías más largas:");
+        jLabelEstadiaMasLarga.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelEstadiaMasLarga.setText("Estadías más largas");
         jPanelEstadisticas.add(jLabelEstadiaMasLarga);
-        jLabelEstadiaMasLarga.setBounds(220, 140, 190, 16);
+        jLabelEstadiaMasLarga.setBounds(280, 130, 190, 10);
 
-        jLabelClientesConMasVehiculos.setText("Clientes con más vehículos:");
+        jLabelClientesConMasVehiculos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelClientesConMasVehiculos.setText("Clientes con más vehículos");
         jPanelEstadisticas.add(jLabelClientesConMasVehiculos);
-        jLabelClientesConMasVehiculos.setBounds(10, 140, 180, 16);
+        jLabelClientesConMasVehiculos.setBounds(10, 130, 180, 16);
 
         jListEstadiasMasLargas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -269,7 +280,7 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneEstadiasMasLargas.setViewportView(jListEstadiasMasLargas);
 
         jPanelEstadisticas.add(jScrollPaneEstadiasMasLargas);
-        jScrollPaneEstadiasMasLargas.setBounds(220, 160, 190, 100);
+        jScrollPaneEstadiasMasLargas.setBounds(280, 150, 260, 90);
 
         jListClientesConMasVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -279,15 +290,15 @@ public class VentanaReportes extends javax.swing.JFrame {
         jScrollPaneClientesConMasVehiculos.setViewportView(jListClientesConMasVehiculos);
 
         jPanelEstadisticas.add(jScrollPaneClientesConMasVehiculos);
-        jScrollPaneClientesConMasVehiculos.setBounds(10, 160, 180, 100);
+        jScrollPaneClientesConMasVehiculos.setBounds(10, 150, 250, 90);
 
         jTabbedPaneReportes.addTab("Estadísticas Generales", jPanelEstadisticas);
 
         jPanelMovimientos.setLayout(null);
 
-        jLabelSeleccionFecha.setText("Selección fecha:");
+        jLabelSeleccionFecha.setText("Fecha:");
         jPanelMovimientos.add(jLabelSeleccionFecha);
-        jLabelSeleccionFecha.setBounds(20, 20, 100, 16);
+        jLabelSeleccionFecha.setBounds(10, 10, 100, 16);
 
         jButtonActualizar.setText("Actualizar");
         jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -296,9 +307,9 @@ public class VentanaReportes extends javax.swing.JFrame {
             }
         });
         jPanelMovimientos.add(jButtonActualizar);
-        jButtonActualizar.setBounds(210, 20, 100, 27);
+        jButtonActualizar.setBounds(180, 10, 100, 27);
         jPanelMovimientos.add(jTextFieldFecha);
-        jTextFieldFecha.setBounds(120, 20, 75, 26);
+        jTextFieldFecha.setBounds(60, 10, 110, 26);
 
         jPanelBotones.setLayout(new java.awt.GridLayout(4, 3, 5, 5));
 
@@ -339,49 +350,49 @@ public class VentanaReportes extends javax.swing.JFrame {
         jPanelBotones.add(jButtonHora4Dia3);
 
         jPanelMovimientos.add(jPanelBotones);
-        jPanelBotones.setBounds(90, 90, 430, 160);
+        jPanelBotones.setBounds(80, 70, 460, 160);
 
         jLabelHora18a00.setText("18:00-23:59");
         jPanelMovimientos.add(jLabelHora18a00);
-        jLabelHora18a00.setBounds(10, 220, 80, 16);
+        jLabelHora18a00.setBounds(10, 200, 70, 16);
 
         jLabelDia3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDia3.setText("Día 3");
         jPanelMovimientos.add(jLabelDia3);
-        jLabelDia3.setBounds(380, 60, 140, 16);
+        jLabelDia3.setBounds(390, 50, 150, 16);
 
         jLabelDia2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDia2.setText("Día 2");
         jPanelMovimientos.add(jLabelDia2);
-        jLabelDia2.setBounds(240, 60, 130, 16);
+        jLabelDia2.setBounds(240, 50, 140, 16);
 
         jLabelDia1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDia1.setText("Día 1");
         jLabelDia1.setToolTipText("");
         jPanelMovimientos.add(jLabelDia1);
-        jLabelDia1.setBounds(90, 60, 140, 16);
+        jLabelDia1.setBounds(90, 50, 130, 16);
 
         jLabelHora0a6.setText("00:00-05:59");
         jPanelMovimientos.add(jLabelHora0a6);
-        jLabelHora0a6.setBounds(10, 100, 80, 16);
+        jLabelHora0a6.setBounds(10, 80, 70, 16);
 
         jLabelHora6a12.setText("06:00-11:59");
         jPanelMovimientos.add(jLabelHora6a12);
-        jLabelHora6a12.setBounds(10, 140, 80, 16);
+        jLabelHora6a12.setBounds(10, 120, 70, 16);
 
         jLabelHora12a18.setText("12:00-17:59");
         jPanelMovimientos.add(jLabelHora12a18);
-        jLabelHora12a18.setBounds(10, 180, 80, 16);
+        jLabelHora12a18.setBounds(10, 160, 70, 16);
 
         jTabbedPaneReportes.addTab("Movimientos", jPanelMovimientos);
 
         jPanelReportes.add(jTabbedPaneReportes);
-        jTabbedPaneReportes.setBounds(40, 50, 610, 300);
+        jTabbedPaneReportes.setBounds(10, 10, 550, 270);
 
         getContentPane().add(jPanelReportes);
-        jPanelReportes.setBounds(0, 0, 650, 350);
+        jPanelReportes.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 663, 378);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarTabla(){
@@ -875,6 +886,7 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEmpleadosConMenosMovimientos;
     private javax.swing.JLabel jLabelEstadiaMasLarga;
     private javax.swing.JLabel jLabelFiltrar;
+    private javax.swing.JLabel jLabelFiltrar1;
     private javax.swing.JLabel jLabelHora0a6;
     private javax.swing.JLabel jLabelHora12a18;
     private javax.swing.JLabel jLabelHora18a00;

@@ -90,6 +90,7 @@
 
 15. Video de YouTube (1 día)
 
+- **LISTO** Guión video
 - Máximo 2 minutos
 - Mostrar funcionalidades principales
 - Ambos integrantes visibles

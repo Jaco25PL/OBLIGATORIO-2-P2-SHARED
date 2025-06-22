@@ -30,8 +30,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         actualizarListaVehiculos();
         actualizarListaEmpleados();
         
-        jButtonEliminar.setVisible(false);
-        
         jTextFieldFecha.setText(controlador.getFechaActual());
         jTextFieldHora.setText(controlador.getHoraActual());
 
@@ -61,13 +59,11 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         jLabelFecha = new javax.swing.JLabel();
         jButtonVaciar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
         jTextFieldFecha = new javax.swing.JTextField();
         jTextFieldHora = new javax.swing.JTextField();
         jLabelHora = new javax.swing.JLabel();
         jScrollPaneVehiculos = new javax.swing.JScrollPane();
         jListVehiculos = new javax.swing.JList<>();
-        jLabelVehiculos = new javax.swing.JLabel();
         jScrollPaneEmpleados = new javax.swing.JScrollPane();
         jListEmpleados = new javax.swing.JList<>();
         jLabelEmpleados = new javax.swing.JLabel();
@@ -75,6 +71,10 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         jLabelTieneContrato = new javax.swing.JLabel();
         jLabelTieneContratoRespuesta = new javax.swing.JLabel();
         jTextFieldNotas = new javax.swing.JTextField();
+        jLabelVehiculos1 = new javax.swing.JLabel();
+        jLabelVehiculos2 = new javax.swing.JLabel();
+        jLabelFecha1 = new javax.swing.JLabel();
+        jLabelFecha2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entradas");
@@ -82,9 +82,9 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
 
         jPanelEntradas.setLayout(null);
 
-        jLabelFecha.setText("Fecha");
+        jLabelFecha.setText("hh:mm 24hs");
         jPanelEntradas.add(jLabelFecha);
-        jLabelFecha.setBounds(30, 70, 50, 16);
+        jLabelFecha.setBounds(230, 80, 90, 16);
 
         jButtonVaciar.setText("Vaciar");
         jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -94,7 +94,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
             }
         });
         jPanelEntradas.add(jButtonVaciar);
-        jButtonVaciar.setBounds(40, 290, 90, 27);
+        jButtonVaciar.setBounds(10, 250, 120, 27);
 
         jButtonAgregar.setText("Agregar");
         jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -104,25 +104,15 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
             }
         });
         jPanelEntradas.add(jButtonAgregar);
-        jButtonAgregar.setBounds(150, 290, 170, 27);
-
-        jButtonEliminar.setText("Eliminar");
-        jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
-        jPanelEntradas.add(jButtonEliminar);
-        jButtonEliminar.setBounds(340, 290, 130, 27);
+        jButtonAgregar.setBounds(130, 250, 240, 27);
         jPanelEntradas.add(jTextFieldFecha);
-        jTextFieldFecha.setBounds(80, 70, 70, 26);
+        jTextFieldFecha.setBounds(60, 40, 160, 26);
         jPanelEntradas.add(jTextFieldHora);
-        jTextFieldHora.setBounds(80, 110, 68, 26);
+        jTextFieldHora.setBounds(60, 80, 160, 26);
 
-        jLabelHora.setText("Hora");
+        jLabelHora.setText("Hora:");
         jPanelEntradas.add(jLabelHora);
-        jLabelHora.setBounds(30, 110, 50, 16);
+        jLabelHora.setBounds(10, 80, 50, 16);
 
         jListVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -132,11 +122,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
         jPanelEntradas.add(jScrollPaneVehiculos);
-        jScrollPaneVehiculos.setBounds(260, 100, 100, 150);
-
-        jLabelVehiculos.setText("Vehiculos");
-        jPanelEntradas.add(jLabelVehiculos);
-        jLabelVehiculos.setBounds(270, 70, 60, 16);
+        jScrollPaneVehiculos.setBounds(380, 40, 180, 100);
 
         jListEmpleados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -146,30 +132,49 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         jScrollPaneEmpleados.setViewportView(jListEmpleados);
 
         jPanelEntradas.add(jScrollPaneEmpleados);
-        jScrollPaneEmpleados.setBounds(380, 100, 100, 150);
+        jScrollPaneEmpleados.setBounds(380, 180, 180, 100);
 
-        jLabelEmpleados.setText("Empleados");
+        jLabelEmpleados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelEmpleados.setText("Lista de Empleados");
         jPanelEntradas.add(jLabelEmpleados);
-        jLabelEmpleados.setBounds(390, 70, 60, 16);
+        jLabelEmpleados.setBounds(380, 150, 130, 16);
 
-        jLabelNotas.setText("Notas");
+        jLabelNotas.setText("Notas:");
         jPanelEntradas.add(jLabelNotas);
-        jLabelNotas.setBounds(30, 150, 50, 16);
+        jLabelNotas.setBounds(10, 120, 50, 16);
 
         jLabelTieneContrato.setText("Tiene Contrato:");
         jPanelEntradas.add(jLabelTieneContrato);
-        jLabelTieneContrato.setBounds(30, 230, 90, 16);
+        jLabelTieneContrato.setBounds(10, 200, 120, 16);
 
         jLabelTieneContratoRespuesta.setText("---");
         jPanelEntradas.add(jLabelTieneContratoRespuesta);
-        jLabelTieneContratoRespuesta.setBounds(120, 230, 60, 16);
+        jLabelTieneContratoRespuesta.setBounds(100, 200, 140, 16);
         jPanelEntradas.add(jTextFieldNotas);
-        jTextFieldNotas.setBounds(80, 150, 68, 26);
+        jTextFieldNotas.setBounds(60, 120, 160, 70);
+
+        jLabelVehiculos1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelVehiculos1.setText("Lista de Vehículos");
+        jPanelEntradas.add(jLabelVehiculos1);
+        jLabelVehiculos1.setBounds(380, 10, 130, 16);
+
+        jLabelVehiculos2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelVehiculos2.setText("Datos de la Entrada");
+        jPanelEntradas.add(jLabelVehiculos2);
+        jLabelVehiculos2.setBounds(10, 10, 120, 16);
+
+        jLabelFecha1.setText("Fecha:");
+        jPanelEntradas.add(jLabelFecha1);
+        jLabelFecha1.setBounds(10, 40, 50, 16);
+
+        jLabelFecha2.setText("dd/mm/yyyy");
+        jPanelEntradas.add(jLabelFecha2);
+        jLabelFecha2.setBounds(230, 40, 90, 16);
 
         getContentPane().add(jPanelEntradas);
-        jPanelEntradas.setBounds(0, 0, 500, 350);
+        jPanelEntradas.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 514, 358);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     private void vehiculoTieneContrato(){
@@ -268,10 +273,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
-
     private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
@@ -280,15 +281,17 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
-    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVaciar;
     private javax.swing.JLabel jLabelEmpleados;
     private javax.swing.JLabel jLabelFecha;
+    private javax.swing.JLabel jLabelFecha1;
+    private javax.swing.JLabel jLabelFecha2;
     private javax.swing.JLabel jLabelHora;
     private javax.swing.JLabel jLabelNotas;
     private javax.swing.JLabel jLabelTieneContrato;
     private javax.swing.JLabel jLabelTieneContratoRespuesta;
-    private javax.swing.JLabel jLabelVehiculos;
+    private javax.swing.JLabel jLabelVehiculos1;
+    private javax.swing.JLabel jLabelVehiculos2;
     private javax.swing.JList<String> jListEmpleados;
     private javax.swing.JList<String> jListVehiculos;
     private javax.swing.JPanel jPanelEntradas;

@@ -41,8 +41,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         actualizarListaEmpleados();
         actualizarListaServicios();
         
-        jButtonEliminar.setVisible(false);
-        
         ClaroOscuro.aplicarModo(this);
         
         //Listener para la Lista
@@ -69,7 +67,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         jLabelFecha = new javax.swing.JLabel();
         jButtonVaciar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
         jTextFieldFecha = new javax.swing.JTextField();
         jTextFieldHora = new javax.swing.JTextField();
         jLabelHora = new javax.swing.JLabel();
@@ -88,6 +85,13 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         jTextFieldCosto = new javax.swing.JTextField();
         jTextFieldVehiculo = new javax.swing.JTextField();
         jTextFieldEmpleado = new javax.swing.JTextField();
+        jLabelFecha1 = new javax.swing.JLabel();
+        jLabelFecha2 = new javax.swing.JLabel();
+        jLabelCosto1 = new javax.swing.JLabel();
+        jLabelCosto2 = new javax.swing.JLabel();
+        jLabelFecha3 = new javax.swing.JLabel();
+        jLabelFecha4 = new javax.swing.JLabel();
+        jLabelFecha5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Servicios Adicionales");
@@ -95,9 +99,10 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
 
         jPanelServiciosAdicionales.setLayout(null);
 
-        jLabelFecha.setText("Fecha");
+        jLabelFecha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelFecha.setText("Datos del Seleccionado");
         jPanelServiciosAdicionales.add(jLabelFecha);
-        jLabelFecha.setBounds(30, 70, 50, 16);
+        jLabelFecha.setBounds(10, 160, 140, 16);
 
         jButtonVaciar.setText("Vaciar");
         jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -107,7 +112,7 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
             }
         });
         jPanelServiciosAdicionales.add(jButtonVaciar);
-        jButtonVaciar.setBounds(40, 290, 90, 27);
+        jButtonVaciar.setBounds(10, 250, 120, 27);
 
         jButtonAgregar.setText("Agregar");
         jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -117,25 +122,15 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
             }
         });
         jPanelServiciosAdicionales.add(jButtonAgregar);
-        jButtonAgregar.setBounds(150, 290, 170, 27);
-
-        jButtonEliminar.setText("Eliminar");
-        jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
-        jPanelServiciosAdicionales.add(jButtonEliminar);
-        jButtonEliminar.setBounds(340, 290, 130, 27);
+        jButtonAgregar.setBounds(130, 250, 240, 27);
         jPanelServiciosAdicionales.add(jTextFieldFecha);
-        jTextFieldFecha.setBounds(80, 70, 70, 26);
+        jTextFieldFecha.setBounds(80, 30, 160, 26);
         jPanelServiciosAdicionales.add(jTextFieldHora);
-        jTextFieldHora.setBounds(80, 110, 68, 26);
+        jTextFieldHora.setBounds(80, 60, 160, 26);
 
-        jLabelHora.setText("Hora");
+        jLabelHora.setText("Hora:");
         jPanelServiciosAdicionales.add(jLabelHora);
-        jLabelHora.setBounds(30, 110, 50, 16);
+        jLabelHora.setBounds(10, 60, 50, 16);
 
         jListVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -145,11 +140,12 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
         jPanelServiciosAdicionales.add(jScrollPaneVehiculos);
-        jScrollPaneVehiculos.setBounds(160, 100, 100, 150);
+        jScrollPaneVehiculos.setBounds(380, 30, 180, 70);
 
-        jLabelVehiculos.setText("Vehiculos");
+        jLabelVehiculos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelVehiculos.setText("Lista de Vehiculos");
         jPanelServiciosAdicionales.add(jLabelVehiculos);
-        jLabelVehiculos.setBounds(170, 70, 60, 16);
+        jLabelVehiculos.setBounds(380, 10, 120, 16);
 
         jListEmpleados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -159,19 +155,20 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         jScrollPaneEmpleados.setViewportView(jListEmpleados);
 
         jPanelServiciosAdicionales.add(jScrollPaneEmpleados);
-        jScrollPaneEmpleados.setBounds(270, 100, 100, 150);
+        jScrollPaneEmpleados.setBounds(380, 120, 180, 70);
 
-        jLabelEmpleados.setText("Empleados");
+        jLabelEmpleados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelEmpleados.setText("Lista de Empleados");
         jPanelServiciosAdicionales.add(jLabelEmpleados);
-        jLabelEmpleados.setBounds(270, 70, 60, 16);
+        jLabelEmpleados.setBounds(380, 100, 120, 16);
 
-        jLabelNotas.setText("Servicio");
+        jLabelNotas.setText("Servicio:");
         jPanelServiciosAdicionales.add(jLabelNotas);
-        jLabelNotas.setBounds(30, 150, 50, 16);
+        jLabelNotas.setBounds(10, 90, 50, 16);
 
         jComboBoxServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanelServiciosAdicionales.add(jComboBoxServicio);
-        jComboBoxServicio.setBounds(80, 150, 76, 26);
+        jComboBoxServicio.setBounds(80, 90, 160, 26);
 
         jListServiciosRealizados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -191,26 +188,56 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         jScrollPaneServiciosRealizadps.setViewportView(jListServiciosRealizados);
 
         jPanelServiciosAdicionales.add(jScrollPaneServiciosRealizadps);
-        jScrollPaneServiciosRealizadps.setBounds(380, 100, 100, 150);
+        jScrollPaneServiciosRealizadps.setBounds(380, 210, 180, 70);
 
-        jLabelServiciosRealizados.setText("Servicios Realizados");
+        jLabelServiciosRealizados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelServiciosRealizados.setText("Lista de Servicios Realizados");
         jPanelServiciosAdicionales.add(jLabelServiciosRealizados);
-        jLabelServiciosRealizados.setBounds(380, 70, 110, 16);
+        jLabelServiciosRealizados.setBounds(380, 190, 180, 16);
 
-        jLabelCosto.setText("Costo");
+        jLabelCosto.setText("Empleado:");
         jPanelServiciosAdicionales.add(jLabelCosto);
-        jLabelCosto.setBounds(30, 190, 50, 16);
+        jLabelCosto.setBounds(10, 210, 70, 16);
         jPanelServiciosAdicionales.add(jTextFieldCosto);
-        jTextFieldCosto.setBounds(80, 190, 70, 26);
+        jTextFieldCosto.setBounds(80, 120, 160, 26);
         jPanelServiciosAdicionales.add(jTextFieldVehiculo);
-        jTextFieldVehiculo.setBounds(160, 250, 100, 26);
+        jTextFieldVehiculo.setBounds(80, 180, 160, 26);
         jPanelServiciosAdicionales.add(jTextFieldEmpleado);
-        jTextFieldEmpleado.setBounds(270, 250, 100, 26);
+        jTextFieldEmpleado.setBounds(80, 210, 160, 26);
+
+        jLabelFecha1.setText("Fecha:");
+        jPanelServiciosAdicionales.add(jLabelFecha1);
+        jLabelFecha1.setBounds(10, 30, 50, 16);
+
+        jLabelFecha2.setText("$");
+        jPanelServiciosAdicionales.add(jLabelFecha2);
+        jLabelFecha2.setBounds(250, 120, 120, 16);
+
+        jLabelCosto1.setText("Costo:");
+        jPanelServiciosAdicionales.add(jLabelCosto1);
+        jLabelCosto1.setBounds(10, 120, 50, 16);
+
+        jLabelCosto2.setText("Vehículo:");
+        jPanelServiciosAdicionales.add(jLabelCosto2);
+        jLabelCosto2.setBounds(10, 180, 70, 16);
+
+        jLabelFecha3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelFecha3.setText("Datos del Servicio");
+        jPanelServiciosAdicionales.add(jLabelFecha3);
+        jLabelFecha3.setBounds(10, 10, 120, 16);
+
+        jLabelFecha4.setText("dd/mm/yyyy");
+        jPanelServiciosAdicionales.add(jLabelFecha4);
+        jLabelFecha4.setBounds(250, 30, 120, 16);
+
+        jLabelFecha5.setText("hh:mm 24hs");
+        jPanelServiciosAdicionales.add(jLabelFecha5);
+        jLabelFecha5.setBounds(250, 60, 120, 16);
 
         getContentPane().add(jPanelServiciosAdicionales);
-        jPanelServiciosAdicionales.setBounds(0, 0, 500, 350);
+        jPanelServiciosAdicionales.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 514, 358);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     public void mostrarServicioSeleccionado(){
@@ -347,12 +374,18 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
-    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVaciar;
     private javax.swing.JComboBox<String> jComboBoxServicio;
     private javax.swing.JLabel jLabelCosto;
+    private javax.swing.JLabel jLabelCosto1;
+    private javax.swing.JLabel jLabelCosto2;
     private javax.swing.JLabel jLabelEmpleados;
     private javax.swing.JLabel jLabelFecha;
+    private javax.swing.JLabel jLabelFecha1;
+    private javax.swing.JLabel jLabelFecha2;
+    private javax.swing.JLabel jLabelFecha3;
+    private javax.swing.JLabel jLabelFecha4;
+    private javax.swing.JLabel jLabelFecha5;
     private javax.swing.JLabel jLabelHora;
     private javax.swing.JLabel jLabelNotas;
     private javax.swing.JLabel jLabelServiciosRealizados;

@@ -9,7 +9,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import model.Vehiculo;
 
 public class VentanaGestionVehiculos extends javax.swing.JFrame implements PropertyChangeListener{
@@ -24,8 +23,6 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         controlador.getSistema().addPropertyChangeListener(this);
         
         actualizarListaVehiculos();
-        
-        jButtonEliminar.setVisible(false);
         
         ClaroOscuro.aplicarModo(this);
         
@@ -50,7 +47,6 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
     private void initComponents() {
 
         jPanelGestionVehiculos = new javax.swing.JPanel();
-        jButtonEliminar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
         jScrollPaneVehiculos = new javax.swing.JScrollPane();
         jListVehiculos = new javax.swing.JList<>();
@@ -64,22 +60,13 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         jTextFieldMatricula = new javax.swing.JTextField();
         jTextFieldEstado = new javax.swing.JTextField();
         jButtonVaciar = new javax.swing.JButton();
+        jLabelVehiculos1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de Vehículos");
         getContentPane().setLayout(null);
 
         jPanelGestionVehiculos.setLayout(null);
-
-        jButtonEliminar.setText("Eliminar");
-        jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
-        jPanelGestionVehiculos.add(jButtonEliminar);
-        jButtonEliminar.setBounds(317, 270, 130, 27);
 
         jButtonAgregar.setText("Agregar");
         jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -89,7 +76,7 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
             }
         });
         jPanelGestionVehiculos.add(jButtonAgregar);
-        jButtonAgregar.setBounds(169, 270, 130, 27);
+        jButtonAgregar.setBounds(130, 250, 240, 27);
 
         jListVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -99,35 +86,36 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
         jPanelGestionVehiculos.add(jScrollPaneVehiculos);
-        jScrollPaneVehiculos.setBounds(380, 90, 100, 140);
+        jScrollPaneVehiculos.setBounds(380, 40, 180, 240);
 
-        jLabelVehiculos.setText("Vehículos");
+        jLabelVehiculos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelVehiculos.setText("Datos del Vehículo");
         jPanelGestionVehiculos.add(jLabelVehiculos);
-        jLabelVehiculos.setBounds(380, 60, 60, 16);
+        jLabelVehiculos.setBounds(10, 10, 120, 16);
 
-        jLabelMarca.setText("Marca");
+        jLabelMarca.setText("Marca:");
         jPanelGestionVehiculos.add(jLabelMarca);
-        jLabelMarca.setBounds(40, 70, 33, 16);
+        jLabelMarca.setBounds(10, 80, 50, 16);
 
-        jLabelMatricula.setText("Matrícula");
+        jLabelMatricula.setText("Matrícula:");
         jPanelGestionVehiculos.add(jLabelMatricula);
-        jLabelMatricula.setBounds(40, 130, 50, 16);
+        jLabelMatricula.setBounds(10, 40, 60, 16);
 
-        jLabelEstado.setText("Estado");
+        jLabelEstado.setText("Estado:");
         jPanelGestionVehiculos.add(jLabelEstado);
-        jLabelEstado.setBounds(40, 180, 50, 16);
+        jLabelEstado.setBounds(10, 160, 50, 16);
 
-        jLabelModelo.setText("Modelo");
+        jLabelModelo.setText("Modelo:");
         jPanelGestionVehiculos.add(jLabelModelo);
-        jLabelModelo.setBounds(220, 70, 60, 16);
+        jLabelModelo.setBounds(10, 120, 60, 16);
         jPanelGestionVehiculos.add(jTextFieldMarca);
-        jTextFieldMarca.setBounds(110, 70, 75, 26);
+        jTextFieldMarca.setBounds(80, 80, 160, 26);
         jPanelGestionVehiculos.add(jTextFieldModelo);
-        jTextFieldModelo.setBounds(290, 70, 68, 26);
+        jTextFieldModelo.setBounds(80, 120, 160, 26);
         jPanelGestionVehiculos.add(jTextFieldMatricula);
-        jTextFieldMatricula.setBounds(110, 130, 75, 26);
+        jTextFieldMatricula.setBounds(80, 40, 160, 26);
         jPanelGestionVehiculos.add(jTextFieldEstado);
-        jTextFieldEstado.setBounds(110, 180, 250, 26);
+        jTextFieldEstado.setBounds(80, 160, 160, 26);
 
         jButtonVaciar.setText("Vaciar");
         jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -137,12 +125,17 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
             }
         });
         jPanelGestionVehiculos.add(jButtonVaciar);
-        jButtonVaciar.setBounds(60, 270, 76, 27);
+        jButtonVaciar.setBounds(10, 250, 120, 27);
+
+        jLabelVehiculos1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelVehiculos1.setText("Lista de Vehículos");
+        jPanelGestionVehiculos.add(jLabelVehiculos1);
+        jLabelVehiculos1.setBounds(380, 10, 110, 16);
 
         getContentPane().add(jPanelGestionVehiculos);
-        jPanelGestionVehiculos.setBounds(0, 0, 500, 350);
+        jPanelGestionVehiculos.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 514, 358);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mostrarVehiculoSeleccionado() {
@@ -204,34 +197,6 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        
-        try {
-            String seleccionado = jListVehiculos.getSelectedValue();            
-            if (seleccionado == null) {
-                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un vehículo para eliminar",
-                        "Selección requerida");
-                return;
-            }
-
-            String matricula = seleccionado.split(" - ")[1];
-
-            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
-                    "¿Está seguro que desea eliminar este vehículo?",
-                    "Confirmar eliminación");
-
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                controlador.eliminarVehiculo(matricula);
-
-                actualizarListaVehiculos();
-                ClaroOscuro.mostrarMensaje(this, "Vehículo eliminado con éxito", "Éxito");
-                limpiarCampos();
-            }        } catch (Exception e) {
-            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
-        }
-        
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
-
     private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
         limpiarCampos();
         jListVehiculos.clearSelection();
@@ -239,13 +204,13 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
-    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVaciar;
     private javax.swing.JLabel jLabelEstado;
     private javax.swing.JLabel jLabelMarca;
     private javax.swing.JLabel jLabelMatricula;
     private javax.swing.JLabel jLabelModelo;
     private javax.swing.JLabel jLabelVehiculos;
+    private javax.swing.JLabel jLabelVehiculos1;
     private javax.swing.JList<String> jListVehiculos;
     private javax.swing.JPanel jPanelGestionVehiculos;
     private javax.swing.JScrollPane jScrollPaneVehiculos;

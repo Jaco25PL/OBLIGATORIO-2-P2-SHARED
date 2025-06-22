@@ -46,14 +46,17 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableWordle = new javax.swing.JTable();
-        jLabelEscribirPalabra = new javax.swing.JLabel();
         jTextFieldPalabra = new javax.swing.JTextField();
         jButtonProbar = new javax.swing.JButton();
         jButtonRendirse = new javax.swing.JButton();
         jButtonReset = new javax.swing.JButton();
+        jLabelEscribirPalabra1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Minijuego - Worlde");
+        getContentPane().setLayout(null);
+
+        jPanel1.setLayout(null);
 
         jTableWordle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -72,7 +75,10 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         jTableWordle.setTableHeader(null);
         jScrollPane1.setViewportView(jTableWordle);
 
-        jLabelEscribirPalabra.setText("Escriba una palabra: ");
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(90, 10, 379, 160);
+        jPanel1.add(jTextFieldPalabra);
+        jTextFieldPalabra.setBounds(210, 180, 260, 34);
 
         jButtonProbar.setText("Probar");
         jButtonProbar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +86,8 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
                 jButtonProbarActionPerformed(evt);
             }
         });
+        jPanel1.add(jButtonProbar);
+        jButtonProbar.setBounds(90, 220, 380, 27);
 
         jButtonRendirse.setText("Rendirse");
         jButtonRendirse.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +95,8 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
                 jButtonRendirseActionPerformed(evt);
             }
         });
+        jPanel1.add(jButtonRendirse);
+        jButtonRendirse.setBounds(90, 250, 190, 27);
 
         jButtonReset.setText("Reiniciar");
         jButtonReset.addActionListener(new java.awt.event.ActionListener() {
@@ -94,56 +104,17 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
                 jButtonResetActionPerformed(evt);
             }
         });
+        jPanel1.add(jButtonReset);
+        jButtonReset.setBounds(280, 250, 190, 27);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextFieldPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonProbar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonRendirse)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonReset))
-                    .addComponent(jLabelEscribirPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(36, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelEscribirPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(jTextFieldPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonProbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonRendirse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonReset))
-                .addGap(30, 30, 30))
-        );
+        jLabelEscribirPalabra1.setText("Escribe una palabra: ");
+        jPanel1.add(jLabelEscribirPalabra1);
+        jLabelEscribirPalabra1.setBounds(90, 180, 143, 33);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 0, 570, 320);
 
-        pack();
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpiarField() {
@@ -314,7 +285,7 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
     private javax.swing.JButton jButtonProbar;
     private javax.swing.JButton jButtonRendirse;
     private javax.swing.JButton jButtonReset;
-    private javax.swing.JLabel jLabelEscribirPalabra;
+    private javax.swing.JLabel jLabelEscribirPalabra1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableWordle;

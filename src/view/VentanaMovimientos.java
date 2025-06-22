@@ -42,6 +42,7 @@ public class VentanaMovimientos extends javax.swing.JDialog {
         jPanelVentanaMovimientos = new javax.swing.JPanel();
         jScrollPaneTablaMovimientos = new javax.swing.JScrollPane();
         jTableTablaMovimientos = new javax.swing.JTable();
+        jButtonCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -62,7 +63,16 @@ public class VentanaMovimientos extends javax.swing.JDialog {
         jScrollPaneTablaMovimientos.setViewportView(jTableTablaMovimientos);
 
         jPanelVentanaMovimientos.add(jScrollPaneTablaMovimientos);
-        jScrollPaneTablaMovimientos.setBounds(30, 30, 340, 210);
+        jScrollPaneTablaMovimientos.setBounds(10, 10, 380, 210);
+
+        jButtonCerrar.setText("Cerrar");
+        jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCerrarActionPerformed(evt);
+            }
+        });
+        jPanelVentanaMovimientos.add(jButtonCerrar);
+        jButtonCerrar.setBounds(140, 230, 120, 27);
 
         getContentPane().add(jPanelVentanaMovimientos);
         jPanelVentanaMovimientos.setBounds(0, 0, 400, 300);
@@ -70,6 +80,10 @@ public class VentanaMovimientos extends javax.swing.JDialog {
         setSize(new java.awt.Dimension(414, 308));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCerrarActionPerformed
 
     private void iniciarTabla() {
         String[] columnas = {"Tipo", "Fecha", "Hora", "Matrícula"};
@@ -119,6 +133,7 @@ public class VentanaMovimientos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCerrar;
     private javax.swing.JPanel jPanelVentanaMovimientos;
     private javax.swing.JScrollPane jScrollPaneTablaMovimientos;
     private javax.swing.JTable jTableTablaMovimientos;
