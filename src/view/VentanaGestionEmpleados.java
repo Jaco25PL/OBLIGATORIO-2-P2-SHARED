@@ -20,8 +20,6 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         
         actualizarListaEmpleados();
         
-        jButtonEliminar.setVisible(false);
-
         ClaroOscuro.aplicarModo(this);
         
         //Listener para la Lista
@@ -52,13 +50,13 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         jLabelClientes = new javax.swing.JLabel();
         jButtonVaciar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
         jTextFieldNombre = new javax.swing.JTextField();
         jTextFieldDireccion = new javax.swing.JTextField();
         jTextFieldCedula = new javax.swing.JTextField();
         jTextFieldNumEmpleado = new javax.swing.JTextField();
         jScrollPaneEmpleados = new javax.swing.JScrollPane();
         jListEmpleados = new javax.swing.JList<>();
+        jLabelClientes1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de Empleados");
@@ -66,25 +64,26 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
 
         jPanelGestionEmpleados.setLayout(null);
 
-        jLabelNombre.setText("Nombre");
+        jLabelNombre.setText("Nombre:");
         jPanelGestionEmpleados.add(jLabelNombre);
-        jLabelNombre.setBounds(37, 100, 60, 16);
+        jLabelNombre.setBounds(10, 40, 60, 16);
 
-        jLabelDireccion.setText("Direccion");
+        jLabelDireccion.setText("Direccion:");
         jPanelGestionEmpleados.add(jLabelDireccion);
-        jLabelDireccion.setBounds(37, 140, 60, 16);
+        jLabelDireccion.setBounds(10, 120, 60, 16);
 
-        jLabelCedula.setText("Cédula");
+        jLabelCedula.setText("Cédula:");
         jPanelGestionEmpleados.add(jLabelCedula);
-        jLabelCedula.setBounds(200, 100, 50, 16);
+        jLabelCedula.setBounds(10, 80, 50, 16);
 
-        jLabelNumEmpleado.setText("N° Empleado");
+        jLabelNumEmpleado.setText("N° Empleado:");
         jPanelGestionEmpleados.add(jLabelNumEmpleado);
-        jLabelNumEmpleado.setBounds(200, 140, 80, 16);
+        jLabelNumEmpleado.setBounds(10, 160, 80, 16);
 
-        jLabelClientes.setText("Empleados");
+        jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelClientes.setText("Datos del Empleado");
         jPanelGestionEmpleados.add(jLabelClientes);
-        jLabelClientes.setBounds(387, 50, 60, 16);
+        jLabelClientes.setBounds(10, 10, 130, 16);
 
         jButtonVaciar.setText("Vaciar");
         jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -94,7 +93,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
             }
         });
         jPanelGestionEmpleados.add(jButtonVaciar);
-        jButtonVaciar.setBounds(40, 280, 90, 27);
+        jButtonVaciar.setBounds(10, 250, 120, 27);
 
         jButtonAgregar.setText("Agregar");
         jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -104,25 +103,15 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
             }
         });
         jPanelGestionEmpleados.add(jButtonAgregar);
-        jButtonAgregar.setBounds(150, 280, 170, 27);
-
-        jButtonEliminar.setText("Eliminar");
-        jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
-        jPanelGestionEmpleados.add(jButtonEliminar);
-        jButtonEliminar.setBounds(340, 280, 130, 27);
+        jButtonAgregar.setBounds(130, 250, 240, 27);
         jPanelGestionEmpleados.add(jTextFieldNombre);
-        jTextFieldNombre.setBounds(110, 100, 68, 26);
+        jTextFieldNombre.setBounds(100, 40, 160, 26);
         jPanelGestionEmpleados.add(jTextFieldDireccion);
-        jTextFieldDireccion.setBounds(110, 140, 68, 26);
+        jTextFieldDireccion.setBounds(100, 120, 160, 26);
         jPanelGestionEmpleados.add(jTextFieldCedula);
-        jTextFieldCedula.setBounds(290, 100, 70, 26);
+        jTextFieldCedula.setBounds(100, 80, 160, 26);
         jPanelGestionEmpleados.add(jTextFieldNumEmpleado);
-        jTextFieldNumEmpleado.setBounds(290, 140, 75, 26);
+        jTextFieldNumEmpleado.setBounds(100, 160, 160, 26);
 
         jListEmpleados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -132,12 +121,17 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         jScrollPaneEmpleados.setViewportView(jListEmpleados);
 
         jPanelGestionEmpleados.add(jScrollPaneEmpleados);
-        jScrollPaneEmpleados.setBounds(380, 80, 100, 150);
+        jScrollPaneEmpleados.setBounds(380, 40, 180, 240);
+
+        jLabelClientes1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelClientes1.setText("Lista de Empleados");
+        jPanelGestionEmpleados.add(jLabelClientes1);
+        jLabelClientes1.setBounds(380, 10, 110, 16);
 
         getContentPane().add(jPanelGestionEmpleados);
-        jPanelGestionEmpleados.setBounds(0, 0, 500, 350);
+        jPanelGestionEmpleados.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 514, 358);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     public void mostrarEmpleadoSeleccionado() {
@@ -204,41 +198,13 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         jListEmpleados.clearSelection();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
 
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        
-        try {
-            String seleccionado = jListEmpleados.getSelectedValue();            if (seleccionado == null) {
-                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un empleado para eliminar",
-                        "Selección requerida");
-                return;
-            }
-
-            int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
-
-            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
-                    "¿Está seguro que desea eliminar este empleado?",
-                    "Confirmar eliminación");
-
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                controlador.eliminarEmpleado(cedula);
-
-                actualizarListaEmpleados();
-                ClaroOscuro.mostrarMensaje(this, "Empleado eliminado con éxito", "Éxito");
-                limpiarCampos();
-            }
-        } catch (Exception e) {
-            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
-        }
-        
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
-    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVaciar;
     private javax.swing.JLabel jLabelCedula;
     private javax.swing.JLabel jLabelClientes;
+    private javax.swing.JLabel jLabelClientes1;
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelNumEmpleado;

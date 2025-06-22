@@ -97,10 +97,10 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
             }
         });
         jPanelMain.add(jButtonClaroOscuro);
-        jButtonClaroOscuro.setBounds(30, 230, 120, 27);
+        jButtonClaroOscuro.setBounds(220, 230, 120, 27);
 
         getContentPane().add(jPanelMain);
-        jPanelMain.setBounds(0, 0, 500, 330);
+        jPanelMain.setBounds(0, 0, 570, 300);
 
         jMenuGestion.setText("Gestión");
 
@@ -224,7 +224,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
 
         setJMenuBar(jMenuBar1);
 
-        setSize(new java.awt.Dimension(514, 358));
+        setSize(new java.awt.Dimension(584, 329));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -333,7 +333,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
                 "Error");
         }
     }
-}//GEN-LAST:event_jMenuItemRecuperacionDatosActionPerformed
+}                                                          
 
     private void jMenuItemGrabacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGrabacionDatosActionPerformed
         int opcion = ClaroOscuro.mostrarConfirmacion(this, "Desea guardar los datos actuales?", "Guardar datos");

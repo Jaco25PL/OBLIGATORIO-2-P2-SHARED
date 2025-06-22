@@ -25,8 +25,6 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
         actualizarListaEntradas();
         actualizarListaEmpleados();
         
-        jButtonEliminar.setVisible(false);
-        
         jTextFieldFecha.setText(controlador.getFechaActual());
         jTextFieldHora.setText(controlador.getHoraActual());
 
@@ -57,7 +55,6 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
         jLabelFecha = new javax.swing.JLabel();
         jButtonVaciar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
         jTextFieldFecha = new javax.swing.JTextField();
         jTextFieldHora = new javax.swing.JTextField();
         jLabelHora = new javax.swing.JLabel();
@@ -73,6 +70,9 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
         jTextFieldNotas = new javax.swing.JTextField();
         jLabelTieneContratoRespuesta = new javax.swing.JLabel();
         jLabelTieneContrato = new javax.swing.JLabel();
+        jLabelFecha1 = new javax.swing.JLabel();
+        jLabelFecha2 = new javax.swing.JLabel();
+        jLabelFecha3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Salidas");
@@ -80,9 +80,9 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
 
         jPanelSalidas.setLayout(null);
 
-        jLabelFecha.setText("Fecha");
+        jLabelFecha.setText("hh:mm 24hs");
         jPanelSalidas.add(jLabelFecha);
-        jLabelFecha.setBounds(30, 70, 50, 16);
+        jLabelFecha.setBounds(230, 80, 110, 16);
 
         jButtonVaciar.setText("Vaciar");
         jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -92,7 +92,7 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
             }
         });
         jPanelSalidas.add(jButtonVaciar);
-        jButtonVaciar.setBounds(40, 290, 90, 27);
+        jButtonVaciar.setBounds(10, 250, 120, 27);
 
         jButtonAgregar.setText("Agregar");
         jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -102,25 +102,15 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
             }
         });
         jPanelSalidas.add(jButtonAgregar);
-        jButtonAgregar.setBounds(150, 290, 170, 27);
-
-        jButtonEliminar.setText("Eliminar");
-        jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
-        jPanelSalidas.add(jButtonEliminar);
-        jButtonEliminar.setBounds(340, 290, 130, 27);
+        jButtonAgregar.setBounds(130, 250, 240, 27);
         jPanelSalidas.add(jTextFieldFecha);
-        jTextFieldFecha.setBounds(80, 70, 70, 26);
+        jTextFieldFecha.setBounds(60, 40, 160, 26);
         jPanelSalidas.add(jTextFieldHora);
-        jTextFieldHora.setBounds(80, 110, 68, 26);
+        jTextFieldHora.setBounds(60, 80, 160, 26);
 
-        jLabelHora.setText("Hora");
+        jLabelHora.setText("Hora:");
         jPanelSalidas.add(jLabelHora);
-        jLabelHora.setBounds(30, 110, 50, 16);
+        jLabelHora.setBounds(10, 80, 50, 16);
 
         jListEntradas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -130,11 +120,12 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
         jScrollPaneEntradas.setViewportView(jListEntradas);
 
         jPanelSalidas.add(jScrollPaneEntradas);
-        jScrollPaneEntradas.setBounds(260, 100, 100, 150);
+        jScrollPaneEntradas.setBounds(380, 40, 180, 100);
 
-        jLabelEntradas.setText("Entradas");
+        jLabelEntradas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelEntradas.setText("Lista de Entradas");
         jPanelSalidas.add(jLabelEntradas);
-        jLabelEntradas.setBounds(270, 70, 60, 16);
+        jLabelEntradas.setBounds(380, 10, 110, 16);
 
         jListEmpleados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -144,38 +135,52 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
         jScrollPaneEmpleados.setViewportView(jListEmpleados);
 
         jPanelSalidas.add(jScrollPaneEmpleados);
-        jScrollPaneEmpleados.setBounds(380, 100, 100, 150);
+        jScrollPaneEmpleados.setBounds(380, 180, 180, 100);
 
-        jLabelEmpleados.setText("Empleados");
+        jLabelEmpleados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelEmpleados.setText("Lista de Empleados");
         jPanelSalidas.add(jLabelEmpleados);
-        jLabelEmpleados.setBounds(390, 70, 60, 16);
+        jLabelEmpleados.setBounds(380, 150, 120, 16);
 
-        jLabelNotas.setText("Notas");
+        jLabelNotas.setText("Notas:");
         jPanelSalidas.add(jLabelNotas);
-        jLabelNotas.setBounds(30, 150, 50, 16);
+        jLabelNotas.setBounds(10, 120, 50, 16);
 
         jLabelTiempoEnParking.setText("Tiempo en Parking:");
         jPanelSalidas.add(jLabelTiempoEnParking);
-        jLabelTiempoEnParking.setBounds(30, 230, 110, 16);
+        jLabelTiempoEnParking.setBounds(10, 220, 110, 16);
 
         jLabelTiempoEnParkingRespuesta.setText("---");
         jPanelSalidas.add(jLabelTiempoEnParkingRespuesta);
-        jLabelTiempoEnParkingRespuesta.setBounds(140, 230, 120, 16);
+        jLabelTiempoEnParkingRespuesta.setBounds(120, 220, 120, 16);
         jPanelSalidas.add(jTextFieldNotas);
-        jTextFieldNotas.setBounds(80, 150, 68, 26);
+        jTextFieldNotas.setBounds(60, 120, 160, 70);
 
         jLabelTieneContratoRespuesta.setText("---");
         jPanelSalidas.add(jLabelTieneContratoRespuesta);
-        jLabelTieneContratoRespuesta.setBounds(140, 210, 40, 16);
+        jLabelTieneContratoRespuesta.setBounds(120, 200, 120, 16);
 
         jLabelTieneContrato.setText("Tiene Contrato:");
         jPanelSalidas.add(jLabelTieneContrato);
-        jLabelTieneContrato.setBounds(30, 210, 110, 16);
+        jLabelTieneContrato.setBounds(10, 200, 110, 16);
+
+        jLabelFecha1.setText("Fecha:");
+        jPanelSalidas.add(jLabelFecha1);
+        jLabelFecha1.setBounds(10, 40, 50, 16);
+
+        jLabelFecha2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelFecha2.setText("Datos de la Salida");
+        jPanelSalidas.add(jLabelFecha2);
+        jLabelFecha2.setBounds(10, 10, 110, 16);
+
+        jLabelFecha3.setText("dd/mm/yyyy");
+        jPanelSalidas.add(jLabelFecha3);
+        jLabelFecha3.setBounds(230, 40, 110, 16);
 
         getContentPane().add(jPanelSalidas);
-        jPanelSalidas.setBounds(0, 0, 500, 350);
+        jPanelSalidas.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 514, 358);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     private void vehiculoTieneContrato() {
@@ -285,18 +290,16 @@ public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserve
         limpiarCampos();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
 
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
-    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVaciar;
     private javax.swing.JLabel jLabelEmpleados;
     private javax.swing.JLabel jLabelEntradas;
     private javax.swing.JLabel jLabelFecha;
+    private javax.swing.JLabel jLabelFecha1;
+    private javax.swing.JLabel jLabelFecha2;
+    private javax.swing.JLabel jLabelFecha3;
     private javax.swing.JLabel jLabelHora;
     private javax.swing.JLabel jLabelNotas;
     private javax.swing.JLabel jLabelTiempoEnParking;

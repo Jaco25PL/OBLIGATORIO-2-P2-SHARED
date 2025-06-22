@@ -65,6 +65,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
         jTextFieldAñoCliente = new javax.swing.JTextField();
         jScrollPaneClientes = new javax.swing.JScrollPane();
         jListClientes = new javax.swing.JList<>();
+        jLabelClientes1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de Clientes");
@@ -72,29 +73,30 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
 
         jPanelGestionClientes.setLayout(null);
 
-        jLabelNombre.setText("Nombre");
+        jLabelNombre.setText("Nombre:");
         jPanelGestionClientes.add(jLabelNombre);
-        jLabelNombre.setBounds(37, 100, 60, 16);
+        jLabelNombre.setBounds(10, 40, 60, 16);
 
-        jLabelDireccion.setText("Direccion");
+        jLabelDireccion.setText("Direccion:");
         jPanelGestionClientes.add(jLabelDireccion);
-        jLabelDireccion.setBounds(37, 140, 60, 16);
+        jLabelDireccion.setBounds(10, 120, 60, 16);
 
-        jLabelCelular.setText("Celular");
+        jLabelCelular.setText("Celular:");
         jPanelGestionClientes.add(jLabelCelular);
-        jLabelCelular.setBounds(37, 180, 60, 16);
+        jLabelCelular.setBounds(10, 160, 60, 16);
 
-        jLabelCedula.setText("Cédula");
+        jLabelCedula.setText("Cédula:");
         jPanelGestionClientes.add(jLabelCedula);
-        jLabelCedula.setBounds(207, 100, 50, 16);
+        jLabelCedula.setBounds(10, 80, 50, 16);
 
-        jLabelAño.setText("Año");
+        jLabelAño.setText("Año Cliente:");
         jPanelGestionClientes.add(jLabelAño);
-        jLabelAño.setBounds(212, 140, 30, 16);
+        jLabelAño.setBounds(10, 200, 70, 16);
 
-        jLabelClientes.setText("Clientes");
+        jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelClientes.setText("Datos del Cliente");
         jPanelGestionClientes.add(jLabelClientes);
-        jLabelClientes.setBounds(387, 50, 60, 16);
+        jLabelClientes.setBounds(10, 10, 110, 16);
 
         jButtonVaciar.setText("Vaciar");
         jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -104,7 +106,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
             }
         });
         jPanelGestionClientes.add(jButtonVaciar);
-        jButtonVaciar.setBounds(40, 280, 90, 27);
+        jButtonVaciar.setBounds(10, 250, 120, 27);
 
         jButtonAgregar.setText("Agregar");
         jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -114,7 +116,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
             }
         });
         jPanelGestionClientes.add(jButtonAgregar);
-        jButtonAgregar.setBounds(150, 280, 170, 27);
+        jButtonAgregar.setBounds(130, 250, 120, 27);
 
         jButtonEliminar.setText("Eliminar");
         jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -124,17 +126,17 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
             }
         });
         jPanelGestionClientes.add(jButtonEliminar);
-        jButtonEliminar.setBounds(340, 280, 130, 27);
+        jButtonEliminar.setBounds(250, 250, 120, 27);
         jPanelGestionClientes.add(jTextFieldNombre);
-        jTextFieldNombre.setBounds(110, 100, 68, 26);
+        jTextFieldNombre.setBounds(90, 40, 160, 26);
         jPanelGestionClientes.add(jTextFieldDireccion);
-        jTextFieldDireccion.setBounds(110, 140, 68, 26);
+        jTextFieldDireccion.setBounds(90, 120, 160, 26);
         jPanelGestionClientes.add(jTextFieldCelular);
-        jTextFieldCelular.setBounds(110, 180, 68, 26);
+        jTextFieldCelular.setBounds(90, 160, 160, 26);
         jPanelGestionClientes.add(jTextFieldCedula);
-        jTextFieldCedula.setBounds(270, 100, 70, 26);
+        jTextFieldCedula.setBounds(90, 80, 160, 26);
         jPanelGestionClientes.add(jTextFieldAñoCliente);
-        jTextFieldAñoCliente.setBounds(270, 140, 75, 26);
+        jTextFieldAñoCliente.setBounds(90, 200, 160, 26);
 
         jListClientes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -144,12 +146,17 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
         jScrollPaneClientes.setViewportView(jListClientes);
 
         jPanelGestionClientes.add(jScrollPaneClientes);
-        jScrollPaneClientes.setBounds(380, 80, 100, 150);
+        jScrollPaneClientes.setBounds(380, 40, 180, 240);
+
+        jLabelClientes1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelClientes1.setText("Lista de Clientes");
+        jPanelGestionClientes.add(jLabelClientes1);
+        jLabelClientes1.setBounds(380, 10, 100, 16);
 
         getContentPane().add(jPanelGestionClientes);
-        jPanelGestionClientes.setBounds(0, 0, 500, 350);
+        jPanelGestionClientes.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 514, 358);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     private void mostrarClienteSeleccionado() {
@@ -308,6 +315,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Sistem
     private javax.swing.JLabel jLabelCedula;
     private javax.swing.JLabel jLabelCelular;
     private javax.swing.JLabel jLabelClientes;
+    private javax.swing.JLabel jLabelClientes1;
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JList<String> jListClientes;

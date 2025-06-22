@@ -31,8 +31,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         actualizarListaEmpleados();
         actualizarListaVehiculos();
         
-        jButtonEliminar.setVisible(false);
-
         ClaroOscuro.aplicarModo(this);
         
         jTextFieldFechaInicio.setText(controlador.getFechaActual());
@@ -62,7 +60,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         jLabelContratos = new javax.swing.JLabel();
         jButtonVaciar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
         jTextFieldFechaInicio = new javax.swing.JTextField();
         jScrollPaneContratos = new javax.swing.JScrollPane();
         jListContratos = new javax.swing.JList<>();
@@ -81,6 +78,13 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         jTextFieldVehiculo = new javax.swing.JTextField();
         jTextFieldCliente = new javax.swing.JTextField();
         jTextFieldNumContrato = new javax.swing.JTextField();
+        jLabelContratos1 = new javax.swing.JLabel();
+        jLabelContratos2 = new javax.swing.JLabel();
+        jLabelContratos3 = new javax.swing.JLabel();
+        jLabelContratos4 = new javax.swing.JLabel();
+        jLabelContratos5 = new javax.swing.JLabel();
+        jLabelContratos6 = new javax.swing.JLabel();
+        jLabelClientes1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de Contratos");
@@ -88,13 +92,13 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
 
         jPanelGestionContratos.setLayout(null);
 
-        jLabelFechaInicio.setText("Fecha Inicio");
+        jLabelFechaInicio.setText("Fecha Inicio:");
         jPanelGestionContratos.add(jLabelFechaInicio);
-        jLabelFechaInicio.setBounds(30, 30, 70, 16);
+        jLabelFechaInicio.setBounds(10, 30, 70, 16);
 
-        jLabelContratos.setText("Contratos");
+        jLabelContratos.setText("N° Contrato:");
         jPanelGestionContratos.add(jLabelContratos);
-        jLabelContratos.setBounds(390, 70, 60, 16);
+        jLabelContratos.setBounds(380, 250, 70, 16);
 
         jButtonVaciar.setText("Vaciar");
         jButtonVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -104,7 +108,7 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
             }
         });
         jPanelGestionContratos.add(jButtonVaciar);
-        jButtonVaciar.setBounds(40, 290, 90, 27);
+        jButtonVaciar.setBounds(10, 250, 120, 27);
 
         jButtonAgregar.setText("Agregar");
         jButtonAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -114,19 +118,9 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
             }
         });
         jPanelGestionContratos.add(jButtonAgregar);
-        jButtonAgregar.setBounds(150, 290, 170, 27);
-
-        jButtonEliminar.setText("Eliminar");
-        jButtonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
-        jPanelGestionContratos.add(jButtonEliminar);
-        jButtonEliminar.setBounds(340, 290, 130, 27);
+        jButtonAgregar.setBounds(130, 250, 240, 27);
         jPanelGestionContratos.add(jTextFieldFechaInicio);
-        jTextFieldFechaInicio.setBounds(110, 30, 70, 26);
+        jTextFieldFechaInicio.setBounds(100, 30, 160, 26);
 
         jListContratos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -136,13 +130,13 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         jScrollPaneContratos.setViewportView(jListContratos);
 
         jPanelGestionContratos.add(jScrollPaneContratos);
-        jScrollPaneContratos.setBounds(380, 100, 100, 150);
+        jScrollPaneContratos.setBounds(380, 30, 180, 100);
         jPanelGestionContratos.add(jTextFieldValorMensual);
-        jTextFieldValorMensual.setBounds(290, 30, 68, 26);
+        jTextFieldValorMensual.setBounds(100, 60, 160, 26);
 
-        jLabelValorMensual.setText("Valor Mensual");
+        jLabelValorMensual.setText("Valor Mensual:");
         jPanelGestionContratos.add(jLabelValorMensual);
-        jLabelValorMensual.setBounds(200, 30, 90, 16);
+        jLabelValorMensual.setBounds(10, 60, 90, 16);
 
         jListClientes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -152,11 +146,11 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         jScrollPaneClientes.setViewportView(jListClientes);
 
         jPanelGestionContratos.add(jScrollPaneClientes);
-        jScrollPaneClientes.setBounds(20, 100, 100, 150);
+        jScrollPaneClientes.setBounds(10, 130, 120, 110);
 
-        jLabelClientes.setText("Clientes");
+        jLabelClientes.setText("Seleccione:");
         jPanelGestionContratos.add(jLabelClientes);
-        jLabelClientes.setBounds(30, 70, 60, 16);
+        jLabelClientes.setBounds(10, 90, 70, 16);
 
         jListVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -166,11 +160,11 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
         jPanelGestionContratos.add(jScrollPaneVehiculos);
-        jScrollPaneVehiculos.setBounds(130, 100, 100, 150);
+        jScrollPaneVehiculos.setBounds(130, 130, 120, 110);
 
         jLabelVehiculos.setText("Vehiculos");
         jPanelGestionContratos.add(jLabelVehiculos);
-        jLabelVehiculos.setBounds(140, 70, 60, 16);
+        jLabelVehiculos.setBounds(130, 110, 60, 16);
 
         jListEmpleados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -180,24 +174,55 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         jScrollPaneEmpleados.setViewportView(jListEmpleados);
 
         jPanelGestionContratos.add(jScrollPaneEmpleados);
-        jScrollPaneEmpleados.setBounds(240, 100, 100, 150);
+        jScrollPaneEmpleados.setBounds(250, 130, 120, 110);
 
         jLabelEmpleados.setText("Empleados");
         jPanelGestionContratos.add(jLabelEmpleados);
-        jLabelEmpleados.setBounds(250, 70, 60, 16);
+        jLabelEmpleados.setBounds(250, 110, 60, 16);
         jPanelGestionContratos.add(jTextFieldEmpleado);
-        jTextFieldEmpleado.setBounds(240, 250, 100, 26);
+        jTextFieldEmpleado.setBounds(450, 220, 110, 26);
         jPanelGestionContratos.add(jTextFieldVehiculo);
-        jTextFieldVehiculo.setBounds(130, 250, 100, 26);
+        jTextFieldVehiculo.setBounds(450, 190, 110, 26);
         jPanelGestionContratos.add(jTextFieldCliente);
-        jTextFieldCliente.setBounds(20, 250, 100, 26);
+        jTextFieldCliente.setBounds(450, 160, 110, 26);
         jPanelGestionContratos.add(jTextFieldNumContrato);
-        jTextFieldNumContrato.setBounds(380, 250, 100, 26);
+        jTextFieldNumContrato.setBounds(450, 250, 110, 26);
+
+        jLabelContratos1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelContratos1.setText("Datos del Contrato");
+        jPanelGestionContratos.add(jLabelContratos1);
+        jLabelContratos1.setBounds(10, 10, 120, 16);
+
+        jLabelContratos2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelContratos2.setText("Lista de Contratos Existentes");
+        jPanelGestionContratos.add(jLabelContratos2);
+        jLabelContratos2.setBounds(380, 10, 170, 16);
+
+        jLabelContratos3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelContratos3.setText("Datos del Seleccionado");
+        jPanelGestionContratos.add(jLabelContratos3);
+        jLabelContratos3.setBounds(380, 140, 140, 16);
+
+        jLabelContratos4.setText("Cliente:");
+        jPanelGestionContratos.add(jLabelContratos4);
+        jLabelContratos4.setBounds(380, 160, 50, 16);
+
+        jLabelContratos5.setText("Vehículo:");
+        jPanelGestionContratos.add(jLabelContratos5);
+        jLabelContratos5.setBounds(380, 190, 60, 16);
+
+        jLabelContratos6.setText("Empleado:");
+        jPanelGestionContratos.add(jLabelContratos6);
+        jLabelContratos6.setBounds(380, 220, 70, 16);
+
+        jLabelClientes1.setText("Clientes");
+        jPanelGestionContratos.add(jLabelClientes1);
+        jLabelClientes1.setBounds(10, 110, 60, 16);
 
         getContentPane().add(jPanelGestionContratos);
-        jPanelGestionContratos.setBounds(0, 0, 500, 350);
+        jPanelGestionContratos.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 514, 358);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     public void mostrarContratoSeleccionado() {
@@ -326,36 +351,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
         
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        
-        try {
-            String seleccionado = jListContratos.getSelectedValue();
-
-            if (seleccionado == null) {
-                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un contrato para eliminar",
-                        "Selección requerida");
-                return;
-            }
-
-            int numContrato = Integer.parseInt(seleccionado.split(" - ")[0]);
-
-            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
-                    "¿Está seguro que desea eliminar este contrato?",
-                    "Confirmar eliminación");
-
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                controlador.eliminarContrato(numContrato);
-
-                actualizarListaContratos();
-                ClaroOscuro.mostrarMensaje(this, "Contrato eliminado con éxito", "Exito");
-                limpiarCampos();
-            }
-        } catch (Exception e) {
-            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
-        }
-        
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
-
     private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
@@ -363,10 +358,16 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Siste
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
-    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVaciar;
     private javax.swing.JLabel jLabelClientes;
+    private javax.swing.JLabel jLabelClientes1;
     private javax.swing.JLabel jLabelContratos;
+    private javax.swing.JLabel jLabelContratos1;
+    private javax.swing.JLabel jLabelContratos2;
+    private javax.swing.JLabel jLabelContratos3;
+    private javax.swing.JLabel jLabelContratos4;
+    private javax.swing.JLabel jLabelContratos5;
+    private javax.swing.JLabel jLabelContratos6;
     private javax.swing.JLabel jLabelEmpleados;
     private javax.swing.JLabel jLabelFechaInicio;
     private javax.swing.JLabel jLabelValorMensual;

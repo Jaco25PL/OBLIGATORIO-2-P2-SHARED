@@ -43,13 +43,13 @@ public class VentanaInfoAutores extends javax.swing.JFrame {
         jLabelMatiasPiedra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMatiasPiedra.setText("Matias Piedra");
         jPanelInfoAutores.add(jLabelMatiasPiedra);
-        jLabelMatiasPiedra.setBounds(70, 230, 120, 30);
+        jLabelMatiasPiedra.setBounds(110, 210, 120, 30);
 
         jLabelJoaquinPiedra.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelJoaquinPiedra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelJoaquinPiedra.setText("Joaquín Piedra ");
         jPanelInfoAutores.add(jLabelJoaquinPiedra);
-        jLabelJoaquinPiedra.setBounds(290, 230, 120, 30);
+        jLabelJoaquinPiedra.setBounds(340, 210, 120, 30);
 
         jLabelAutoresTitulo.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
         jLabelAutoresTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -57,34 +57,34 @@ public class VentanaInfoAutores extends javax.swing.JFrame {
         jLabelAutoresTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabelAutoresTitulo.setInheritsPopupMenu(false);
         jPanelInfoAutores.add(jLabelAutoresTitulo);
-        jLabelAutoresTitulo.setBounds(100, 10, 280, 60);
+        jLabelAutoresTitulo.setBounds(140, 0, 290, 60);
 
         jLabelMatiasImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMatiasImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/matias_image.png"))); // NOI18N
         jPanelInfoAutores.add(jLabelMatiasImage);
-        jLabelMatiasImage.setBounds(70, 90, 120, 120);
+        jLabelMatiasImage.setBounds(110, 70, 120, 120);
 
         jLabelJoaquinImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelJoaquinImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/joaquin_image.png"))); // NOI18N
         jPanelInfoAutores.add(jLabelJoaquinImage);
-        jLabelJoaquinImage.setBounds(290, 90, 120, 120);
+        jLabelJoaquinImage.setBounds(340, 70, 120, 120);
 
         jLabelMatiasPiedraNumero.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelMatiasPiedraNumero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelMatiasPiedraNumero.setText("354007");
         jPanelInfoAutores.add(jLabelMatiasPiedraNumero);
-        jLabelMatiasPiedraNumero.setBounds(70, 260, 120, 30);
+        jLabelMatiasPiedraNumero.setBounds(110, 240, 120, 30);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("304804");
         jPanelInfoAutores.add(jLabel1);
-        jLabel1.setBounds(290, 260, 120, 30);
+        jLabel1.setBounds(340, 240, 120, 30);
 
         getContentPane().add(jPanelInfoAutores);
-        jPanelInfoAutores.setBounds(0, 0, 510, 350);
+        jPanelInfoAutores.setBounds(0, 0, 570, 320);
 
-        setBounds(0, 0, 514, 358);
+        setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
