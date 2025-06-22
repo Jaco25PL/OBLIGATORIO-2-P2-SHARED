@@ -56,6 +56,25 @@ public class ClaroOscuro {
         aplicarModoAComponentes(frame.getContentPane(), colorFondo, colorTexto);
     }
     
+    public static void aplicarModoJDialog(JDialog dialog) {
+        Color colorFondo; //Background
+        Color colorTexto; //Foreground
+        
+        if(getEstaModoClaro()) {
+            colorFondo = Color.WHITE;
+            colorTexto = Color.BLACK;
+        } else {
+            colorFondo = Color.BLACK;
+            colorTexto = Color.WHITE;
+        }
+
+        // Aplicar al JDialog
+        dialog.getContentPane().setBackground(colorFondo);
+        dialog.getContentPane().setForeground(colorTexto);
+        
+        // Aplicar a componentes
+        aplicarModoAComponentes(dialog.getContentPane(), colorFondo, colorTexto);
+    }
     
     private static void aplicarModoAComponentes(Container container, Color fondo, Color texto){
         Component[] components = container.getComponents();

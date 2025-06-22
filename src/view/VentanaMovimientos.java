@@ -25,7 +25,7 @@ public class VentanaMovimientos extends javax.swing.JDialog {
         iniciarTabla();
         actualizarMovimientos();
         
-        ClaroOscuro.aplicarModo((JFrame) getContentPane());
+        ClaroOscuro.aplicarModoJDialog(this);
         
         setLocationRelativeTo(ventanaPadre);
     }

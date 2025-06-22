@@ -837,7 +837,6 @@ public class VentanaReportes extends javax.swing.JFrame {
                 ClaroOscuro.mostrarError(VentanaReportes.this, 
                         "Error al mostrar los movimientos: " + ex.getMessage(), 
                         "Error");
-                ex.printStackTrace();
             }
         }
     }
