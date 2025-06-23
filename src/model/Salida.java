@@ -24,6 +24,6 @@ public class Salida extends RegistroMovimientos{
 
     @Override
     public String toString(){
-        return "Movimiento: Salida | " + super.toString();
+        return super.toString();
     }
 }

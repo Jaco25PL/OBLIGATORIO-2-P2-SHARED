@@ -4,7 +4,6 @@
 package view;
 
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 import model.Sistema;
 import model.Entrada;
@@ -12,8 +11,10 @@ import model.Salida;
 import model.ServicioAdicional;
 import model.Vehiculo;
 import util.ValidadorFechaHora;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class VentanaReportes extends javax.swing.JFrame {
+public class VentanaReportes extends javax.swing.JFrame implements PropertyChangeListener {
 
     private Sistema sistema;
     private ArrayList<Object> movimientosActuales;
@@ -24,6 +25,9 @@ public class VentanaReportes extends javax.swing.JFrame {
         this.sistema = sistema;
 
         initComponents();
+        
+        // Agregar el PropertyChangeListener al sistema
+        sistema.addPropertyChangeListener(this);
         
         // Crear ButtonGroup para los radio buttons
         buttonGroupOrdenamiento = new javax.swing.ButtonGroup();
@@ -44,17 +48,6 @@ public class VentanaReportes extends javax.swing.JFrame {
 
         ClaroOscuro.aplicarModo(this);
         
-        //Listener para la Lista
-        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if (!evt.getValueIsAdjusting()) {
-                    mostrarVehiculoSeleccionado();
-                }
-            }
-        });
-        
-        // Agregar listeners a todos los botones de la grilla
         agregarListenersBotonesmovimientos();
     }
 
@@ -409,66 +402,35 @@ public class VentanaReportes extends javax.swing.JFrame {
     
     private void actualizarListaVehiculos() {
         ArrayList<Vehiculo> vehiculos = sistema.getListaVehiculos();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < vehiculos.size(); i++) {
-            Vehiculo vehiculo = vehiculos.get(i);
-            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() + " - " + vehiculo.getMatricula());
-        }
-
-        jListVehiculos.setModel(modelo);
+        jListVehiculos.setListData(vehiculos.toArray());
     }
     
     private void actualizarServiciosMasUtilizados() {
         ArrayList<String> serviciosMasUtilizados = sistema.getServiciosMasUtilizados();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < serviciosMasUtilizados.size(); i++) {
-            modelo.addElement(serviciosMasUtilizados.get(i));
-        }
-
-        jListServiciosMasUtilizados.setModel(modelo);
+        jListServiciosMasUtilizados.setListData(serviciosMasUtilizados.toArray());
     }
     
     private void actualizarEmpleadosConMenosMovimientos() {
         ArrayList<String> empleadosMenosMovimientos = sistema.getEmpleadosConMenosMovimientos();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < empleadosMenosMovimientos.size(); i++) {
-            modelo.addElement(empleadosMenosMovimientos.get(i));
-        }
-
-        jListEmpleadosConMenosMovimientos.setModel(modelo);
+        jListEmpleadosConMenosMovimientos.setListData(empleadosMenosMovimientos.toArray());
     }
     
     private void actualizarEstadiasMasLargas() {
         ArrayList<String> estadiasMasLargas = sistema.getEstadiasMasLargas();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < estadiasMasLargas.size(); i++) {
-            modelo.addElement(estadiasMasLargas.get(i));
-        }
-
-        jListEstadiasMasLargas.setModel(modelo);
+        jListEstadiasMasLargas.setListData(estadiasMasLargas.toArray());
     }
     
     private void actualizarClientesConMasVehiculos() {
         ArrayList<String> clientesConMasVehiculos = sistema.getClientesConMasVehiculos();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < clientesConMasVehiculos.size(); i++) {
-            modelo.addElement(clientesConMasVehiculos.get(i));
-        }
-
-        jListClientesConMasVehiculos.setModel(modelo);
+        jListClientesConMasVehiculos.setListData(clientesConMasVehiculos.toArray());
     }
     
     public void mostrarVehiculoSeleccionado(){
-        String seleccionado = jListVehiculos.getSelectedValue();
+        Vehiculo vehiculo = (Vehiculo) jListVehiculos.getSelectedValue();
         
-        if (seleccionado != null) {
+        if (vehiculo != null) {
             try {
-                matricula = seleccionado.split(" - ")[1];
+                matricula = vehiculo.getMatricula();
                 actualizarTabla();
             } catch (Exception e) {
                 ClaroOscuro.mostrarError(this, "Error al cargar datos del vehiculo: " + e.getMessage(), "Error");
@@ -861,6 +823,41 @@ public class VentanaReportes extends javax.swing.JFrame {
         ventana.setVisible(true);
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        String propertyName = evt.getPropertyName();
+        
+        // Actualizar lista de vehículos cuando se crea o elimina un vehículo
+        if ("vehiculoCreado".equals(propertyName) || "vehiculoEliminado".equals(propertyName)) {
+            actualizarListaVehiculos();
+        }
+        // También puedes agregar otros eventos si necesitas actualizar las estadísticas
+        else if ("entradaCreada".equals(propertyName) || "salidaCreada".equals(propertyName) || "servicioCreado".equals(propertyName)) {
+            // Actualizar estadísticas cuando hay nuevos movimientos
+            actualizarServiciosMasUtilizados();
+            actualizarEmpleadosConMenosMovimientos();
+            actualizarEstadiasMasLargas();
+            actualizarClientesConMasVehiculos();
+            
+            // Si hay un vehículo seleccionado, actualizar su tabla también
+            if (matricula != null) {
+                actualizarTabla();
+            }
+        }
+        else if ("contratoCreado".equals(propertyName) || "contratoEliminado".equals(propertyName)) {
+            // Actualizar estadísticas de clientes cuando se crean o eliminan contratos
+            actualizarClientesConMasVehiculos();
+        }
+        else if ("empleadoCreado".equals(propertyName) || "empleadoEliminado".equals(propertyName)) {
+            // Actualizar estadísticas de empleados
+            actualizarEmpleadosConMenosMovimientos();
+        }
+        else if ("clienteEliminado".equals(propertyName)) {
+            // Actualizar estadísticas de clientes
+            actualizarClientesConMasVehiculos();
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonExportar;
@@ -895,11 +892,11 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelMovimientosDelVehiculo;
     private javax.swing.JLabel jLabelSeleccionFecha;
     private javax.swing.JLabel jLabelServiciosMasUtilizados;
-    private javax.swing.JList<String> jListClientesConMasVehiculos;
-    private javax.swing.JList<String> jListEmpleadosConMenosMovimientos;
-    private javax.swing.JList<String> jListEstadiasMasLargas;
-    private javax.swing.JList<String> jListServiciosMasUtilizados;
-    private javax.swing.JList<String> jListVehiculos;
+    private javax.swing.JList jListClientesConMasVehiculos;        
+    private javax.swing.JList jListEmpleadosConMenosMovimientos;   
+    private javax.swing.JList jListEstadiasMasLargas;              
+    private javax.swing.JList jListServiciosMasUtilizados;         
+    private javax.swing.JList jListVehiculos;                      
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelEstadisticas;
     private javax.swing.JPanel jPanelHistorial;
@@ -917,4 +914,10 @@ public class VentanaReportes extends javax.swing.JFrame {
     private javax.swing.JTable jTable;
     private javax.swing.JTextField jTextFieldFecha;
     // End of variables declaration//GEN-END:variables
+
+    private void jListVehiculosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListVehiculosValueChanged
+        if (!evt.getValueIsAdjusting()) {
+            mostrarVehiculoSeleccionado();
+        }
+    }//GEN-LAST:event_jListVehiculosValueChanged
 }

@@ -70,8 +70,8 @@
 
 11. Persistencia (1 día)
 
-- Serialización en DATOS.ser
-- Recuperación y grabación con confirmación
+- **LISTO** Serialización en DATOS.ser
+- **LISTO** Recuperación y grabación con confirmación
 
 12. **LISTO** Mini Juego (1 día)
 

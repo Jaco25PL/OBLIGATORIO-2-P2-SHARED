@@ -5,8 +5,6 @@ package view;
 
 import controlador.EmpleadoControlador;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import model.Empleado;
 
 public class VentanaGestionEmpleados extends javax.swing.JFrame {
@@ -17,20 +15,9 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         this.controlador = controlador;
         
         initComponents();
-        
-        actualizarListaEmpleados();
+          actualizarVista();
         
         ClaroOscuro.aplicarModo(this);
-        
-        //Listener para la Lista
-        jListEmpleados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if (!evt.getValueIsAdjusting()) {
-                    mostrarEmpleadoSeleccionado();
-                }
-            }
-        });
     }
 
     /**
@@ -55,7 +42,12 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         jTextFieldCedula = new javax.swing.JTextField();
         jTextFieldNumEmpleado = new javax.swing.JTextField();
         jScrollPaneEmpleados = new javax.swing.JScrollPane();
-        jListEmpleados = new javax.swing.JList<>();
+        jListEmpleados = new javax.swing.JList();
+        jListEmpleados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListEmpleadosValueChanged(evt);
+            }
+        });
         jLabelClientes1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -134,22 +126,24 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void mostrarEmpleadoSeleccionado() {
-        String seleccionado = jListEmpleados.getSelectedValue();
-        
-        if (seleccionado != null) {
+    private void jListEmpleadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListEmpleadosValueChanged
+        if (!evt.getValueIsAdjusting()) {
+            mostrarEmpleadoSeleccionado();
+        }
+    }//GEN-LAST:event_jListEmpleadosValueChanged
+
+    private void mostrarEmpleadoSeleccionado() {
+        Empleado empleado = (Empleado) jListEmpleados.getSelectedValue();
+
+        if (empleado != null) {
             try {
-                int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
-                Empleado empleado = controlador.buscarEmpleadoPorCedula(cedula);
-                
-                if (empleado != null) {
-                    jTextFieldNombre.setText(empleado.getNombre());
-                    jTextFieldCedula.setText(String.valueOf(empleado.getCedula()));
-                    jTextFieldDireccion.setText(empleado.getDireccion());
-                    jTextFieldNumEmpleado.setText(String.valueOf(empleado.getNumEmpleado()));                }
+                jTextFieldNombre.setText(empleado.getNombre());
+                jTextFieldCedula.setText(String.valueOf(empleado.getCedula()));
+                jTextFieldDireccion.setText(empleado.getDireccion());
+                jTextFieldNumEmpleado.setText(String.valueOf(empleado.getNumEmpleado()));
             } catch (Exception e) {
-                ClaroOscuro.mostrarError(this, "Error al cargar datos del empleado: " + e.getMessage(), 
-                "Error");
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del empleado: " + e.getMessage(),
+                        "Error");
             }
         }
     }
@@ -163,14 +157,11 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     
     private void actualizarListaEmpleados(){
         ArrayList<Empleado> empleados = controlador.getListaEmpleados();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
+        jListEmpleados.setListData(empleados.toArray());
+    }
 
-        for (int i = 0; i < empleados.size(); i++) {
-            Empleado empleado = empleados.get(i);
-            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
-        }
-
-        jListEmpleados.setModel(modelo);
+    private void actualizarVista(){
+        actualizarListaEmpleados();
     }
     
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
@@ -208,7 +199,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelNumEmpleado;
-    private javax.swing.JList<String> jListEmpleados;
+    private javax.swing.JList jListEmpleados;
     private javax.swing.JPanel jPanelGestionEmpleados;
     private javax.swing.JScrollPane jScrollPaneEmpleados;
     private javax.swing.JTextField jTextFieldCedula;

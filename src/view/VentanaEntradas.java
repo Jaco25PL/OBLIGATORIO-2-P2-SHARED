@@ -27,23 +27,24 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         // controlador.getSistema().addObserver(this);
         controlador.getSistema().addPropertyChangeListener(this);
         
-        actualizarListaVehiculos();
-        actualizarListaEmpleados();
-        
+        // actualizarListaVehiculos();
+        // actualizarListaEmpleados();
+        actualizarVista();
+
         jTextFieldFecha.setText(controlador.getFechaActual());
         jTextFieldHora.setText(controlador.getHoraActual());
 
         ClaroOscuro.aplicarModo(this);
         
         //Listener para la Lista
-        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if (!evt.getValueIsAdjusting()) {
-                    vehiculoTieneContrato();
-                }
-            }
-        });
+        // jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        //     @Override
+        //     public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+        //         if (!evt.getValueIsAdjusting()) {
+        //             vehiculoTieneContrato();
+        //         }
+        //     }
+        // });
     }
 
     /**
@@ -70,11 +71,12 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         jLabelNotas = new javax.swing.JLabel();
         jLabelTieneContrato = new javax.swing.JLabel();
         jLabelTieneContratoRespuesta = new javax.swing.JLabel();
-        jTextFieldNotas = new javax.swing.JTextField();
         jLabelVehiculos1 = new javax.swing.JLabel();
         jLabelVehiculos2 = new javax.swing.JLabel();
         jLabelFecha1 = new javax.swing.JLabel();
         jLabelFecha2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaNotasEntrada = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Entradas");
@@ -119,6 +121,11 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListVehiculosValueChanged(evt);
+            }
+        });
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
         jPanelEntradas.add(jScrollPaneVehiculos);
@@ -150,8 +157,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         jLabelTieneContratoRespuesta.setText("---");
         jPanelEntradas.add(jLabelTieneContratoRespuesta);
         jLabelTieneContratoRespuesta.setBounds(100, 200, 140, 16);
-        jPanelEntradas.add(jTextFieldNotas);
-        jTextFieldNotas.setBounds(60, 120, 160, 70);
 
         jLabelVehiculos1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelVehiculos1.setText("Lista de Vehículos");
@@ -171,65 +176,79 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         jPanelEntradas.add(jLabelFecha2);
         jLabelFecha2.setBounds(230, 40, 90, 16);
 
+        jTextAreaNotasEntrada.setColumns(20);
+        jTextAreaNotasEntrada.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaNotasEntrada);
+
+        jPanelEntradas.add(jScrollPane1);
+        jScrollPane1.setBounds(60, 120, 160, 70);
+
         getContentPane().add(jPanelEntradas);
         jPanelEntradas.setBounds(0, 0, 570, 320);
 
         setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void vehiculoTieneContrato(){
-        String seleccionado = jListVehiculos.getSelectedValue();
+    // private void vehiculoTieneContrato(){
+    //     String seleccionado = jListVehiculos.getSelectedValue();
 
-        if (seleccionado != null) {
-            try {
-                String matricula = seleccionado.split(" - ")[1];
-                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
+    //     if (seleccionado != null) {
+    //         try {
+    //             String matricula = seleccionado.split(" - ")[1];
+    //             Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
 
-                if (vehiculo != null) {
-                    if(controlador.vehiculoTieneContrato(vehiculo)){
-                        jLabelTieneContratoRespuesta.setText("SI");
-                    } else if(!controlador.vehiculoTieneContrato(vehiculo)){
-                        jLabelTieneContratoRespuesta.setText("NO");
-                    }
+    //             if (vehiculo != null) {
+    //                 if(controlador.vehiculoTieneContrato(vehiculo)){
+    //                     jLabelTieneContratoRespuesta.setText("SI");
+    //                 } else if(!controlador.vehiculoTieneContrato(vehiculo)){
+    //                     jLabelTieneContratoRespuesta.setText("NO");
+    //                 }
                     
+    //             }
+    //         } catch (Exception e) {
+    //             // JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(),
+    //             //         "Error", JOptionPane.ERROR_MESSAGE);
+
+    //              ClaroOscuro.mostrarMensaje(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error");
+    //         }
+    //     }
+    // }
+
+    private void vehiculoTieneContrato(){
+        Vehiculo vehiculo = (Vehiculo) jListVehiculos.getSelectedValue();
+        
+        if (vehiculo != null) {
+            try {
+                if(controlador.vehiculoTieneContrato(vehiculo)){
+                    jLabelTieneContratoRespuesta.setText("SI");
+                } else {
+                    jLabelTieneContratoRespuesta.setText("NO");
                 }
             } catch (Exception e) {
-                // JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(),
-                //         "Error", JOptionPane.ERROR_MESSAGE);
-
-                 ClaroOscuro.mostrarMensaje(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error");
+                ClaroOscuro.mostrarMensaje(this, "Error al cargar datos del vehículo: " + e.getMessage(), "Error");
             }
         }
     }
     
     private void actualizarListaVehiculos() {
         ArrayList<Vehiculo> vehiculos = controlador.getVehiculosDisponiblesParaEntrada();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < vehiculos.size(); i++) {
-            Vehiculo vehiculo = vehiculos.get(i);
-            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() + " - " + vehiculo.getMatricula());
-        }
-
-        jListVehiculos.setModel(modelo);
+        jListVehiculos.setListData(vehiculos.toArray());
     }
     
     private void actualizarListaEmpleados() {
         ArrayList<Empleado> empleados = controlador.getListaEmpleados();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
+        jListEmpleados.setListData(empleados.toArray());
+    }
 
-        for (int i = 0; i < empleados.size(); i++) {
-            Empleado empleado = empleados.get(i);
-            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
-        }
-
-        jListEmpleados.setModel(modelo);
+    private void actualizarVista(){
+        actualizarListaVehiculos();
+        actualizarListaEmpleados();
     }
     
     private void limpiarCampos(){
         jTextFieldFecha.setText("");
         jTextFieldHora.setText("");
-        jTextFieldNotas.setText("");
+        jTextAreaNotasEntrada.setText("");
         jLabelTieneContratoRespuesta.setText("---");
                 
         jListVehiculos.clearSelection();
@@ -241,19 +260,19 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         try {
             String fecha = jTextFieldFecha.getText();
             String hora = jTextFieldHora.getText();
-            String notas = jTextFieldNotas.getText();
+            String notas = jTextAreaNotasEntrada.getText();
 
-            String empleadoSeleccionado = jListEmpleados.getSelectedValue();
-            String vehiculoSeleccionado = jListVehiculos.getSelectedValue();
+            Empleado empleadoSeleccionado = (Empleado) jListEmpleados.getSelectedValue();
+            Vehiculo vehiculoSeleccionado = (Vehiculo) jListVehiculos.getSelectedValue();
 
             String cedulaEmpleado = "";
             String matriculaVehiculo = "";
 
             if (empleadoSeleccionado != null) {
-                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+                cedulaEmpleado = String.valueOf(empleadoSeleccionado.getCedula());
             }
             if (vehiculoSeleccionado != null) {
-                matriculaVehiculo = vehiculoSeleccionado.split(" - ")[1];
+                matriculaVehiculo = vehiculoSeleccionado.getMatricula();
             }
 
             controlador.registrarEntrada(fecha, hora, notas, cedulaEmpleado, matriculaVehiculo);
@@ -277,6 +296,15 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         limpiarCampos();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
 
+    private void jListVehiculosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListVehiculosValueChanged
+        // TODO add your handling code here:
+        if (!evt.getValueIsAdjusting()) {
+            vehiculoTieneContrato();
+        }
+    }//GEN-LAST:event_jListVehiculosValueChanged
+
+    // jTextFieldNotasActionPerformed
+
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -292,14 +320,15 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JLabel jLabelTieneContratoRespuesta;
     private javax.swing.JLabel jLabelVehiculos1;
     private javax.swing.JLabel jLabelVehiculos2;
-    private javax.swing.JList<String> jListEmpleados;
-    private javax.swing.JList<String> jListVehiculos;
+    private javax.swing.JList jListEmpleados;     
+    private javax.swing.JList jListVehiculos;     
     private javax.swing.JPanel jPanelEntradas;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPaneEmpleados;
     private javax.swing.JScrollPane jScrollPaneVehiculos;
+    private javax.swing.JTextArea jTextAreaNotasEntrada;
     private javax.swing.JTextField jTextFieldFecha;
     private javax.swing.JTextField jTextFieldHora;
-    private javax.swing.JTextField jTextFieldNotas;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -308,64 +337,19 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         String propertyName = evt.getPropertyName();
 
         if ("vehiculoCreado".equals(propertyName) || "vehiculoEliminado".equals(propertyName)) {
-            actualizarListaVehiculos(); // Actualizar lista de vehículos
+            actualizarListaVehiculos();
         } else if ("empleadoCreado".equals(propertyName) || "empleadoEliminado".equals(propertyName)) {
-            actualizarListaEmpleados(); // Actualizar lista de empleados
+            actualizarListaEmpleados();
         } else if ("entradaCreada".equals(propertyName)) {
-            actualizarListaVehiculos(); // Actualizar cuando se crea una entrada
+            actualizarListaVehiculos();
         } else if ("salidaCreada".equals(propertyName)) {
-            actualizarListaVehiculos(); // Actualizar cuando se crea una salida
+            actualizarListaVehiculos();
         } else if ("contratoCreado".equals(propertyName) || "contratoEliminado".equals(propertyName)) {
             if (jListVehiculos.getSelectedValue() != null) {
-                vehiculoTieneContrato(); // Actualizar si se crea o elimina un contrato
+                vehiculoTieneContrato();
             }
         }
     }
 
-    // Implementar todos los métodos de SistemaObserver:
-    // @Override
-    // public void onClienteEliminado() {
-    // }
 
-    // @Override
-    // public void onClienteCreado() {
-    // }
-
-    // @Override
-    // public void onVehiculoEliminado() {
-    //     actualizarListaVehiculos(); // Actualizar si se elimina un vehículo
-    // }
-
-    // @Override
-    // public void onVehiculoCreado() {
-    //     actualizarListaVehiculos(); // Actualizar si se crea un vehículo
-    // }
-
-    // @Override
-    // public void onEmpleadoEliminado() {
-    //     actualizarListaEmpleados(); // Actualizar si se elimina un empleado
-    // }
-
-    // @Override
-    // public void onEmpleadoCreado() {
-    //     actualizarListaEmpleados(); // Actualizar si se crea un empleado
-    // }
-
-    // @Override
-    // public void onContratoEliminado() {
-    // }
-
-    // @Override
-    // public void onContratoCreado() {
-    // }
-
-    // @Override
-    // public void onEntradaCreada() {
-    //     actualizarListaVehiculos(); // Actualizar cuando se crea una entrada (el vehículo ya no está disponible)
-    // }
-
-    // @Override
-    // public void onSalidaCreada() {
-    //     actualizarListaVehiculos(); // ¡ESTA ES LA CLAVE! Actualizar cuando se crea una salida (el vehículo vuelve a estar disponible)
-    // }
 }

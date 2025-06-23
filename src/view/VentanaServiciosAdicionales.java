@@ -8,7 +8,6 @@ import controlador.ServicioAdicionalControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import model.Empleado;
 import model.ServicioAdicional;
 import model.Vehiculo;
@@ -24,7 +23,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         
         initComponents();
         
-        // controlador.getSistema().addObserver(this);
         controlador.getSistema().addPropertyChangeListener(this);
         
         jComboBoxServicio.removeAllItems();
@@ -42,16 +40,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         actualizarListaServicios();
         
         ClaroOscuro.aplicarModo(this);
-        
-        //Listener para la Lista
-        jListServiciosRealizados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if (!evt.getValueIsAdjusting()) {
-                    mostrarServicioSeleccionado();
-                }
-            }
-        });
     }
 
     /**
@@ -241,27 +229,22 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
     }// </editor-fold>//GEN-END:initComponents
 
     public void mostrarServicioSeleccionado(){
-        String seleccionado = jListServiciosRealizados.getSelectedValue();
+        ServicioAdicional servicio = (ServicioAdicional) jListServiciosRealizados.getSelectedValue();
 
-        if (seleccionado != null) {
+        if (servicio != null) {
             try {
-                String matricula = seleccionado.split(" - ")[1];
-                ServicioAdicional servicio = controlador.buscarServicioPorMatricula(matricula);
+                jTextFieldVehiculo.setText(servicio.getVehiculo().getMarca() + " "
+                        + servicio.getVehiculo().getModelo() + " - "
+                        + servicio.getVehiculo().getMatricula());
 
-                if (servicio != null) {
-                    jTextFieldVehiculo.setText(servicio.getVehiculo().getMarca() + " "
-                            + servicio.getVehiculo().getModelo() + " - "
-                            + servicio.getVehiculo().getMatricula());
-
-                    jTextFieldEmpleado.setText(servicio.getEmpleado().getNombre() + " - "
-                            + servicio.getEmpleado().getCedula());
-                    
-                    jComboBoxServicio.setSelectedItem(servicio.getTipoServicio());
-                    jTextFieldFecha.setText(servicio.getFecha());
-                    jTextFieldHora.setText(servicio.getHora());
-                    jTextFieldCosto.setText(String.valueOf(servicio.getCostoServicio()));
-                    
-                }
+                jTextFieldEmpleado.setText(servicio.getEmpleado().getNombre() + " - "
+                        + servicio.getEmpleado().getCedula());
+                
+                jComboBoxServicio.setSelectedItem(servicio.getTipoServicio());
+                jTextFieldFecha.setText(servicio.getFecha());
+                jTextFieldHora.setText(servicio.getHora());
+                jTextFieldCosto.setText(String.valueOf(servicio.getCostoServicio()));
+                
             } catch (Exception e) {
                 ClaroOscuro.mostrarError(this, "Error al cargar datos del servicio: " 
                     + e.getMessage(), "Error");
@@ -271,38 +254,16 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
     
     private void actualizarListaVehiculos(){
         ArrayList<Vehiculo> vehiculos = controlador.getListaVehiculos();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < vehiculos.size(); i++) {
-            Vehiculo vehiculo = vehiculos.get(i);
-            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() 
-                + " - " + vehiculo.getMatricula());
-        }
-
-        jListVehiculos.setModel(modelo);
+        jListVehiculos.setListData(vehiculos.toArray());
     }
     
     private void actualizarListaEmpleados(){
         ArrayList<Empleado> empleados = controlador.getListaEmpleados();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < empleados.size(); i++) {
-            Empleado empleado = empleados.get(i);
-            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
-        }
-
-        jListEmpleados.setModel(modelo);
+        jListEmpleados.setListData(empleados.toArray());
     }
     private void actualizarListaServicios(){
         ArrayList<ServicioAdicional> serviciosAdicionales = controlador.getListaServicios();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < serviciosAdicionales.size(); i++) {
-            ServicioAdicional servicioAdicional = serviciosAdicionales.get(i);
-            modelo.addElement(servicioAdicional.getTipoServicio() + " - " + servicioAdicional.getVehiculo().getMatricula());
-        }
-
-        jListServiciosRealizados.setModel(modelo);
+        jListServiciosRealizados.setListData(serviciosAdicionales.toArray());
     }
     
     private void limpiarCampos(){
@@ -318,39 +279,36 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
     }
     
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        
+    
         try {
             String tipoServicio = (String) jComboBoxServicio.getSelectedItem();
             String fecha = jTextFieldFecha.getText();
             String hora = jTextFieldHora.getText();
             String costo = jTextFieldCosto.getText();
 
-            String empleadoSeleccionado = jListEmpleados.getSelectedValue();
-            String vehiculoSeleccionado = jListVehiculos.getSelectedValue();
+            Empleado empleadoSeleccionado = (Empleado) jListEmpleados.getSelectedValue();
+            Vehiculo vehiculoSeleccionado = (Vehiculo) jListVehiculos.getSelectedValue();
 
             String cedulaEmpleado = "";
             String matriculaVehiculo = "";
 
             if (empleadoSeleccionado != null) {
-                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+                cedulaEmpleado = String.valueOf(empleadoSeleccionado.getCedula());
             }
             if (vehiculoSeleccionado != null) {
-                matriculaVehiculo = vehiculoSeleccionado.split(" - ")[1];
+                matriculaVehiculo = vehiculoSeleccionado.getMatricula();
             }
 
             controlador.registrarServicio(tipoServicio, fecha, hora, cedulaEmpleado, matriculaVehiculo, costo);
 
             actualizarListaServicios();
 
-            // JOptionPane.showMessageDialog(this, "Entrada agregada con éxito");
             ClaroOscuro.mostrarMensaje(this, "Servicio adicional agregado con éxito", "Éxito");
 
             limpiarCampos();
 
         } catch (Exception e) {
-            // JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
-
         }
         
     }//GEN-LAST:event_jButtonAgregarActionPerformed
@@ -368,7 +326,9 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
     }//GEN-LAST:event_jListServiciosRealizadosPropertyChange
 
     private void jListServiciosRealizadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListServiciosRealizadosValueChanged
-        // TODO add your handling code here:
+        if (!evt.getValueIsAdjusting()) {
+            mostrarServicioSeleccionado();
+        }
     }//GEN-LAST:event_jListServiciosRealizadosValueChanged
 
 
@@ -390,9 +350,9 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
     private javax.swing.JLabel jLabelNotas;
     private javax.swing.JLabel jLabelServiciosRealizados;
     private javax.swing.JLabel jLabelVehiculos;
-    private javax.swing.JList<String> jListEmpleados;
-    private javax.swing.JList<String> jListServiciosRealizados;
-    private javax.swing.JList<String> jListVehiculos;
+    private javax.swing.JList jListEmpleados;              
+    private javax.swing.JList jListServiciosRealizados;    
+    private javax.swing.JList jListVehiculos;              
     private javax.swing.JPanel jPanelServiciosAdicionales;
     private javax.swing.JScrollPane jScrollPaneEmpleados;
     private javax.swing.JScrollPane jScrollPaneServiciosRealizadps;

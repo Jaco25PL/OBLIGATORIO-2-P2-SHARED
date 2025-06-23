@@ -29,7 +29,7 @@ public class Cliente extends Persona {
 
     @Override
     public String toString(){
-        return "Cliente: " + super.toString() + " | Cel: " + getCelular() + " | Cliente Desde: " + getAñoCliente();
+        return super.toString();
     }
 
 }

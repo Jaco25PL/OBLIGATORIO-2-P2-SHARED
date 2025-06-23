@@ -28,6 +28,9 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         
         initComponents();
         configurarRenderizador();
+        
+        // investigando agregamos como poner enter para que se ejecute el boton de probar
+        getRootPane().setDefaultButton(jButtonProbar);
 
         minijuego = new Minijuego();
         ClaroOscuro.aplicarModo(this);
@@ -84,6 +87,11 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         jButtonProbar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonProbarActionPerformed(evt);
+            }
+        });
+        jButtonProbar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButtonProbarKeyPressed(evt);
             }
         });
         jPanel1.add(jButtonProbar);
@@ -278,6 +286,11 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         }
         limpiarField();
     }//GEN-LAST:event_jButtonResetActionPerformed
+
+    private void jButtonProbarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButtonProbarKeyPressed
+//        jButtonProbarActionPerformed(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonProbarKeyPressed
 
     
 

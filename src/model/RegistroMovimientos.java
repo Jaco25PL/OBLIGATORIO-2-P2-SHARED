@@ -62,12 +62,7 @@ public abstract class RegistroMovimientos implements Serializable{
 
     @Override
     public String toString(){
-        return "Movimiento N#" + getNumMovimiento() + 
-        " | Fecha: " + getFecha() + 
-        " | Hora: " + getHora() + 
-        " | Nota: " + getNota() + 
-        " | Empleado Asociado: " + getEmpleado().getNombre() + "CI: " + getEmpleado().getCedula() + 
-        " | Vehiculo Asociado: " + getVehiculo().getMarca() + " " + getVehiculo().getModelo() + " Matricula: " + getVehiculo().getMatricula(); 
+        return getVehiculo().getMarca() + " " + getVehiculo().getModelo() + " - " + getVehiculo().getMatricula(); 
     }
 
 }

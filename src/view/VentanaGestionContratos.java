@@ -8,8 +8,6 @@ import controlador.ContratoControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 
 // import javax.swing.JOptionPane;
 import model.Cliente;
@@ -40,15 +38,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         
         jTextFieldFechaInicio.setText(controlador.getFechaActual());
         
-        //Listener para la Lista
-        jListContratos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if (!evt.getValueIsAdjusting()) {
-                    mostrarContratoSeleccionado();
-                }
-            }
-        });
     }
 
     /**
@@ -127,11 +116,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         jPanelGestionContratos.add(jTextFieldFechaInicio);
         jTextFieldFechaInicio.setBounds(100, 30, 160, 26);
 
-        jListContratos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPaneContratos.setViewportView(jListContratos);
 
         jPanelGestionContratos.add(jScrollPaneContratos);
@@ -143,11 +127,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         jPanelGestionContratos.add(jLabelValorMensual);
         jLabelValorMensual.setBounds(10, 60, 90, 16);
 
-        jListClientes.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPaneClientes.setViewportView(jListClientes);
 
         jPanelGestionContratos.add(jScrollPaneClientes);
@@ -157,11 +136,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         jPanelGestionContratos.add(jLabelClientes);
         jLabelClientes.setBounds(10, 90, 70, 16);
 
-        jListVehiculos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
         jPanelGestionContratos.add(jScrollPaneVehiculos);
@@ -171,11 +145,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         jPanelGestionContratos.add(jLabelVehiculos);
         jLabelVehiculos.setBounds(130, 110, 60, 16);
 
-        jListEmpleados.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPaneEmpleados.setViewportView(jListEmpleados);
 
         jPanelGestionContratos.add(jScrollPaneEmpleados);
@@ -231,22 +200,17 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
     }// </editor-fold>//GEN-END:initComponents
 
     public void mostrarContratoSeleccionado() {
-        String seleccionado = jListContratos.getSelectedValue();
+        Contrato contrato = (Contrato) jListContratos.getSelectedValue();
         
-        if (seleccionado != null) {
+        if (contrato != null) {
             try {
-                int numContrato = Integer.parseInt(seleccionado.split(" - ")[0]);
-                Contrato contrato = controlador.buscarContratoPorNumContrato(numContrato);
-                
-                if (contrato != null) {
-                    jTextFieldValorMensual.setText(String.valueOf(contrato.getValorMensual()));
-                    jTextFieldFechaInicio.setText(String.valueOf(contrato.getFechaInicio()));
-                    jTextFieldCliente.setText(contrato.getClienteContrato().getNombre() + " - " + contrato.getClienteContrato().getCedula());
-                    jTextFieldVehiculo.setText(contrato.getVehiculoContrato().getMarca() + " " + contrato.getVehiculoContrato().getModelo() 
-                        + " - " + contrato.getVehiculoContrato().getMatricula());
-                    jTextFieldEmpleado.setText(contrato.getEmpleadoContrato().getNombre() + " - " + contrato.getEmpleadoContrato().getCedula());
-                    jTextFieldNumContrato.setText(String.valueOf(contrato.getNumContrato()));
-                }
+                jTextFieldValorMensual.setText(String.valueOf(contrato.getValorMensual()));
+                jTextFieldFechaInicio.setText(String.valueOf(contrato.getFechaInicio()));
+                jTextFieldCliente.setText(contrato.getClienteContrato().getNombre() + " - " + contrato.getClienteContrato().getCedula());
+                jTextFieldVehiculo.setText(contrato.getVehiculoContrato().getMarca() + " " + contrato.getVehiculoContrato().getModelo() 
+                    + " - " + contrato.getVehiculoContrato().getMatricula());
+                jTextFieldEmpleado.setText(contrato.getEmpleadoContrato().getNombre() + " - " + contrato.getEmpleadoContrato().getCedula());
+                jTextFieldNumContrato.setText(String.valueOf(contrato.getNumContrato()));
             } catch (Exception e) {
                 ClaroOscuro.mostrarMensaje(this, "Error al cargar datos del contrato: " + e.getMessage(), 
                 "Error");
@@ -270,76 +234,46 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
     
     private void actualizarListaEmpleados(){
         ArrayList<Empleado> empleados = controlador.getListaEmpleados();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < empleados.size(); i++) {
-            Empleado empleado = empleados.get(i);
-            modelo.addElement(empleado.getNombre() + " - " + empleado.getCedula());
-        }
-
-        jListEmpleados.setModel(modelo);
+        jListEmpleados.setListData(empleados.toArray());
     }
     
     private void actualizarListaClientes(){
         ArrayList<Cliente> clientes = controlador.getListaClientes();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente cliente = clientes.get(i);
-            modelo.addElement(cliente.getNombre() + " - " + cliente.getCedula());
-        }
-        
-        jListClientes.setModel(modelo);
+        jListClientes.setListData(clientes.toArray());
     }
     
     private void actualizarListaVehiculos() {
         ArrayList<Vehiculo> vehiculos = controlador.getListaVehiculos();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < vehiculos.size(); i++) {
-            Vehiculo vehiculo = vehiculos.get(i);
-            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() + " - " + vehiculo.getMatricula());
-        }
-
-        jListVehiculos.setModel(modelo);
+        jListVehiculos.setListData(vehiculos.toArray());
     }
     
     private void actualizarListaContratos() {
         ArrayList<Contrato> contratos = controlador.getListaContratos();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < contratos.size(); i++) {
-            Contrato contrato = contratos.get(i);
-            modelo.addElement(contrato.getNumContrato() + " - " + contrato.getClienteContrato().getNombre()
-                + " - " + contrato.getVehiculoContrato().getMarca()  + " " + contrato.getVehiculoContrato().getModelo()
-                + " - " + contrato.getEmpleadoContrato().getNombre());
-        }
-
-        jListContratos.setModel(modelo);
+        jListContratos.setListData(contratos.toArray());
     }
     
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        
+    
         try {
             String valorMensual = jTextFieldValorMensual.getText();
             String fechaInicio = jTextFieldFechaInicio.getText();
             
-            String empleadoSeleccionado = jListEmpleados.getSelectedValue();
-            String clienteSeleccionado = jListClientes.getSelectedValue();
-            String vehiculoSeleccionado = jListVehiculos.getSelectedValue();
+            Empleado empleadoSeleccionado = (Empleado) jListEmpleados.getSelectedValue();
+            Cliente clienteSeleccionado = (Cliente) jListClientes.getSelectedValue();
+            Vehiculo vehiculoSeleccionado = (Vehiculo) jListVehiculos.getSelectedValue();
             
             String cedulaEmpleado = "";
             String cedulaCliente = "";
             String matriculaVehiculo = "";
             
             if (empleadoSeleccionado != null) {
-                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+                cedulaEmpleado = String.valueOf(empleadoSeleccionado.getCedula());
             }
             if (clienteSeleccionado != null) {
-                cedulaCliente = clienteSeleccionado.split(" - ")[1];
+                cedulaCliente = String.valueOf(clienteSeleccionado.getCedula());
             }
             if (vehiculoSeleccionado != null) {
-                matriculaVehiculo = vehiculoSeleccionado.split(" - ")[1];
+                matriculaVehiculo = vehiculoSeleccionado.getMatricula();
             }
             
             controlador.registrarContrato(valorMensual, cedulaEmpleado, cedulaCliente, matriculaVehiculo, fechaInicio);
@@ -360,6 +294,12 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         limpiarCampos();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
 
+    private void jListContratosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListContratosValueChanged
+        if (!evt.getValueIsAdjusting()) {
+            mostrarContratoSeleccionado();
+        }
+    }//GEN-LAST:event_jListContratosValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregar;
@@ -377,10 +317,10 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
     private javax.swing.JLabel jLabelFechaInicio;
     private javax.swing.JLabel jLabelValorMensual;
     private javax.swing.JLabel jLabelVehiculos;
-    private javax.swing.JList<String> jListClientes;
-    private javax.swing.JList<String> jListContratos;
-    private javax.swing.JList<String> jListEmpleados;
-    private javax.swing.JList<String> jListVehiculos;
+    private javax.swing.JList jListClientes;    
+    private javax.swing.JList jListContratos;     
+    private javax.swing.JList jListEmpleados;   
+    private javax.swing.JList jListVehiculos;   
     private javax.swing.JPanel jPanelGestionContratos;
     private javax.swing.JScrollPane jScrollPaneClientes;
     private javax.swing.JScrollPane jScrollPaneContratos;
