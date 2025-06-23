@@ -234,7 +234,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jButtonClaroOscuroActionPerformed
 
     private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
-        VentanaGestionClientes ventanaClientes = new VentanaGestionClientes(clienteControlador);
+        VentanaGestionClientes ventanaClientes = new VentanaGestionClientes(sistema);
         ventanaClientes.setVisible(true);
     }//GEN-LAST:event_jMenuItemClientesActionPerformed
 

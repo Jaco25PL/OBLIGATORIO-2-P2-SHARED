@@ -3,31 +3,28 @@
  */
 package view;
 
-import controlador.ClienteControlador;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.Cliente;
 // import observer.SistemaObserver;
+import model.Sistema;
 
 // public class VentanaGestionClientes extends javax.swing.JFrame implements SistemaObserver {
 public class VentanaGestionClientes extends javax.swing.JFrame implements PropertyChangeListener{
     
-    private ClienteControlador controlador;
+    private Sistema sistema;
     
-    public VentanaGestionClientes(ClienteControlador controlador) {
-        this.controlador = controlador;
+    public VentanaGestionClientes(Sistema sistema) {
+        this.sistema = sistema;
         
         initComponents();
         
-        // ¡Registrarse como observer!
-        // controlador.getSistema().addObserver(this);
-        
         // Registrar como listener
-        controlador.getSistema().addPropertyChangeListener(this);
+        sistema.addPropertyChangeListener(this);
 
         jPanelGestionClientes.setBounds(0,0, this.getWidth(), this.getHeight());
         
@@ -172,7 +169,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
         if (seleccionado != null) {
             try {
                 int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
-                Cliente cliente = controlador.buscarClientePorCedula(cedula);
+                Cliente cliente = sistema.buscarClientePorCedula(cedula);
 
                 if (cliente != null) {
                     jTextFieldNombre.setText(cliente.getNombre());
@@ -196,7 +193,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
     }
     
     private void actualizarListaClientes(){
-        ArrayList<Cliente> clientes = controlador.getListaClientes();
+        ArrayList<Cliente> clientes = sistema.getListaClientes();
         DefaultListModel<String> modelo = new DefaultListModel<>();
         
         for (int i = 0; i < clientes.size(); i++) {
@@ -211,12 +208,73 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
 
         try {
             String nombre = jTextFieldNombre.getText();
-            String cedula = jTextFieldCedula.getText();
+            String cedulaStr = jTextFieldCedula.getText();
             String direccion = jTextFieldDireccion.getText();
-            String celular = jTextFieldCelular.getText();
-            String añoCliente = jTextFieldAñoCliente.getText();
+            String celularStr = jTextFieldCelular.getText();
+            String añoClienteStr = jTextFieldAñoCliente.getText();
+
+            // Validar que los campos no estén vacíos
+            if (nombre == null || nombre.trim().isEmpty()) {
+                throw new Exception("El nombre no puede estar vacío");
+            } 
+            if (direccion == null || direccion.trim().isEmpty()) {
+                throw new Exception("La dirección no puede estar vacía");
+            } 
+            if (cedulaStr == null || cedulaStr.trim().isEmpty()) {
+                throw new Exception("La cédula no puede estar vacía");
+            } 
+            if (celularStr == null || celularStr.trim().isEmpty()) {
+                throw new Exception("El celular no puede estar vacío");
+            } 
+            if (añoClienteStr == null || añoClienteStr.trim().isEmpty()) {
+                throw new Exception("El año no puede estar vacío");
+            }
             
-            controlador.registrarCliente(nombre, cedula, direccion, celular, añoCliente);
+            // Convertir strings a números
+            int cedula;
+            int celular;
+            int añoCliente;
+            
+            try {
+                cedula = Integer.parseInt(cedulaStr);
+            } catch (NumberFormatException e){
+                throw new Exception("La cédula debe ser un número válido");
+            }
+            try {
+                celular = Integer.parseInt(celularStr);
+            } catch (NumberFormatException e){
+                throw new Exception("El celular debe ser un número válido");
+            }
+            try {
+                añoCliente = Integer.parseInt(añoClienteStr);
+            } catch (NumberFormatException e){
+                throw new Exception("El año debe ser un número válido");
+            }
+            
+            // Validar valores numéricos
+            if (cedula <= 0) {
+                throw new Exception("La cédula debe ser un número positivo");
+            }
+            if (celular <= 0) {
+                throw new Exception("El celular debe ser un número positivo");
+            }
+            if (añoCliente <= 0 || añoCliente > LocalDate.now().getYear()) {
+                throw new Exception("El año debe ser válido");
+            }
+            
+            // Verificar cliente existente
+            if (sistema.existeClienteConCedula(cedula)) {
+                throw new Exception("Ya existe un cliente con esa cédula");
+            }
+            
+            // Crear y registrar cliente
+            Cliente cliente = new Cliente(nombre, cedula, direccion, celular, añoCliente);
+            boolean resultado = sistema.registrarCliente(cliente);
+            
+            if (!resultado) {
+                throw new Exception("No se pudo registrar el cliente");
+            }
+
             actualizarListaClientes();
             
             ClaroOscuro.mostrarMensaje(this, "Cliente agregado con éxito", "Éxito");
@@ -232,7 +290,8 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
             
         try {
-            String seleccionado = jListClientes.getSelectedValue();            if (seleccionado == null) {
+            String seleccionado = jListClientes.getSelectedValue();            
+            if (seleccionado == null) {
                 ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un cliente para eliminar", 
                     "Selección requerida");
                 return;
@@ -245,7 +304,16 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
                     "Confirmar eliminación");
             
             if (confirmacion == JOptionPane.YES_OPTION) {
-                controlador.eliminarCliente(cedula);
+                // Verificar que el cliente existe
+                if (!sistema.existeClienteConCedula(cedula)) {
+                    throw new Exception("No existe un cliente con esa cédula");
+                }
+                
+                boolean resultado = sistema.eliminarCliente(cedula);
+                
+                if (!resultado) {
+                    throw new Exception("No se pudo eliminar el cliente");
+                }
                 
                 actualizarListaClientes();
                 ClaroOscuro.mostrarMensaje(this, "Cliente eliminado con éxito", "Éxito");
