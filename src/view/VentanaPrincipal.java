@@ -3,8 +3,6 @@
  */
 package view;
 
-import controlador.ClienteControlador;
-import controlador.ContratoControlador;
 import controlador.EmpleadoControlador;
 import controlador.EntradaControlador;
 import controlador.SalidaControlador;
@@ -19,10 +17,8 @@ import model.Sistema;
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
-    private ClienteControlador clienteControlador;
     private EmpleadoControlador empleadoControlador;
     private VehiculoControlador vehiculoControlador;
-    private ContratoControlador contratoControlador;    
     private EntradaControlador entradaControlador;
     private SalidaControlador salidaControlador;
     private ServicioAdicionalControlador servicioAdicionalControlador;
@@ -34,10 +30,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
      */
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
-        this.clienteControlador = new ClienteControlador(sistema);
         this.empleadoControlador = new EmpleadoControlador(sistema);
         this.vehiculoControlador = new VehiculoControlador(sistema);        
-        this.contratoControlador = new ContratoControlador(sistema);
         this.entradaControlador = new EntradaControlador(sistema);
         this.salidaControlador = new SalidaControlador(sistema);
         this.servicioAdicionalControlador = new ServicioAdicionalControlador(sistema);
@@ -254,7 +248,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemEmpleadosActionPerformed
 
     private void jMenuItemContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemContratosActionPerformed
-        VentanaGestionContratos ventanaContratos = new VentanaGestionContratos(contratoControlador);
+        VentanaGestionContratos ventanaContratos = new VentanaGestionContratos(sistema);
         ventanaContratos.setVisible(true);
     }//GEN-LAST:event_jMenuItemContratosActionPerformed
 
@@ -316,10 +310,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
             this.sistema = serializacionControlador.getSistema();
             
             // Actualizar TODOS los controladores con el nuevo sistema
-            this.clienteControlador = new ClienteControlador(this.sistema);
             this.empleadoControlador = new EmpleadoControlador(this.sistema);
             this.vehiculoControlador = new VehiculoControlador(this.sistema);
-            this.contratoControlador = new ContratoControlador(this.sistema);
             this.entradaControlador = new EntradaControlador(this.sistema);
             this.salidaControlador = new SalidaControlador(this.sistema);
             this.servicioAdicionalControlador = new ServicioAdicionalControlador(this.sistema);
