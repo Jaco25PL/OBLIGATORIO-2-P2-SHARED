@@ -166,10 +166,6 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         jListVehiculos.setListData(vehiculos.toArray());
     }
     
-    private void actualizarVista(){
-        actualizarListaVehiculos();
-    }
-
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
         
         try {

@@ -185,37 +185,6 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         jTableWordle.setRowHeight(25);
     }
 
-    private class CeldaColoreada extends DefaultTableCellRenderer {
-        private Color backgroundColor;
-        private Color foregroundColor;
-        
-        public CeldaColoreada(Color backgroundColor, Color foregroundColor) {
-            this.backgroundColor = backgroundColor;
-            this.foregroundColor = foregroundColor;
-        }
-        
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, 
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            Component cell = super.getTableCellRendererComponent(
-                    table, value, isSelected, hasFocus, row, column);
-                
-            // Si estamos en la fila actual y la columna contiene el valor
-            if (row == filaActual - 1 && column < 5) {
-                cell.setBackground(backgroundColor);
-                cell.setForeground(foregroundColor);
-                setHorizontalAlignment(CENTER);
-                setFont(new Font("Arial", Font.BOLD, 16));
-            } else {
-                // Para las demás celdas, restaurar el color por defecto
-                cell.setBackground(table.getBackground());
-                cell.setForeground(table.getForeground());
-            }
-            
-            return cell;
-        }
-    }
-    
     private void colocarPalabraEnTabla(String palabra, int fila) {
         JTable tabla = this.jTableWordle;
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
