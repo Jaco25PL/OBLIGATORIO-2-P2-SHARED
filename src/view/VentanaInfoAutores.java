@@ -6,9 +6,6 @@ package view;
 
 public class VentanaInfoAutores extends javax.swing.JFrame {
 
-     /**
-     * Creates new form VentanaInfoAutores
-     */
     public VentanaInfoAutores() {
         initComponents();
 

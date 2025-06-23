@@ -6,19 +6,13 @@ package view;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-
-import javax.swing.DefaultListModel;
-
-// import javax.swing.JOptionPane;
 import model.Cliente;
 import model.Contrato;
 import model.Empleado;
 import model.Sistema;
 import model.Vehiculo;
-// import observer.SistemaObserver;
 import util.ValidadorFechaHora;
 
-// public class VentanaGestionContratos extends javax.swing.JFrame implements SistemaObserver{
 public class VentanaGestionContratos extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
@@ -28,7 +22,6 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         
         initComponents();
         
-        // controlador.getSistema().addObserver(this);
         sistema.addPropertyChangeListener(this);
         
         actualizarListaContratos();

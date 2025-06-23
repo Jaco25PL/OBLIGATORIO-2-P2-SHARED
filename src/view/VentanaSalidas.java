@@ -6,9 +6,6 @@ package view;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-
-import javax.swing.DefaultListModel;
-
 import model.Empleado;
 import model.Entrada;
 import model.Salida;
@@ -25,7 +22,6 @@ public class VentanaSalidas extends javax.swing.JFrame implements PropertyChange
         
         initComponents();
         
-        // controlador.getSistema().addObserver(this);
         sistema.addPropertyChangeListener(this);
 
         actualizarListaEntradas();

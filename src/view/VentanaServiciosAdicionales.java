@@ -12,7 +12,6 @@ import model.Sistema;
 import model.Vehiculo;
 import util.ValidadorFechaHora;
 
-// public class VentanaServiciosAdicionales extends javax.swing.JFrame implements SistemaObserver{
 public class VentanaServiciosAdicionales extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
@@ -22,7 +21,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         
         initComponents();
         
-        // controlador.getSistema().addObserver(this);
         sistema.addPropertyChangeListener(this);
         
         jComboBoxServicio.removeAllItems();
