@@ -15,7 +15,7 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         this.sistema = sistema;
         
         initComponents();
-          actualizarVista();
+        actualizarVista();
         
         ClaroOscuro.aplicarModo(this);
     }
@@ -43,16 +43,18 @@ public class VentanaGestionEmpleados extends javax.swing.JFrame {
         jTextFieldNumEmpleado = new javax.swing.JTextField();
         jScrollPaneEmpleados = new javax.swing.JScrollPane();
         jListEmpleados = new javax.swing.JList();
-        jListEmpleados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListEmpleadosValueChanged(evt);
-            }
-        });
+
         jLabelClientes1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de Empleados");
         getContentPane().setLayout(null);
+
+        jListEmpleados.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListEmpleadosValueChanged(evt);
+            }
+        });
 
         jPanelGestionEmpleados.setLayout(null);
 

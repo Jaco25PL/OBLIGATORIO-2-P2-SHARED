@@ -18,28 +18,22 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
     private Sistema sistema;
 
         public VentanaGestionContratos(Sistema sistema) {
-        this.sistema = sistema;
-        
-        initComponents();
+            this.sistema = sistema;
+            
+            initComponents();
 
-        jListContratos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListContratosValueChanged(evt);
-            }
-        });
-        
-        sistema.addPropertyChangeListener(this);
-        
-        actualizarListaContratos();
-        actualizarListaClientes();
-        actualizarListaEmpleados();
-        actualizarListaVehiculos();
-        
-        ClaroOscuro.aplicarModo(this);
-        
-        jTextFieldFechaInicio.setText(ValidadorFechaHora.getFechaActual());
-        
-    }
+            sistema.addPropertyChangeListener(this);
+
+            actualizarListaContratos();
+            actualizarListaClientes();
+            actualizarListaEmpleados();
+            actualizarListaVehiculos();
+
+            ClaroOscuro.aplicarModo(this);
+
+            jTextFieldFechaInicio.setText(ValidadorFechaHora.getFechaActual());
+
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,6 +62,7 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         jLabelVehiculos = new javax.swing.JLabel();
         jScrollPaneEmpleados = new javax.swing.JScrollPane();
         jListEmpleados = new javax.swing.JList<>();
+        
         jLabelEmpleados = new javax.swing.JLabel();
         jTextFieldEmpleado = new javax.swing.JTextField();
         jTextFieldVehiculo = new javax.swing.JTextField();
@@ -86,6 +81,12 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         getContentPane().setLayout(null);
 
         jPanelGestionContratos.setLayout(null);
+
+        jListContratos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListContratosValueChanged(evt);
+            }
+        });
 
         jLabelFechaInicio.setText("Fecha Inicio:");
         jPanelGestionContratos.add(jLabelFechaInicio);

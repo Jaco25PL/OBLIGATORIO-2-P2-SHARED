@@ -21,7 +21,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         
         initComponents();
 
-        // controlador.getSistema().addObserver(this);
         sistema.addPropertyChangeListener(this);
         
         actualizarVista();

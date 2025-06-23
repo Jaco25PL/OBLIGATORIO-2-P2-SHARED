@@ -9,10 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.Cliente;
-// import observer.SistemaObserver;
 import model.Sistema;
 
-// public class VentanaGestionClientes extends javax.swing.JFrame implements SistemaObserver {
 public class VentanaGestionClientes extends javax.swing.JFrame implements PropertyChangeListener{
     
     private Sistema sistema;
@@ -30,9 +28,6 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
         actualizarVista();
         
         ClaroOscuro.aplicarModo(this);
-        
-        //Listener para la Lista
-        jListClientes.addListSelectionListener(e -> jListClientesValueChanged(e));
     }
 
     /**
@@ -60,7 +55,12 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
         jTextFieldCedula = new javax.swing.JTextField();
         jTextFieldAñoCliente = new javax.swing.JTextField();
         jScrollPaneClientes = new javax.swing.JScrollPane();
-        jListClientes = new javax.swing.JList<>(); // Sin <String>
+        jListClientes = new javax.swing.JList<>();
+                jListClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListClientesValueChanged(evt);
+            }
+        });
         jLabelClientes1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
