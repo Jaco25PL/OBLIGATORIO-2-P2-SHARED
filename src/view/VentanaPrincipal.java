@@ -7,7 +7,6 @@ import controlador.EntradaControlador;
 import controlador.SalidaControlador;
 import controlador.SerializacionControlador;
 import controlador.ServicioAdicionalControlador;
-import controlador.VehiculoControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JOptionPane;
@@ -16,7 +15,6 @@ import model.Sistema;
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
-    private VehiculoControlador vehiculoControlador;
     private EntradaControlador entradaControlador;
     private SalidaControlador salidaControlador;
     private ServicioAdicionalControlador servicioAdicionalControlador;
@@ -28,7 +26,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
      */
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
-        this.vehiculoControlador = new VehiculoControlador(sistema);        
         this.entradaControlador = new EntradaControlador(sistema);
         this.salidaControlador = new SalidaControlador(sistema);
         this.servicioAdicionalControlador = new ServicioAdicionalControlador(sistema);
@@ -235,7 +232,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemMiniJuegoActionPerformed
 
     private void jMenuItemVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVehiculosActionPerformed
-        VentanaGestionVehiculos ventanaVehiculos = new VentanaGestionVehiculos(vehiculoControlador);
+        VentanaGestionVehiculos ventanaVehiculos = new VentanaGestionVehiculos(sistema);
         ventanaVehiculos.setVisible(true);
     }//GEN-LAST:event_jMenuItemVehiculosActionPerformed
 
@@ -307,7 +304,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
             this.sistema = serializacionControlador.getSistema();
             
             // Actualizar TODOS los controladores con el nuevo sistema
-            this.vehiculoControlador = new VehiculoControlador(this.sistema);
             this.entradaControlador = new EntradaControlador(this.sistema);
             this.salidaControlador = new SalidaControlador(this.sistema);
             this.servicioAdicionalControlador = new ServicioAdicionalControlador(this.sistema);

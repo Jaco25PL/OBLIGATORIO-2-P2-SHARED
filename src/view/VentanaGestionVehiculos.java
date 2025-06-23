@@ -3,24 +3,24 @@
  */
 package view;
 
-import controlador.VehiculoControlador;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+
+import model.Sistema;
 import model.Vehiculo;
 
 public class VentanaGestionVehiculos extends javax.swing.JFrame implements PropertyChangeListener{
 
-    private VehiculoControlador controlador;
+    private Sistema sistema;
     
-    public VentanaGestionVehiculos(VehiculoControlador controlador) {
-        this.controlador = controlador;
+    public VentanaGestionVehiculos(Sistema sistema) {
+        this.sistema = sistema;
         
         initComponents();
 
-        controlador.getSistema().addPropertyChangeListener(this);
+        sistema.addPropertyChangeListener(this);
         
         actualizarListaVehiculos();
         
@@ -144,7 +144,7 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         if (seleccionado != null) {
             try {
                 String matricula = seleccionado.split(" - ")[1];
-                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
+                Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matricula);
 
                 if (vehiculo != null) {
                     jTextFieldMatricula.setText(vehiculo.getMatricula());
@@ -166,7 +166,7 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
     }
 
     private void actualizarListaVehiculos() {
-        ArrayList<Vehiculo> vehiculos = controlador.getListaVehiculos();
+        ArrayList<Vehiculo> vehiculos = sistema.getListaVehiculos();
         DefaultListModel<String> modelo = new DefaultListModel<>();
 
         for (int i = 0; i < vehiculos.size(); i++) {
@@ -185,7 +185,34 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
             String modelo = jTextFieldModelo.getText();
             String estado = jTextFieldEstado.getText();
 
-            controlador.registrarVehiculo(matricula, marca, modelo, estado);            actualizarListaVehiculos();
+            // Validar que los campos no estén vacíos
+            if (matricula == null || matricula.trim().isEmpty()) {
+                throw new Exception("La matrícula no puede estar vacía");
+            } 
+            if (marca == null || marca.trim().isEmpty()) {
+                throw new Exception("La marca no puede estar vacía");
+            } 
+            if (modelo == null || modelo.trim().isEmpty()) {
+                throw new Exception("El modelo no puede estar vacío");
+            } 
+            if (estado == null || estado.trim().isEmpty()) {
+                throw new Exception("El estado no puede estar vacío");
+            } 
+            
+            // Verificar unicidad
+            if (sistema.existeVehiculoConMatricula(matricula)) {
+                throw new Exception("Ya existe un vehículo con esa matrícula");
+            }
+            
+            // Crear y registrar
+            Vehiculo vehiculo = new Vehiculo(matricula, marca, modelo, estado);
+            boolean resultado = sistema.registrarVehiculo(vehiculo);
+            
+            if (!resultado) {
+                throw new Exception("No se pudo registrar el vehículo");
+            }
+
+            actualizarListaVehiculos();
 
             ClaroOscuro.mostrarMensaje(this, "Vehículo agregado con éxito", "Éxito");
 
