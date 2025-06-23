@@ -6,7 +6,6 @@ package view;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 
 import model.Sistema;
 import model.Vehiculo;
@@ -25,16 +24,6 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         actualizarListaVehiculos();
         
         ClaroOscuro.aplicarModo(this);
-        
-        //Listener para la Lista
-        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if (!evt.getValueIsAdjusting()) {
-                    mostrarVehiculoSeleccionado();
-                }
-            }
-        });
     }
 
     /**
@@ -49,7 +38,7 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         jPanelGestionVehiculos = new javax.swing.JPanel();
         jButtonAgregar = new javax.swing.JButton();
         jScrollPaneVehiculos = new javax.swing.JScrollPane();
-        jListVehiculos = new javax.swing.JList<>();
+        jListVehiculos = new javax.swing.JList();
         jLabelVehiculos = new javax.swing.JLabel();
         jLabelMarca = new javax.swing.JLabel();
         jLabelMatricula = new javax.swing.JLabel();
@@ -82,6 +71,11 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListVehiculosValueChanged(evt);
+            }
         });
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
@@ -138,19 +132,21 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jListVehiculosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListVehiculosValueChanged
+        if (!evt.getValueIsAdjusting()) {
+            mostrarVehiculoSeleccionado();
+        }
+    }//GEN-LAST:event_jListVehiculosValueChanged
+
     private void mostrarVehiculoSeleccionado() {
-        String seleccionado = jListVehiculos.getSelectedValue();
+        Vehiculo vehiculo = (Vehiculo) jListVehiculos.getSelectedValue();
 
-        if (seleccionado != null) {
+        if (vehiculo != null) {
             try {
-                String matricula = seleccionado.split(" - ")[1];
-                Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matricula);
-
-                if (vehiculo != null) {
-                    jTextFieldMatricula.setText(vehiculo.getMatricula());
-                    jTextFieldMarca.setText(String.valueOf(vehiculo.getMarca()));
-                    jTextFieldModelo.setText(vehiculo.getModelo());
-                    jTextFieldEstado.setText(vehiculo.getEstado());                }
+                jTextFieldMatricula.setText(vehiculo.getMatricula());
+                jTextFieldMarca.setText(String.valueOf(vehiculo.getMarca()));
+                jTextFieldModelo.setText(vehiculo.getModelo());
+                jTextFieldEstado.setText(vehiculo.getEstado());
             } catch (Exception e) {
                 ClaroOscuro.mostrarError(this, "Error al cargar datos del vehículo: " + e.getMessage(),
                         "Error");
@@ -167,16 +163,13 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
 
     private void actualizarListaVehiculos() {
         ArrayList<Vehiculo> vehiculos = sistema.getListaVehiculos();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-
-        for (int i = 0; i < vehiculos.size(); i++) {
-            Vehiculo vehiculo = vehiculos.get(i);
-            modelo.addElement(vehiculo.getMarca() + " " + vehiculo.getModelo() + " - " + vehiculo.getMatricula());
-        }
-
-        jListVehiculos.setModel(modelo);
+        jListVehiculos.setListData(vehiculos.toArray());
     }
     
+    private void actualizarVista(){
+        actualizarListaVehiculos();
+    }
+
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
         
         try {
@@ -238,7 +231,7 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
     private javax.swing.JLabel jLabelModelo;
     private javax.swing.JLabel jLabelVehiculos;
     private javax.swing.JLabel jLabelVehiculos1;
-    private javax.swing.JList<String> jListVehiculos;
+    private javax.swing.JList jListVehiculos;
     private javax.swing.JPanel jPanelGestionVehiculos;
     private javax.swing.JScrollPane jScrollPaneVehiculos;
     private javax.swing.JTextField jTextFieldEstado;

@@ -40,6 +40,6 @@ public abstract class Persona implements Serializable{
 
     @Override
     public String toString(){
-        return getNombre() + " | CI: " + getCedula() + " | Dirección: " + getDireccion();
+        return getNombre() + " - CI: " + getCedula();
     }
 }

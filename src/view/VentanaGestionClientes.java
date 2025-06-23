@@ -7,7 +7,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import model.Cliente;
 // import observer.SistemaObserver;
@@ -28,19 +27,12 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
 
         jPanelGestionClientes.setBounds(0,0, this.getWidth(), this.getHeight());
         
-        actualizarListaClientes();
+        actualizarVista();
         
         ClaroOscuro.aplicarModo(this);
         
         //Listener para la Lista
-        jListClientes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            @Override
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if (!evt.getValueIsAdjusting()) {
-                    mostrarClienteSeleccionado();
-                }
-            }
-        });
+        jListClientes.addListSelectionListener(e -> jListClientesValueChanged(e));
     }
 
     /**
@@ -68,7 +60,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
         jTextFieldCedula = new javax.swing.JTextField();
         jTextFieldAñoCliente = new javax.swing.JTextField();
         jScrollPaneClientes = new javax.swing.JScrollPane();
-        jListClientes = new javax.swing.JList<>();
+        jListClientes = new javax.swing.JList<>(); // Sin <String>
         jLabelClientes1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -163,47 +155,74 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
         setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jListClientesValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        if (!evt.getValueIsAdjusting()) {
+            mostrarClienteSeleccionado();
+        }
+    }
+
     private void mostrarClienteSeleccionado() {
-        String seleccionado = jListClientes.getSelectedValue();
+        Cliente cliente = (Cliente) jListClientes.getSelectedValue();
 
-        if (seleccionado != null) {
+        if (cliente != null) {
             try {
-                int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
-                Cliente cliente = sistema.buscarClientePorCedula(cedula);
-
-                if (cliente != null) {
-                    jTextFieldNombre.setText(cliente.getNombre());
-                    jTextFieldCedula.setText(String.valueOf(cliente.getCedula()));
-                    jTextFieldDireccion.setText(cliente.getDireccion());
-                    jTextFieldCelular.setText(String.valueOf(cliente.getCelular()));
-                    jTextFieldAñoCliente.setText(String.valueOf(cliente.getAñoCliente()));
-                }
+                jTextFieldNombre.setText(cliente.getNombre());
+                jTextFieldCedula.setText(String.valueOf(cliente.getCedula()));
+                jTextFieldDireccion.setText(cliente.getDireccion());
+                jTextFieldCelular.setText(String.valueOf(cliente.getCelular()));
+                jTextFieldAñoCliente.setText(String.valueOf(cliente.getAñoCliente()));
             } catch (Exception e) {
                 ClaroOscuro.mostrarError(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error");
             }
         }
     }
-    
-    private void limpiarCampos(){
-        jTextFieldNombre.setText("");
-        jTextFieldCedula.setText("");
-        jTextFieldDireccion.setText("");
-        jTextFieldCelular.setText("");
-        jTextFieldAñoCliente.setText("");
-    }
-    
+
     private void actualizarListaClientes(){
         ArrayList<Cliente> clientes = sistema.getListaClientes();
-        DefaultListModel<String> modelo = new DefaultListModel<>();
-        
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente cliente = clientes.get(i);
-            modelo.addElement(cliente.getNombre() + " - " + cliente.getCedula());
-        }
-        
-        jListClientes.setModel(modelo);
+        jListClientes.setListData(clientes.toArray());
     }
-    
+
+    private void actualizarVista(){
+        actualizarListaClientes();
+    }
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            Cliente clienteSeleccionado = (Cliente) jListClientes.getSelectedValue();
+            
+            if (clienteSeleccionado == null) {
+                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un cliente para eliminar", 
+                    "Selección requerida");
+                return;
+            }
+            
+            int cedula = clienteSeleccionado.getCedula();
+            
+            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
+                    "¿Está seguro que desea eliminar este cliente?\nEsto eliminará también todos sus contratos.", 
+                    "Confirmar eliminación");
+            
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                // Verificar que el cliente existe
+                if (!sistema.existeClienteConCedula(cedula)) {
+                    throw new Exception("No existe un cliente con esa cédula");
+                }
+                
+                boolean resultado = sistema.eliminarCliente(cedula);
+                
+                if (!resultado) {
+                    throw new Exception("No se pudo eliminar el cliente");
+                }
+                
+                actualizarListaClientes();
+                ClaroOscuro.mostrarMensaje(this, "Cliente eliminado con éxito", "Éxito");
+                limpiarCampos();
+            }
+        } catch (Exception e) {
+            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
+        }
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
 
         try {
@@ -287,47 +306,18 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
         
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-            
-        try {
-            String seleccionado = jListClientes.getSelectedValue();            
-            if (seleccionado == null) {
-                ClaroOscuro.mostrarAdvertencia(this, "Debe seleccionar un cliente para eliminar", 
-                    "Selección requerida");
-                return;
-            }
-            
-            int cedula = Integer.parseInt(seleccionado.split(" - ")[1]);
-            
-            int confirmacion = ClaroOscuro.mostrarConfirmacion(this,
-                    "¿Está seguro que desea eliminar este cliente?\nEsto eliminará también todos sus contratos.", 
-                    "Confirmar eliminación");
-            
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                // Verificar que el cliente existe
-                if (!sistema.existeClienteConCedula(cedula)) {
-                    throw new Exception("No existe un cliente con esa cédula");
-                }
-                
-                boolean resultado = sistema.eliminarCliente(cedula);
-                
-                if (!resultado) {
-                    throw new Exception("No se pudo eliminar el cliente");
-                }
-                
-                actualizarListaClientes();
-                ClaroOscuro.mostrarMensaje(this, "Cliente eliminado con éxito", "Éxito");
-                limpiarCampos();
-            }
-        } catch (Exception e) {
-            ClaroOscuro.mostrarError(this, e.getMessage(), "Error");
-        }
+    private void limpiarCampos() {
+        jTextFieldNombre.setText("");
+        jTextFieldCedula.setText("");
+        jTextFieldDireccion.setText("");
+        jTextFieldCelular.setText("");
+        jTextFieldAñoCliente.setText("");
         
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
+        jListClientes.clearSelection();
+    }
 
     private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
         limpiarCampos();
-        jListClientes.clearSelection();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
 
     // Implementar todos los métodos de SistemaObserver:
@@ -393,7 +383,7 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
     private javax.swing.JLabel jLabelClientes1;
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelNombre;
-    private javax.swing.JList<String> jListClientes;
+    private javax.swing.JList jListClientes; // Sin <String>
     private javax.swing.JPanel jPanelGestionClientes;
     private javax.swing.JScrollPane jScrollPaneClientes;
     private javax.swing.JTextField jTextFieldAñoCliente;
