@@ -156,7 +156,7 @@ public class VentanaSalidas extends javax.swing.JFrame implements PropertyChange
 
         jLabelTiempoEnParkingRespuesta.setText("---");
         jPanelSalidas.add(jLabelTiempoEnParkingRespuesta);
-        jLabelTiempoEnParkingRespuesta.setBounds(120, 220, 120, 16);
+        jLabelTiempoEnParkingRespuesta.setBounds(120, 220, 250, 16);
         jPanelSalidas.add(jTextFieldNotas);
         jTextFieldNotas.setBounds(60, 120, 160, 70);
 
