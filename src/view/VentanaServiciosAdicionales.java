@@ -369,10 +369,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         limpiarCampos();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
 
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
-
     private void jListServiciosRealizadosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jListServiciosRealizadosPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_jListServiciosRealizadosPropertyChange
