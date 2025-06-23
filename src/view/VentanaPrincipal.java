@@ -3,16 +3,17 @@
  */
 package view;
 
-import controlador.SerializacionControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
+
 import model.Sistema;
 
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
-    private SerializacionControlador serializacionControlador;
   
     
     /**
@@ -20,7 +21,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
      */
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
-        this.serializacionControlador = new SerializacionControlador(sistema);
         
         initComponents();
         jPanelMain.setBounds(0,0, this.getWidth(), this.getHeight());
@@ -207,6 +207,29 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // Método para guardar el sistema
+    private boolean guardarSistema() {
+        try {
+            sistema.guardarDatos();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Método para cargar el sistema
+    private boolean cargarSistema() {
+        try {
+            Sistema sistemaRecuperado = sistema.cargarDatos();
+            this.sistema = sistemaRecuperado;
+            return true;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private void jButtonClaroOscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClaroOscuroActionPerformed
         ClaroOscuro.setModo();
         ClaroOscuro.aplicarModo(this);
@@ -272,7 +295,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
 
     private void jMenuItemRecuperacionDatosActionPerformed(java.awt.event.ActionEvent evt) {
     // PRIMERO verificar si existen datos guardados
-    if (!serializacionControlador.existenDatosGuardados()) {
+    if (!sistema.existenDatosGuardados()) {
         ClaroOscuro.mostrarMensaje(this, 
             "No hay datos guardados previamente", 
             "Sin datos guardados");
@@ -285,18 +308,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
         "Recuperar datos");
         
     if (opcion == JOptionPane.YES_OPTION) {
-        boolean resultado = serializacionControlador.cargarSistema();
+        boolean resultado = cargarSistema();
         if (resultado) {
             ClaroOscuro.mostrarMensaje(this, 
                 "Datos recuperados correctamente.", 
                 "Recuperación exitosa");
-            
-            // Obtener el sistema ANTES de crear controladores
-            this.sistema = serializacionControlador.getSistema();
-            
-            // ¡IMPORTANTE! También actualizar el serializacionControlador
-            this.serializacionControlador = new SerializacionControlador(this.sistema);
-            
         } else {
             ClaroOscuro.mostrarMensaje(this, 
                 "No se pudieron recuperar los datos.\nEl archivo puede estar corrupto.", 
@@ -308,7 +324,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     private void jMenuItemGrabacionDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGrabacionDatosActionPerformed
         int opcion = ClaroOscuro.mostrarConfirmacion(this, "Desea guardar los datos actuales?", "Guardar datos");
         if (opcion == JOptionPane.YES_OPTION) {
-            boolean resultado = serializacionControlador.guardarSistema();
+            boolean resultado = guardarSistema();
             if (resultado) {
                 ClaroOscuro.mostrarMensaje(this, "Los datos se han guardado correctamente.", "Guardado exitoso");
             } else {
