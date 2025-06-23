@@ -3,35 +3,34 @@
  */
 package view;
 
-import controlador.SalidaControlador;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import model.Empleado;
 import model.Entrada;
+import model.Salida;
+import model.Sistema;
 import model.Vehiculo;
-// import observer.SistemaObserver;
+import util.ValidadorFechaHora;
 
-// public class VentanaSalidas extends javax.swing.JFrame implements SistemaObserver{
 public class VentanaSalidas extends javax.swing.JFrame implements PropertyChangeListener{
     
-    private SalidaControlador controlador;
+    private Sistema sistema;
 
-    public VentanaSalidas(SalidaControlador controlador) {
-        this.controlador = controlador;
+    public VentanaSalidas(Sistema sistema) {
+        this.sistema = sistema;
         
         initComponents();
         
         // controlador.getSistema().addObserver(this);
-        controlador.getSistema().addPropertyChangeListener(this);
+        sistema.addPropertyChangeListener(this);
 
         actualizarListaEntradas();
         actualizarListaEmpleados();
         
-        jTextFieldFecha.setText(controlador.getFechaActual());
-        jTextFieldHora.setText(controlador.getHoraActual());
+        jTextFieldFecha.setText(ValidadorFechaHora.getFechaActual());
+        jTextFieldHora.setText(ValidadorFechaHora.getHoraActual());
 
         ClaroOscuro.aplicarModo(this);
         
@@ -194,10 +193,10 @@ public class VentanaSalidas extends javax.swing.JFrame implements PropertyChange
         if (seleccionado != null) {
             try {
                 String matricula = seleccionado.split(" - ")[1];
-                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);                if (vehiculo != null) {
-                    if (controlador.vehiculoTieneContrato(vehiculo)) {
+                Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matricula);                if (vehiculo != null) {
+                    if (sistema.vehiculoTieneContrato(vehiculo)) {
                         jLabelTieneContratoRespuesta.setText("SI");
-                    } else if (!controlador.vehiculoTieneContrato(vehiculo)) {
+                    } else if (!sistema.vehiculoTieneContrato(vehiculo)) {
                         jLabelTieneContratoRespuesta.setText("NO");
                     }
 
@@ -215,8 +214,8 @@ public class VentanaSalidas extends javax.swing.JFrame implements PropertyChange
         if (seleccionado != null) {
             try {
                 String matricula = seleccionado.split(" - ")[1];
-                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);                if (vehiculo != null) {
-                    jLabelTiempoEnParkingRespuesta.setText(controlador.vehiculoTiempoEnParking(vehiculo) + "");
+                Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matricula);                if (vehiculo != null) {
+                    jLabelTiempoEnParkingRespuesta.setText(sistema.vehiculoTiempoEnParking(vehiculo) + "");
                 }
             } catch (Exception e) {
                 ClaroOscuro.mostrarError(this, "Error al cargar datos del vehiculo: " + e.getMessage(),
@@ -226,7 +225,7 @@ public class VentanaSalidas extends javax.swing.JFrame implements PropertyChange
     }
     
     private void actualizarListaEntradas() {
-        ArrayList<Entrada> entradas = controlador.getEntradasSinSalida();
+        ArrayList<Entrada> entradas = sistema.getEntradasSinSalida();
         DefaultListModel<String> modelo = new DefaultListModel<>();
 
         for (int i = 0; i < entradas.size(); i++) {
@@ -238,7 +237,7 @@ public class VentanaSalidas extends javax.swing.JFrame implements PropertyChange
     }
     
     private void actualizarListaEmpleados() {
-        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        ArrayList<Empleado> empleados = sistema.getListaEmpleados();
         DefaultListModel<String> modelo = new DefaultListModel<>();
 
         for (int i = 0; i < empleados.size(); i++) {
@@ -270,17 +269,70 @@ public class VentanaSalidas extends javax.swing.JFrame implements PropertyChange
             String empleadoSeleccionado = jListEmpleados.getSelectedValue();
             String entradaSeleccionada = jListEntradas.getSelectedValue();
 
-            String cedulaEmpleado = "";
+            String cedulaEmpleadoStr = "";
             String matriculaVehiculoEntrada = "";
 
             if (empleadoSeleccionado != null) {
-                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+                cedulaEmpleadoStr = empleadoSeleccionado.split(" - ")[1];
             }
             if (entradaSeleccionada != null) {
                 matriculaVehiculoEntrada = entradaSeleccionada.split(" - ")[1];
             }
 
-            controlador.registrarSalida(fecha, hora, notas, cedulaEmpleado, matriculaVehiculoEntrada);            actualizarListaEntradas();
+            // Validar que los campos no estén vacíos y tengan el formato correcto
+            ValidadorFechaHora.validarFecha(fecha);
+            ValidadorFechaHora.validarHora(hora);
+            
+            if (notas == null) { // Las notas pueden estar vacías
+                notas = "";
+            }
+            if (cedulaEmpleadoStr == null || cedulaEmpleadoStr.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un empleado");
+            }
+            if (matriculaVehiculoEntrada == null || matriculaVehiculoEntrada.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar una entrada");
+            }
+
+            // Convertir cédulas
+            int cedulaEmpleado;
+
+            try {
+                cedulaEmpleado = Integer.parseInt(cedulaEmpleadoStr);
+            } catch (NumberFormatException e) {
+                throw new Exception("La cédula del empleado debe ser un número válido");
+            }
+
+            // Buscar en sistema
+            Empleado empleado = sistema.buscarEmpleadoPorCedula(cedulaEmpleado);
+            if (empleado == null) {
+                throw new Exception("El empleado seleccionado no existe");
+            }
+
+            Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matriculaVehiculoEntrada);
+            if (vehiculo == null) {
+                throw new Exception("El vehículo seleccionado no existe");
+            }
+            
+            Entrada entrada = sistema.buscarEntradaPorMatricula(matriculaVehiculoEntrada);
+            if (entrada == null) {
+                throw new Exception("No se encontró una entrada activa para el vehículo seleccionado");
+            }
+
+            //Validar que fecha/hora de salida sea posterior a la de entrada
+            ValidadorFechaHora.validarFechaHoraPosterior(entrada.getFecha(), entrada.getHora(), fecha, hora);
+            
+            // Verificar unicidad
+            if (!sistema.vehiculoEstaEnParking(matriculaVehiculoEntrada)) {
+                throw new Exception("El vehículo no está en el parking");
+            }
+            
+            // Crear y registrar
+            Salida salida = new Salida(0, fecha, hora, notas, empleado, vehiculo);
+            boolean resultado = sistema.registrarSalida(salida, entrada);
+
+            if (!resultado) {
+                throw new Exception("No se pudo registrar la salida");
+            }
 
             ClaroOscuro.mostrarMensaje(this, "Salida agregada con éxito", "Éxito");
 
@@ -341,52 +393,4 @@ public class VentanaSalidas extends javax.swing.JFrame implements PropertyChange
             }
         }
     }
-
-
-    // implememnatr todos los metodos aunque no se usen para que java no se enoje
-    // @Override
-    // public void onClienteEliminado() {
-    // }
-
-    // @Override
-    // public void onClienteCreado() {
-    // }
-
-    // @Override
-    // public void onVehiculoEliminado() {
-    //     actualizarListaEntradas();
-    // }
-
-    // @Override
-    // public void onVehiculoCreado() {
-    //     actualizarListaEntradas();
-    // }
-
-    // @Override
-    // public void onEmpleadoEliminado() {
-    //     actualizarListaEmpleados();
-    // }
-
-    // @Override
-    // public void onEmpleadoCreado() {
-    //     actualizarListaEmpleados();
-    // }
-
-    // @Override
-    // public void onContratoEliminado() {
-    // }
-
-    // @Override
-    // public void onContratoCreado() {
-    // }
-
-    // @Override
-    // public void onEntradaCreada() {
-    //     actualizarListaEntradas();
-    // }
-
-    // @Override
-    // public void onSalidaCreada() {
-    //     actualizarListaEntradas();
-    // }
 }

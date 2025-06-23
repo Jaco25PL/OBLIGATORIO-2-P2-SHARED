@@ -3,7 +3,6 @@
  */
 package view;
 
-import controlador.SalidaControlador;
 import controlador.SerializacionControlador;
 import controlador.ServicioAdicionalControlador;
 import java.beans.PropertyChangeEvent;
@@ -14,7 +13,6 @@ import model.Sistema;
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
-    private SalidaControlador salidaControlador;
     private ServicioAdicionalControlador servicioAdicionalControlador;
     private SerializacionControlador serializacionControlador;
   
@@ -24,7 +22,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
      */
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
-        this.salidaControlador = new SalidaControlador(sistema);
         this.servicioAdicionalControlador = new ServicioAdicionalControlador(sistema);
         this.serializacionControlador = new SerializacionControlador(sistema);
         
@@ -249,7 +246,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemEntradasActionPerformed
 
     private void jMenuItemSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalidasActionPerformed
-        VentanaSalidas ventanaSalidas = new VentanaSalidas(salidaControlador);
+        VentanaSalidas ventanaSalidas = new VentanaSalidas(sistema);
         ventanaSalidas.setVisible(true);
     }//GEN-LAST:event_jMenuItemSalidasActionPerformed
 
@@ -301,7 +298,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
             this.sistema = serializacionControlador.getSistema();
             
             // Actualizar TODOS los controladores con el nuevo sistema
-            this.salidaControlador = new SalidaControlador(this.sistema);
             this.servicioAdicionalControlador = new ServicioAdicionalControlador(this.sistema);
             
             // ¡IMPORTANTE! También actualizar el serializacionControlador
