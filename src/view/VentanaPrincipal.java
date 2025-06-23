@@ -4,7 +4,6 @@
 package view;
 
 import controlador.SerializacionControlador;
-import controlador.ServicioAdicionalControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JOptionPane;
@@ -13,7 +12,6 @@ import model.Sistema;
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
-    private ServicioAdicionalControlador servicioAdicionalControlador;
     private SerializacionControlador serializacionControlador;
   
     
@@ -22,7 +20,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
      */
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
-        this.servicioAdicionalControlador = new ServicioAdicionalControlador(sistema);
         this.serializacionControlador = new SerializacionControlador(sistema);
         
         initComponents();
@@ -251,7 +248,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemSalidasActionPerformed
 
     private void jMenuItemServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemServiciosActionPerformed
-        VentanaServiciosAdicionales ventanaServicios = new VentanaServiciosAdicionales(servicioAdicionalControlador);
+        VentanaServiciosAdicionales ventanaServicios = new VentanaServiciosAdicionales(sistema);
         ventanaServicios.setVisible(true);
     }//GEN-LAST:event_jMenuItemServiciosActionPerformed
 
@@ -296,9 +293,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
             
             // Obtener el sistema ANTES de crear controladores
             this.sistema = serializacionControlador.getSistema();
-            
-            // Actualizar TODOS los controladores con el nuevo sistema
-            this.servicioAdicionalControlador = new ServicioAdicionalControlador(this.sistema);
             
             // ¡IMPORTANTE! También actualizar el serializacionControlador
             this.serializacionControlador = new SerializacionControlador(this.sistema);
