@@ -248,5 +248,6 @@ public class VentanaGestionVehiculos extends javax.swing.JFrame implements Prope
         if("vehiculoCreado".equals(propertyName) || "vehiculoEliminado".equals(propertyName)) {
             actualizarListaVehiculos();
         } 
+
     }
 }

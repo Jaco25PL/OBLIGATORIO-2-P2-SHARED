@@ -396,8 +396,12 @@ public class VentanaGestionClientes extends javax.swing.JFrame implements Proper
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // TODO Auto-generated method stub
-        if ("clienteCreado".equals(evt.getPropertyName()) || "clienteEliminado".equals(evt.getPropertyName())) {
+        
+        String evento = evt.getPropertyName();
+        if ("clienteCreado".equals(evento) || "clienteEliminado".equals(evento)) {
             actualizarListaClientes();
         }
+
+
     }
 }

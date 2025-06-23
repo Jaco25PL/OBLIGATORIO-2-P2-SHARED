@@ -35,6 +35,7 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         minijuego = new Minijuego();
         ClaroOscuro.aplicarModo(this);
 
+        mostrarReglasJuego();
     }
 
     /**
@@ -250,6 +251,16 @@ public class VentanaMiniJuego extends javax.swing.JFrame {
         }
         
         tabla.repaint();
+    }
+
+    private void mostrarReglasJuego() {
+        String reglas = "Reglas del juego:\n"
+                + "1. Debes adivinar una palabra de 5 letras.\n"
+                + "2. Las letras correctas en la posición correcta se marcarán en verde.\n"
+                + "3. Las letras correctas pero en la posición incorrecta se marcarán en amarillo.\n"
+                + "4. Las letras incorrectas se marcarán en gris.\n"
+                + "5. Tienes 6 intentos para adivinar la palabra secreta.";
+        ClaroOscuro.mostrarMensaje(this, reglas, "Instrucciones del juego");
     }
     
     private void reiniciarTablero() {

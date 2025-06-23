@@ -559,6 +559,7 @@ public class Sistema implements Serializable{
         manejador.firePropertyChange("servicioCreado", null, null);
         return true;
     }
+
     
     public ArrayList<ServicioAdicional> getListaServiciosAdicionales() {
         return listaServiciosAdicionales;
@@ -1252,6 +1253,7 @@ public class Sistema implements Serializable{
 
     public Sistema cargarDatos() throws IOException, ClassNotFoundException, FileNotFoundException {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("DATOS.ser"))) {
+
             return (Sistema) in.readObject(); // retornar el sistema cargado
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException("No hay datos guardados previamente");
@@ -1261,6 +1263,7 @@ public class Sistema implements Serializable{
             throw new ClassNotFoundException("Clase no encontrada al cargar los datos: " + e.getMessage());
         }
     }
+
 
 
 
