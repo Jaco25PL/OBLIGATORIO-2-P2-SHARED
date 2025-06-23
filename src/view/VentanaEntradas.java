@@ -3,33 +3,36 @@
  */
 package view;
 
-import controlador.EntradaControlador;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import model.Empleado;
 import model.Entrada;
+import model.Sistema;
 import model.Vehiculo;
 import util.ValidadorFechaHora;
 
 public class VentanaEntradas extends javax.swing.JFrame implements PropertyChangeListener{
 
-    private EntradaControlador controlador;
+    private Sistema sistema;
     
-    public VentanaEntradas(EntradaControlador controlador) {
-        this.controlador = controlador;
+    public VentanaEntradas(Sistema sistema) {
+        this.sistema = sistema;
         
         initComponents();
 
-        controlador.getSistema().addPropertyChangeListener(this);
+        // controlador.getSistema().addObserver(this);
+        sistema.addPropertyChangeListener(this);
         
         actualizarVista();
 
-        jTextFieldFecha.setText(controlador.getFechaActual());
-        jTextFieldHora.setText(controlador.getHoraActual());
+        jTextFieldFecha.setText(ValidadorFechaHora.getFechaActual());
+        jTextFieldHora.setText(ValidadorFechaHora.getHoraActual());
 
         ClaroOscuro.aplicarModo(this);
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,24 +181,24 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         
         if (vehiculo != null) {
             try {
-                if(controlador.vehiculoTieneContrato(vehiculo)){
+                if(sistema.vehiculoTieneContrato(vehiculo)){
                     jLabelTieneContratoRespuesta.setText("SI");
                 } else {
                     jLabelTieneContratoRespuesta.setText("NO");
                 }
             } catch (Exception e) {
-                ClaroOscuro.mostrarMensaje(this, "Error al cargar datos del vehículo: " + e.getMessage(), "Error");
+                ClaroOscuro.mostrarError(this, "Error al cargar datos del vehículo: " + e.getMessage(), "Error");
             }
         }
     }
     
     private void actualizarListaVehiculos() {
-        ArrayList<Vehiculo> vehiculos = controlador.getVehiculosDisponiblesParaEntrada();
+        ArrayList<Vehiculo> vehiculos = sistema.getVehiculosDisponiblesParaEntrada();
         jListVehiculos.setListData(vehiculos.toArray());
     }
     
     private void actualizarListaEmpleados() {
-        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        ArrayList<Empleado> empleados = sistema.getListaEmpleados();
         jListEmpleados.setListData(empleados.toArray());
     }
 
@@ -215,7 +218,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
     }
     
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        
         try {
             String fecha = jTextFieldFecha.getText();
             String hora = jTextFieldHora.getText();
@@ -237,7 +239,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
             // Validar que los campos no estén vacíos y tengan el formato correcto
             ValidadorFechaHora.validarFecha(fecha);
             ValidadorFechaHora.validarHora(hora);
-            
+
             if (notas == null) { // Las notas pueden estar vacías
                 notas = "";
             }
@@ -258,24 +260,24 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
             }
 
             // Buscar en sistema
-            Empleado empleado = controlador.getSistema().buscarEmpleadoPorCedula(cedulaEmpleado);
+            Empleado empleado = sistema.buscarEmpleadoPorCedula(cedulaEmpleado);
             if (empleado == null) {
                 throw new Exception("El empleado seleccionado no existe");
             }
 
-            Vehiculo vehiculo = controlador.getSistema().buscarVehiculoPorMatricula(matriculaVehiculo);
+            Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matriculaVehiculo);
             if (vehiculo == null) {
                 throw new Exception("El vehículo seleccionado no existe");
             }
 
             // Verificar unicidad
-            if (controlador.getSistema().vehiculoEstaEnParking(matriculaVehiculo)) {
+            if (sistema.vehiculoEstaEnParking(matriculaVehiculo)) {
                 throw new Exception("El vehículo ya está en el parking");
             }
 
             // Crear y registrar
             Entrada entrada = new Entrada(0, fecha, hora, notas, empleado, vehiculo);
-            boolean resultado = controlador.getSistema().registrarEntrada(entrada);
+            boolean resultado = sistema.registrarEntrada(entrada);
 
             if (!resultado) {
                 throw new Exception("No se pudo registrar la entrada");

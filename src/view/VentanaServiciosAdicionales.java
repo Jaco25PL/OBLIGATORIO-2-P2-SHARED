@@ -3,27 +3,27 @@
  */
 package view;
 
-import controlador.ServicioAdicionalControlador;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import model.Empleado;
 import model.ServicioAdicional;
+import model.Sistema;
 import model.Vehiculo;
-// import observer.SistemaObserver;
+import util.ValidadorFechaHora;
 
 // public class VentanaServiciosAdicionales extends javax.swing.JFrame implements SistemaObserver{
 public class VentanaServiciosAdicionales extends javax.swing.JFrame implements PropertyChangeListener{
 
-    private ServicioAdicionalControlador controlador;
+    private Sistema sistema;
     
-    public VentanaServiciosAdicionales(ServicioAdicionalControlador controlador) {
-        this.controlador = controlador;
+    public VentanaServiciosAdicionales(Sistema sistema) {
+        this.sistema = sistema;
         
         initComponents();
         
-        controlador.getSistema().addPropertyChangeListener(this);
+        // controlador.getSistema().addObserver(this);
+        sistema.addPropertyChangeListener(this);
         
         jComboBoxServicio.removeAllItems();
         jComboBoxServicio.addItem("Lavado");
@@ -32,8 +32,8 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         jComboBoxServicio.addItem("Cambio de luces");
         jComboBoxServicio.addItem("Otro");
         
-        jTextFieldFecha.setText(controlador.getFechaActual());
-        jTextFieldHora.setText(controlador.getHoraActual());
+        jTextFieldFecha.setText(ValidadorFechaHora.getFechaActual());
+        jTextFieldHora.setText(ValidadorFechaHora.getHoraActual());
         
         actualizarListaVehiculos();
         actualizarListaEmpleados();
@@ -253,16 +253,17 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
     }
     
     private void actualizarListaVehiculos(){
-        ArrayList<Vehiculo> vehiculos = controlador.getListaVehiculos();
+        ArrayList<Vehiculo> vehiculos = sistema.getListaVehiculos();
         jListVehiculos.setListData(vehiculos.toArray());
     }
     
     private void actualizarListaEmpleados(){
-        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        ArrayList<Empleado> empleados = sistema.getListaEmpleados();
         jListEmpleados.setListData(empleados.toArray());
     }
+    
     private void actualizarListaServicios(){
-        ArrayList<ServicioAdicional> serviciosAdicionales = controlador.getListaServicios();
+        ArrayList<ServicioAdicional> serviciosAdicionales = sistema.getListaServiciosAdicionales();
         jListServiciosRealizados.setListData(serviciosAdicionales.toArray());
     }
     
@@ -284,22 +285,75 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
             String tipoServicio = (String) jComboBoxServicio.getSelectedItem();
             String fecha = jTextFieldFecha.getText();
             String hora = jTextFieldHora.getText();
-            String costo = jTextFieldCosto.getText();
+            String costoStr = jTextFieldCosto.getText();
 
             Empleado empleadoSeleccionado = (Empleado) jListEmpleados.getSelectedValue();
             Vehiculo vehiculoSeleccionado = (Vehiculo) jListVehiculos.getSelectedValue();
 
-            String cedulaEmpleado = "";
+            String cedulaEmpleadoStr = "";
             String matriculaVehiculo = "";
 
             if (empleadoSeleccionado != null) {
-                cedulaEmpleado = String.valueOf(empleadoSeleccionado.getCedula());
+                cedulaEmpleadoStr = String.valueOf(empleadoSeleccionado.getCedula());
             }
             if (vehiculoSeleccionado != null) {
                 matriculaVehiculo = vehiculoSeleccionado.getMatricula();
             }
 
-            controlador.registrarServicio(tipoServicio, fecha, hora, cedulaEmpleado, matriculaVehiculo, costo);
+             // Validar que los campos no estén vacíos y tengan el formato correcto
+            ValidadorFechaHora.validarFecha(fecha);
+            ValidadorFechaHora.validarHora(hora);
+            
+            if (tipoServicio == null || tipoServicio.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un tipo de servicio");
+            }
+            if (costoStr == null || costoStr.trim().isEmpty()) {
+                throw new Exception("Debe ingresar costo");
+            }
+            
+            // Convertir costo
+            double costo;
+            try {
+                costo = Double.parseDouble(costoStr);
+                if (costo <= 0) {
+                    throw new Exception("El costo debe ser mayor a 0");
+                }
+            } catch (NumberFormatException e) {
+                throw new Exception("El costo debe ser un número válido");
+            }
+            
+            if (cedulaEmpleadoStr == null || cedulaEmpleadoStr.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un empleado");
+            }
+            if (matriculaVehiculo == null || matriculaVehiculo.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un vehículo");
+            }
+            
+            // Convertir cédula
+            int cedulaEmpleado;
+            try {
+                cedulaEmpleado = Integer.parseInt(cedulaEmpleadoStr);
+            } catch (NumberFormatException e) {
+                throw new Exception("La cédula del empleado debe ser un número válido");
+            }
+            
+            // Buscar empleado y vehículo en sistema
+            Empleado empleado = sistema.buscarEmpleadoPorCedula(cedulaEmpleado);
+            if (empleado == null) {
+                throw new Exception("Empleado no encontrado");
+            }
+            Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matriculaVehiculo);
+            if (vehiculo == null) {
+                throw new Exception("Vehículo no encontrado");
+            }
+            
+            // Crear y registrar servicio
+            ServicioAdicional servicio = new ServicioAdicional(0, tipoServicio, fecha, hora, "", vehiculo, empleado, costo);
+            boolean resultado = sistema.registrarServicio(servicio);
+            
+            if (!resultado) {
+                throw new Exception("No se pudo registrar la salida");
+            }
 
             actualizarListaServicios();
 
@@ -382,47 +436,4 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         }
     }
 
-    // @Override
-    // public void onClienteEliminado() {
-    // }
-
-    // @Override
-    // public void onClienteCreado() {
-    // }
-
-    // @Override
-    // public void onVehiculoEliminado() {
-    //     actualizarListaVehiculos();
-    // }
-
-    // @Override
-    // public void onVehiculoCreado() {
-    //     actualizarListaVehiculos();
-    // }
-
-    // @Override
-    // public void onEmpleadoEliminado() {
-    //     actualizarListaEmpleados();
-    // }
-
-    // @Override
-    // public void onEmpleadoCreado() {
-    //     actualizarListaEmpleados();
-    // }
-
-    // @Override
-    // public void onContratoEliminado() {
-    // }
-
-    // @Override
-    // public void onContratoCreado() {
-    // }
-
-    // @Override
-    // public void onEntradaCreada() {
-    // }
-
-    // @Override
-    // public void onSalidaCreada() {
-    // }
 }

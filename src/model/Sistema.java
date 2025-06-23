@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
-// import observer.SistemaObserver;
 
 public class Sistema implements Serializable{
 
@@ -302,26 +300,52 @@ public class Sistema implements Serializable{
         String tiempo = "0:00";
 
         // Busco la entrada más reciente del vehiculo que no tenga salida
-        boolean encontrada = false;
         Entrada entradaActiva = null;
         Iterator<Entrada> it = listaEntradas.iterator();
-        while(it.hasNext() && !encontrada){
+        while(it.hasNext()){
             Entrada entrada = it.next();
-            if (entrada.getVehiculo().getMatricula().equals(vehiculo.getMatricula())){
+            if (entrada.getVehiculo().getMatricula().equals(vehiculo.getMatricula()) && !entrada.tieneSalida()){
+                // Si encontramos una entrada sin salida, la guardamos
+                // (como recorremos en orden, la última que encontremos será la más reciente)
                 entradaActiva = entrada;
-                encontrada = true;
             }
         }
 
         if (entradaActiva != null) {
             // Obtengo fecha y hora actual para calcular
             java.time.LocalDateTime ahora = java.time.LocalDateTime.now();
-            String fechaActual = ahora.getDayOfMonth() + "/" + ahora.getMonthValue() 
-            + "/" + ahora.getYear();
+            String fechaActual = String.format("%02d/%02d/%04d", ahora.getDayOfMonth(), ahora.getMonthValue(), ahora.getYear());
             String horaActual = String.format("%02d:%02d", ahora.getHour(), ahora.getMinute());
-        
-            tiempo = calcularDiferenciaTiempo(entradaActiva.getFecha(), entradaActiva.getHora(), 
-            fechaActual, horaActual);
+            
+            // Verificar si la fecha de entrada es posterior a la fecha actual
+            try {
+                // Parsear fecha de entrada
+                String[] partesEntrada = entradaActiva.getFecha().split("/");
+                int diaEntrada = Integer.parseInt(partesEntrada[0]);
+                int mesEntrada = Integer.parseInt(partesEntrada[1]);
+                int añoEntrada = Integer.parseInt(partesEntrada[2]);
+                
+                // Parsear hora de entrada
+                String[] partesHoraEntrada = entradaActiva.getHora().split(":");
+                int horasEntrada = Integer.parseInt(partesHoraEntrada[0]);
+                int minutosEntrada = Integer.parseInt(partesHoraEntrada[1]);
+                
+                // Crear LocalDateTime para entrada y actual
+                java.time.LocalDateTime fechaHoraEntrada = java.time.LocalDateTime.of(
+                    añoEntrada, mesEntrada, diaEntrada, horasEntrada, minutosEntrada);
+                
+                // Si la entrada es en el futuro, retornar mensaje apropiado
+                if (fechaHoraEntrada.isAfter(ahora)) {
+                    return "Entrada futura";
+                }
+                
+                // Si la entrada es válida (pasada o presente), calcular tiempo
+                tiempo = calcularDiferenciaTiempo(entradaActiva.getFecha(), entradaActiva.getHora(), 
+                    fechaActual, horaActual);
+                    
+            } catch (Exception e) {
+                return "Error en fecha";
+            }
         }
 
         return tiempo;

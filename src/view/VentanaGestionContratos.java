@@ -3,31 +3,33 @@
  */
 package view;
 
-import controlador.ContratoControlador;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
 
 // import javax.swing.JOptionPane;
 import model.Cliente;
 import model.Contrato;
 import model.Empleado;
+import model.Sistema;
 import model.Vehiculo;
 // import observer.SistemaObserver;
+import util.ValidadorFechaHora;
 
 // public class VentanaGestionContratos extends javax.swing.JFrame implements SistemaObserver{
 public class VentanaGestionContratos extends javax.swing.JFrame implements PropertyChangeListener{
 
-    private ContratoControlador controlador;
+    private Sistema sistema;
 
-        public VentanaGestionContratos(ContratoControlador controlador) {
-        this.controlador = controlador;
+        public VentanaGestionContratos(Sistema sistema) {
+        this.sistema = sistema;
         
         initComponents();
         
         // controlador.getSistema().addObserver(this);
-        controlador.getSistema().addPropertyChangeListener(this);
+        sistema.addPropertyChangeListener(this);
         
         actualizarListaContratos();
         actualizarListaClientes();
@@ -36,7 +38,7 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         
         ClaroOscuro.aplicarModo(this);
         
-        jTextFieldFechaInicio.setText(controlador.getFechaActual());
+        jTextFieldFechaInicio.setText(ValidadorFechaHora.getFechaActual());
         
     }
 
@@ -233,51 +235,124 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
     }
     
     private void actualizarListaEmpleados(){
-        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        ArrayList<Empleado> empleados = sistema.getListaEmpleados();
         jListEmpleados.setListData(empleados.toArray());
     }
-    
+
     private void actualizarListaClientes(){
-        ArrayList<Cliente> clientes = controlador.getListaClientes();
+        ArrayList<Cliente> clientes = sistema.getListaClientes();
         jListClientes.setListData(clientes.toArray());
     }
     
     private void actualizarListaVehiculos() {
-        ArrayList<Vehiculo> vehiculos = controlador.getListaVehiculos();
+        ArrayList<Vehiculo> vehiculos = sistema.getListaVehiculos();
         jListVehiculos.setListData(vehiculos.toArray());
     }
     
     private void actualizarListaContratos() {
-        ArrayList<Contrato> contratos = controlador.getListaContratos();
+        ArrayList<Contrato> contratos = sistema.getListaContratos();
         jListContratos.setListData(contratos.toArray());
     }
     
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
     
         try {
-            String valorMensual = jTextFieldValorMensual.getText();
+            String valorMensualStr = jTextFieldValorMensual.getText();
             String fechaInicio = jTextFieldFechaInicio.getText();
             
             Empleado empleadoSeleccionado = (Empleado) jListEmpleados.getSelectedValue();
             Cliente clienteSeleccionado = (Cliente) jListClientes.getSelectedValue();
             Vehiculo vehiculoSeleccionado = (Vehiculo) jListVehiculos.getSelectedValue();
             
-            String cedulaEmpleado = "";
-            String cedulaCliente = "";
+            String cedulaEmpleadoStr = "";
+            String cedulaClienteStr = "";
             String matriculaVehiculo = "";
             
             if (empleadoSeleccionado != null) {
-                cedulaEmpleado = String.valueOf(empleadoSeleccionado.getCedula());
+                cedulaEmpleadoStr = String.valueOf(empleadoSeleccionado.getCedula());
             }
             if (clienteSeleccionado != null) {
-                cedulaCliente = String.valueOf(clienteSeleccionado.getCedula());
+                cedulaClienteStr = String.valueOf(clienteSeleccionado.getCedula());
             }
             if (vehiculoSeleccionado != null) {
                 matriculaVehiculo = vehiculoSeleccionado.getMatricula();
             }
             
-            controlador.registrarContrato(valorMensual, cedulaEmpleado, cedulaCliente, matriculaVehiculo, fechaInicio);
+            // Validar que los campos no estén vacíos
+            if (valorMensualStr == null || valorMensualStr.trim().isEmpty()) {
+                throw new Exception("El valor mensual no puede estar vacío");
+            }
+            if (cedulaEmpleadoStr == null || cedulaEmpleadoStr.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un empleado");
+            }
+            if (cedulaClienteStr == null || cedulaClienteStr.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un cliente");
+            }
+            if (matriculaVehiculo == null || matriculaVehiculo.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un vehículo");
+            }
+
+            //Validar fecha
+            ValidadorFechaHora.validarFecha(fechaInicio);
+
+            // Convertir strings a números
+            double valorMensual;
+
+            try {
+                valorMensual = Double.parseDouble(valorMensualStr);
+            } catch (NumberFormatException e) {
+                throw new Exception("El valor mensual debe ser un número válido");
+            }
+
+            // Validar valores numéricos
+            if (valorMensual <= 0) {
+                throw new Exception("El valor mensual debe ser mayor a cero");
+            }
+
+            // Convertir cédulas
+            int cedulaEmpleado; 
+            int cedulaCliente;
             
+            try {
+                cedulaEmpleado = Integer.parseInt(cedulaEmpleadoStr);
+            } catch (NumberFormatException e) {
+                throw new Exception("La cédula del empleado debe ser un número válido");
+            }
+            try {
+                cedulaCliente = Integer.parseInt(cedulaClienteStr);
+            } catch (NumberFormatException e) {
+                throw new Exception("La cédula del cliente debe ser un número válido");
+            }
+            
+            // Buscar en sistema
+            Empleado empleado = sistema.buscarEmpleadoPorCedula(cedulaEmpleado);
+            if (empleado == null) {
+                throw new Exception("El empleado seleccionado no existe");
+            }
+
+            Cliente cliente = sistema.buscarClientePorCedula(cedulaCliente);
+            if (cliente == null) {
+                throw new Exception("El cliente seleccionado no existe");
+            }
+
+            Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matriculaVehiculo);
+            if (vehiculo == null) {
+                throw new Exception("El vehículo seleccionado no existe");
+            }
+            
+            // Verificar unicidad
+            if (sistema.vehiculoTieneContrato(vehiculo)) {
+                throw new Exception("El vehículo ya tiene un contrato activo");
+            }
+
+            // Crear y registrar
+            Contrato contrato = new Contrato(valorMensual, empleado, cliente, vehiculo, 0, fechaInicio);
+            boolean resultado = sistema.registrarContrato(contrato);
+
+            if (!resultado) {
+                throw new Exception("No se pudo registrar el contrato");
+            }
+
             actualizarListaContratos();
             
             ClaroOscuro.mostrarMensaje(this, "Contrato agregado con éxito", "Éxito");
@@ -353,54 +428,4 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
             actualizarListaEmpleados();
         }
     }
-
-
-    // @Override
-    // public void onClienteEliminado() {
-    //     actualizarListaContratos();
-    //     actualizarListaClientes();
-    // }
-
-    // @Override
-    // public void onClienteCreado() {
-    //     actualizarListaClientes();
-    // }
-
-    // @Override
-    // public void onVehiculoEliminado() {
-    //     actualizarListaVehiculos();
-    // }
-
-    // @Override
-    // public void onVehiculoCreado() {
-    //     actualizarListaVehiculos();
-    // }
-
-    // @Override
-    // public void onEmpleadoEliminado() {
-    //     actualizarListaEmpleados();
-    // }
-
-    // @Override
-    // public void onEmpleadoCreado() {
-    //     actualizarListaEmpleados();
-    // }
-
-    // @Override
-    // public void onContratoEliminado() {
-    //     actualizarListaContratos();
-    // }
-
-    // @Override
-    // public void onContratoCreado() {
-    //     actualizarListaContratos();
-    // }
-
-    // @Override
-    // public void onEntradaCreada() {
-    // }
-
-    // @Override
-    // public void onSalidaCreada() {
-    // }
 }
