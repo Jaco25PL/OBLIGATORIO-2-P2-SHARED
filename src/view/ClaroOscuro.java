@@ -75,16 +75,29 @@ public class ClaroOscuro {
         // Aplicar a componentes
         aplicarModoAComponentes(dialog.getContentPane(), colorFondo, colorTexto);
     }
-    
-    private static void aplicarModoAComponentes(Container container, Color fondo, Color texto){
+      private static void aplicarModoAComponentes(Container container, Color fondo, Color texto){
         Component[] components = container.getComponents();
         
         for(int i=0; i<components.length; i++){
 
             Component comp = components[i];
 
-            comp.setBackground(fondo);
-            comp.setForeground(texto);
+            // Verificar si el componente es un botón de la grilla de movimientos
+            if (comp instanceof JButton) {
+                JButton boton = (JButton) comp;
+                Boolean esBotonGrilla = (Boolean) boton.getClientProperty("esBotonGrilla");
+                if (esBotonGrilla != null && esBotonGrilla) {
+                    // Solo aplicar el color de texto, mantener el fondo personalizado
+                    comp.setForeground(Color.BLACK); // Texto negro para mejor contraste con colores verde/amarillo/rojo
+                } else {
+                    // Para otros botones, aplicar colores normalmente
+                    comp.setBackground(fondo);
+                    comp.setForeground(texto);
+                }
+            } else {
+                comp.setBackground(fondo);
+                comp.setForeground(texto);
+            }
 
             if (comp instanceof Container) {
                 aplicarModoAComponentes((Container) comp, fondo, texto);

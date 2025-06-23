@@ -623,11 +623,12 @@ public class VentanaReportes extends javax.swing.JFrame implements PropertyChang
             color = java.awt.Color.YELLOW;
         } else {
             color = java.awt.Color.RED;
-        }
-
-        // Actualizar texto y color del botón
+        }        // Actualizar texto y color del botón
         boton.setText(cantidadMovimientos + " mov.");
         boton.setBackground(color);
+        
+        // Marcar como botón de grilla para que no se modifique su color de fondo
+        boton.putClientProperty("esBotonGrilla", true);
 
         // Guardar los datos del botón para usarlos cuando se haga clic
         boton.putClientProperty("fecha", fecha);
@@ -793,10 +794,10 @@ public class VentanaReportes extends javax.swing.JFrame implements PropertyChang
             // este código se ejecutará al presionar el botón, obtengo cuál botón
             javax.swing.JButton cual = ((javax.swing.JButton) e.getSource());
             
-            try {
-                // Recuperar datos guardados en el botón
+            try {                // Recuperar datos guardados en el botón
                 String fecha = (String) cual.getClientProperty("fecha");
                 Integer indiceHoraObj = (Integer) cual.getClientProperty("indiceHora");
+                @SuppressWarnings("unchecked")
                 ArrayList<Object> movimientos = (ArrayList<Object>) cual.getClientProperty("movimientos");
                 
                 // Verificar que todos los datos necesarios estén presentes
