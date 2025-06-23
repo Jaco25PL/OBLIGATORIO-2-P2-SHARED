@@ -12,7 +12,6 @@ import model.Sistema;
 import model.Vehiculo;
 import util.ValidadorFechaHora;
 
-// public class VentanaServiciosAdicionales extends javax.swing.JFrame implements SistemaObserver{
 public class VentanaServiciosAdicionales extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
@@ -22,7 +21,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
         
         initComponents();
         
-        // controlador.getSistema().addObserver(this);
         sistema.addPropertyChangeListener(this);
         
         jComboBoxServicio.removeAllItems();
@@ -370,10 +368,6 @@ public class VentanaServiciosAdicionales extends javax.swing.JFrame implements P
     private void jButtonVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarActionPerformed
         limpiarCampos();
     }//GEN-LAST:event_jButtonVaciarActionPerformed
-
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jListServiciosRealizadosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jListServiciosRealizadosPropertyChange
         // TODO add your handling code here:

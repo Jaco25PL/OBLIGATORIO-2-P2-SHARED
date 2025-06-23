@@ -101,8 +101,6 @@ public class Sistema implements Serializable{
             listaClientes.remove(cliente);
             eliminado = true;
             
-            // notificarClienteEliminado();
-
             manejador.firePropertyChange("clienteEliminado", null, null);
         }
         return eliminado;
@@ -138,7 +136,6 @@ public class Sistema implements Serializable{
         if (!existeVehiculoConMatricula(vehiculo.getMatricula())) {
             registrado = true;
             listaVehiculos.add(vehiculo);
-            // notificarVehiculoCreado();
 
             manejador.firePropertyChange("vehiculoCreado", null, null);
         }
@@ -152,7 +149,6 @@ public class Sistema implements Serializable{
             
             listaVehiculos.remove(vehiculo);
             eliminado = true;
-            // notificarVehiculoEliminado();
 
             manejador.firePropertyChange("vehiculoEliminado", null, null);
         }
@@ -189,7 +185,6 @@ public class Sistema implements Serializable{
         if (!existeEmpleadoConCedula(empleado.getCedula())) {
             registrado = true;
             listaEmpleados.add(empleado);
-            // notificarEmpleadoCreado();
 
             manejador.firePropertyChange("empleadoCreado", null, null);
         }
@@ -203,7 +198,6 @@ public class Sistema implements Serializable{
             
             listaEmpleados.remove(empleado);
             eliminado = true;
-            // notificarEmpleadoEliminado();
 
             manejador.firePropertyChange("empleadoEliminado", null, null);
         }
@@ -239,7 +233,6 @@ public class Sistema implements Serializable{
         contrato.setNumContrato(proxNumContrato);
         listaContratos.add(contrato);
         proxNumContrato++;
-        // notificarContratoCreado();
 
         manejador.firePropertyChange("contratoCreado", null, null);
         return true;
@@ -252,7 +245,6 @@ public class Sistema implements Serializable{
             
             listaContratos.remove(contrato);
             eliminado = true;
-            // notificarContratoEliminado();
             manejador.firePropertyChange("contratoEliminado", null, null);
         }
         return eliminado;
@@ -453,7 +445,6 @@ public class Sistema implements Serializable{
         entrada.setNumMovimiento(proxNumEntrada);
         listaEntradas.add(entrada);
         proxNumEntrada++;
-        // notificarEntradaCreada();  
         manejador.firePropertyChange("entradaCreada", null, null);              
         return true;
     }
@@ -540,7 +531,6 @@ public class Sistema implements Serializable{
         entrada.setSalidaAsociada(salida);
         listaSalidas.add(salida);
         proxNumSalida++;
-        // notificarSalidaCreada();
         manejador.firePropertyChange("salidaCreada", null, null);
         return true;
     }

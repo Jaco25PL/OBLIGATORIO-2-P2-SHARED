@@ -15,10 +15,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
 
     private Sistema sistema;
   
-    
-    /**
-     * Creates new form VentanaPrincipal
-     */
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
         
