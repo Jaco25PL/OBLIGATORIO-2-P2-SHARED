@@ -3,7 +3,6 @@
  */
 package view;
 
-import controlador.EmpleadoControlador;
 import controlador.EntradaControlador;
 import controlador.SalidaControlador;
 import controlador.SerializacionControlador;
@@ -17,7 +16,6 @@ import model.Sistema;
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
-    private EmpleadoControlador empleadoControlador;
     private VehiculoControlador vehiculoControlador;
     private EntradaControlador entradaControlador;
     private SalidaControlador salidaControlador;
@@ -30,7 +28,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
      */
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
-        this.empleadoControlador = new EmpleadoControlador(sistema);
         this.vehiculoControlador = new VehiculoControlador(sistema);        
         this.entradaControlador = new EntradaControlador(sistema);
         this.salidaControlador = new SalidaControlador(sistema);
@@ -243,7 +240,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemVehiculosActionPerformed
 
     private void jMenuItemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEmpleadosActionPerformed
-        VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados(empleadoControlador);
+        VentanaGestionEmpleados ventanaEmpleados = new VentanaGestionEmpleados(sistema);
         ventanaEmpleados.setVisible(true);
     }//GEN-LAST:event_jMenuItemEmpleadosActionPerformed
 
@@ -310,7 +307,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
             this.sistema = serializacionControlador.getSistema();
             
             // Actualizar TODOS los controladores con el nuevo sistema
-            this.empleadoControlador = new EmpleadoControlador(this.sistema);
             this.vehiculoControlador = new VehiculoControlador(this.sistema);
             this.entradaControlador = new EntradaControlador(this.sistema);
             this.salidaControlador = new SalidaControlador(this.sistema);
