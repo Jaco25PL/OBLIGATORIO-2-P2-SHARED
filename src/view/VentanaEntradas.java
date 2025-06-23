@@ -3,35 +3,34 @@
  */
 package view;
 
-import controlador.EntradaControlador;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-// import javax.swing.JOptionPane;
 import model.Empleado;
+import model.Entrada;
+import model.Sistema;
 import model.Vehiculo;
-// import observer.SistemaObserver;
+import util.ValidadorFechaHora;
 
 // public class VentanaEntradas extends javax.swing.JFrame implements SistemaObserver{
 public class VentanaEntradas extends javax.swing.JFrame implements PropertyChangeListener{
 
-    private EntradaControlador controlador;
+    private Sistema sistema;
     
-    public VentanaEntradas(EntradaControlador controlador) {
-        this.controlador = controlador;
+    public VentanaEntradas(Sistema sistema) {
+        this.sistema = sistema;
         
         initComponents();
 
         // controlador.getSistema().addObserver(this);
-        controlador.getSistema().addPropertyChangeListener(this);
+        sistema.addPropertyChangeListener(this);
         
         actualizarListaVehiculos();
         actualizarListaEmpleados();
         
-        jTextFieldFecha.setText(controlador.getFechaActual());
-        jTextFieldHora.setText(controlador.getHoraActual());
+        jTextFieldFecha.setText(ValidadorFechaHora.getFechaActual());
+        jTextFieldHora.setText(ValidadorFechaHora.getHoraActual());
 
         ClaroOscuro.aplicarModo(this);
         
@@ -183,12 +182,12 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         if (seleccionado != null) {
             try {
                 String matricula = seleccionado.split(" - ")[1];
-                Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
+                Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matricula);
 
                 if (vehiculo != null) {
-                    if(controlador.vehiculoTieneContrato(vehiculo)){
+                    if(sistema.vehiculoTieneContrato(vehiculo)){
                         jLabelTieneContratoRespuesta.setText("SI");
-                    } else if(!controlador.vehiculoTieneContrato(vehiculo)){
+                    } else if(!sistema.vehiculoTieneContrato(vehiculo)){
                         jLabelTieneContratoRespuesta.setText("NO");
                     }
                     
@@ -203,7 +202,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
     }
     
     private void actualizarListaVehiculos() {
-        ArrayList<Vehiculo> vehiculos = controlador.getVehiculosDisponiblesParaEntrada();
+        ArrayList<Vehiculo> vehiculos = sistema.getVehiculosDisponiblesParaEntrada();
         DefaultListModel<String> modelo = new DefaultListModel<>();
 
         for (int i = 0; i < vehiculos.size(); i++) {
@@ -215,7 +214,7 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
     }
     
     private void actualizarListaEmpleados() {
-        ArrayList<Empleado> empleados = controlador.getListaEmpleados();
+        ArrayList<Empleado> empleados = sistema.getListaEmpleados();
         DefaultListModel<String> modelo = new DefaultListModel<>();
 
         for (int i = 0; i < empleados.size(); i++) {
@@ -246,23 +245,67 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
             String empleadoSeleccionado = jListEmpleados.getSelectedValue();
             String vehiculoSeleccionado = jListVehiculos.getSelectedValue();
 
-            String cedulaEmpleado = "";
+            String cedulaEmpleadoStr = "";
             String matriculaVehiculo = "";
 
             if (empleadoSeleccionado != null) {
-                cedulaEmpleado = empleadoSeleccionado.split(" - ")[1];
+                cedulaEmpleadoStr = empleadoSeleccionado.split(" - ")[1];
             }
             if (vehiculoSeleccionado != null) {
                 matriculaVehiculo = vehiculoSeleccionado.split(" - ")[1];
             }
 
-            controlador.registrarEntrada(fecha, hora, notas, cedulaEmpleado, matriculaVehiculo);
+            // Validar que los campos no estén vacíos y tengan el formato correcto
+            ValidadorFechaHora.validarFecha(fecha);
+            ValidadorFechaHora.validarHora(hora);
             
+            if (notas == null) { // Las notas pueden estar vacías
+                notas = "";
+            }
+            if (cedulaEmpleadoStr == null || cedulaEmpleadoStr.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un empleado");
+            }
+            if (matriculaVehiculo == null || matriculaVehiculo.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un vehículo");
+            }
+
+            // Convertir cédulas
+            int cedulaEmpleado;
+
+            try {
+                cedulaEmpleado = Integer.parseInt(cedulaEmpleadoStr);
+            } catch (NumberFormatException e) {
+                throw new Exception("La cédula del empleado debe ser un número válido");
+            }
+
+            // Buscar en sistema
+            Empleado empleado = sistema.buscarEmpleadoPorCedula(cedulaEmpleado);
+            if (empleado == null) {
+                throw new Exception("El empleado seleccionado no existe");
+            }
+
+            Vehiculo vehiculo = sistema.buscarVehiculoPorMatricula(matriculaVehiculo);
+            if (vehiculo == null) {
+                throw new Exception("El vehículo seleccionado no existe");
+            }
+
+            // Verificar unicidad
+            if (sistema.vehiculoEstaEnParking(matriculaVehiculo)) {
+                throw new Exception("El vehículo ya está en el parking");
+            }
+
+            // Crear y registrar
+            Entrada entrada = new Entrada(0, fecha, hora, notas, empleado, vehiculo);
+            boolean resultado = sistema.registrarEntrada(entrada);
+
+            if (!resultado) {
+                throw new Exception("No se pudo registrar la entrada");
+            }
+
             actualizarListaVehiculos();
             
             // JOptionPane.showMessageDialog(this, "Entrada agregada con éxito");
             ClaroOscuro.mostrarMensaje(this, "Entrada agregada con éxito", "Éxito");
-
 
             limpiarCampos();
 

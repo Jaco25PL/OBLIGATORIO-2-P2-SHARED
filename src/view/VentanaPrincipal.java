@@ -3,7 +3,6 @@
  */
 package view;
 
-import controlador.EntradaControlador;
 import controlador.SalidaControlador;
 import controlador.SerializacionControlador;
 import controlador.ServicioAdicionalControlador;
@@ -15,7 +14,6 @@ import model.Sistema;
 public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChangeListener{
 
     private Sistema sistema;
-    private EntradaControlador entradaControlador;
     private SalidaControlador salidaControlador;
     private ServicioAdicionalControlador servicioAdicionalControlador;
     private SerializacionControlador serializacionControlador;
@@ -26,7 +24,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
      */
     public VentanaPrincipal(Sistema sistema) {
         this.sistema = sistema;
-        this.entradaControlador = new EntradaControlador(sistema);
         this.salidaControlador = new SalidaControlador(sistema);
         this.servicioAdicionalControlador = new ServicioAdicionalControlador(sistema);
         this.serializacionControlador = new SerializacionControlador(sistema);
@@ -247,7 +244,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
     }//GEN-LAST:event_jMenuItemContratosActionPerformed
 
     private void jMenuItemEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEntradasActionPerformed
-        VentanaEntradas ventanaEntradas = new VentanaEntradas(entradaControlador);
+        VentanaEntradas ventanaEntradas = new VentanaEntradas(sistema);
         ventanaEntradas.setVisible(true);
     }//GEN-LAST:event_jMenuItemEntradasActionPerformed
 
@@ -304,7 +301,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements PropertyChan
             this.sistema = serializacionControlador.getSistema();
             
             // Actualizar TODOS los controladores con el nuevo sistema
-            this.entradaControlador = new EntradaControlador(this.sistema);
             this.salidaControlador = new SalidaControlador(this.sistema);
             this.servicioAdicionalControlador = new ServicioAdicionalControlador(this.sistema);
             
