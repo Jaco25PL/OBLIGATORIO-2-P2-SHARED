@@ -27,8 +27,13 @@ public class VentanaGestionContratos extends javax.swing.JFrame implements Prope
         this.sistema = sistema;
         
         initComponents();
+
+        jListContratos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListContratosValueChanged(evt);
+            }
+        });
         
-        // controlador.getSistema().addObserver(this);
         sistema.addPropertyChangeListener(this);
         
         actualizarListaContratos();
