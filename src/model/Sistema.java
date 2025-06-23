@@ -79,7 +79,6 @@ public class Sistema implements Serializable{
         if (!existeClienteConCedula(cliente.getCedula())) {
             registrado = true;
             listaClientes.add(cliente);
-            // notificarClienteCreado();
             manejador.firePropertyChange("clienteCreado", null, null);
         }
         return registrado;
