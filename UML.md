@@ -12,9 +12,6 @@
 
 #### **Metodos**
 
-- `+ getNombre(): String`
-- `+ getCedula(): int`
-- `+ getDireccion(): String`
 - `+ toString(): String`
 
 ### **RegistroMovimientos** (Abstracta)
@@ -30,12 +27,6 @@
 
 #### **Metodos**
 
-- `+ getNumMovimiento(): int`
-- `+ getFecha(): String`
-- `+ getHora(): String`
-- `+ getNota(): String`
-- `+ getEmpleado(): Empleado`
-- `+ getVehiculo(): Vehiculo`
 - `+ toString(): String`
 
 ---
@@ -51,8 +42,6 @@
 
 #### **Metodos**
 
-- `+ getCelular(): int`
-- `+ getAñoCliente(): int`
 - `+ toString(): String`
 
 ### **Empleado** (extends Persona)
@@ -63,7 +52,6 @@
 
 #### **Metodos**
 
-- `+ getNumEmpleado(): int`
 - `+ toString(): String`
 
 ### **Vehiculo**
@@ -77,10 +65,6 @@
 
 #### **Metodos**
 
-- `+ getMatricula(): String`
-- `+ getMarca(): String`
-- `+ getModelo(): String`
-- `+ getEstado(): String`
 - `+ setEstado(estado: String): void`
 - `+ toString(): String`
 
@@ -97,12 +81,7 @@
 
 #### **Metodos**
 
-- `+ getValorMensual(): double`
-- `+ getEmpleadoContrato(): Empleado`
-- `+ getClienteContrato(): Cliente`
-- `+ getVehiculoContrato(): Vehiculo`
-- `+ getNumContrato(): int`
-- `+ getFechaInicio(): String`
+- `+ setNumContrato(): int`
 - `+ toString(): String`
 
 ### **Entrada** (extends RegistroMovimientos)
@@ -113,12 +92,15 @@
 
 #### **Metodos**
 
-- `+ getSalidaAsociada(): Salida`
 - `+ setSalidaAsociada(salida: Salida): void`
 - `+ tieneSalida(): boolean`
 - `+ toString(): String`
 
 ### **Salida** (extends RegistroMovimientos)
+
+#### **Atributos**
+
+- `- entrada: Entrada`
 
 #### **Metodos**
 
@@ -133,71 +115,114 @@
 
 #### **Metodos**
 
-- `+ getTipoServicio(): String`
-- `+ getCostoServicio(): double`
 - `+ toString(): String`
 
-### **Sistema**
+### **Sistema** implements Serializable
 
 #### **Atributos**
 
-- `- listaClientes: List<Cliente>`
-- `- listaVehiculos: List<Vehiculo>`
-- `- listaEmpleados: List<Empleado>`
-- `- listaContratos: List<Contrato>`
-- `- listaEntradas: List<Entrada>`
-- `- listaSalidas: List<Salida>`
-- `- listaServiciosAdicionales: List<ServicioAdicional>`
+- `- listaClientes: ArrayList<Cliente>`
+- `- listaVehiculos: ArrayList<Vehiculo>`
+- `- listaEmpleados: ArrayList<Empleado>`
+- `- listaContratos: ArrayList<Contrato>`
+- `- listaEntradas: ArrayList<Entrada>`
+- `- listaSalidas: ArrayList<Salida>`
+- `- listaServiciosAdicionales: ArrayList<ServicioAdicional>`
 - `- proxNumContrato: int`
 - `- proxNumServicio: int`
 - `- proxNumEntrada: int`
 - `- proxNumSalida: int`
+- `- manejador: PropertyChangeSupport`
 
 #### **Metodos**
 
-<!--Gestión de Clientes-->
+<!-- Gestión de Listeners -->
 
-- `+ registrarCliente(nombre: String, cedula: int, direccion: String, celular: int, añoCliente: int): boolean`
+- `+ addPropertyChangeListener(listener: PropertyChangeListener): void`
+
+<!-- Gestión de Clientes -->
+
+- `+ registrarCliente(cliente: Cliente): boolean`
 - `+ eliminarCliente(cedula: int): boolean`
-- `+ validarCedulaCliente(cedula: int): boolean`
 - `+ buscarClientePorCedula(cedula: int): Cliente`
+- `+ existeClienteConCedula(cedula: int): boolean`
 - `+ getListaClientes(): ArrayList<Cliente>`
-<!--Gestión de Vehiculos-->
-- `+ registrarVehiculo(matricula: String, marca: String, modelo: String, estado: String): boolean`
-- `+ validarMatricula(matricula: String): boolean`
-- `+ buscarVehiculoPorMatricula(matricula: String): Vehiculo`
-- `+ getListaVehiculos(): ArrayList<Vehiculo>`
-<!--Gestión de Empleados-->
-- `+ registrarEmpleado(nombre: String, cedula: int, direccion: String, numEmpleado: int): boolean`
-- `+ validarCedulaEmpleado(cedula: int): boolean`
-- `+ buscarEmpleadoPorCedula(cedula: int): Empleado`
-- `+ getListaEmpleados(): ArrayList<Empleado>`
-<!--Gestión de Contratos-->
-- `+ registrarContrato(valorMensual: double, empleado: Empleado, cliente: Cliente, vehiculo: Vehiculo, fechaInicio: String): boolean`
-- `+ eliminarContratoPorCliente(cliente: Cliente): void`
-- `+ buscarContratoPorVehiculo(vehiculo: Vehiculo): Contrato`
-- `+ getListaContratos(): ArrayList<Contrato>`
-<!--Movimientos-->
-- `+ registrarEntrada(fecha: String, hora: String, nota: String, empleado: Empleado, vehiculo: Vehiculo): boolean`
-- `+ registrarSalida(entrada: Entrada, fecha: String, hora: String, nota: String, empleado: Empleado): boolean`
-- `+ registrarServicioAdicional(tipoServicio: String, fecha: String, hora: String, nota: String, vehiculo: Vehiculo, empleado: Empleado, costo: double): boolean`
-- `+ buscarEntradaPorNumero(numEntrada: int): Entrada`
-<!--Consulta Movimientos-->
-- `+ getVehiculosDisponiblesParaEntrada(): ArrayList<Vehiculo>`
-- `+ getEntradaSinSalida(): ArrayList<Entrada>`
-- `+ calcularTiempoEstadia(entrada: Entrada, fechaSalida: String, horaSalida: String): String`
-<!--Reportes-->
-- `+ getHistorialPorVehiculo(vehiculo: Vehiculo): ArrayList<RegistroMovimientos>`
-- `+ contarMovimientosPorPeriodo(fecha: String, horaInicio: int, horaFin: int): int`
-- `+ getMovimientosPorPeriodo(fecha: String, horaInicio: int, horaFin: int): ArrayList<RegistroMovimientos>`
-- `+ ordenarMovimientosPorFechaHora(movimientos: ArrayList<RegistroMovimientos>): ArrayList<RegistroMovimientos>`
-- `+ getServiciosAdicionales(): ArrayList<ServicioAdicional>`
-<!--Persistencia-->
-- `+ grabarDatos(): boolean`
-- `+ recuperarDatos(): boolean`
 
+<!-- Gestión de Vehículos -->
+
+- `+ registrarVehiculo(vehiculo: Vehiculo): boolean`
+- `+ eliminarVehiculo(matricula: String): boolean`
+- `+ buscarVehiculoPorMatricula(matricula: String): Vehiculo`
+- `+ existeVehiculoConMatricula(matricula: String): boolean`
+- `+ getListaVehiculos(): ArrayList<Vehiculo>`
+- `+ getVehiculosDisponiblesParaEntrada(): ArrayList<Vehiculo>`
+
+<!-- Gestión de Empleados -->
+
+- `+ registrarEmpleado(empleado: Empleado): boolean`
+- `+ eliminarEmpleado(cedula: int): boolean`
+- `+ buscarEmpleadoPorCedula(cedula: int): Empleado`
+- `+ existeEmpleadoConCedula(cedula: int): boolean`
+- `+ getListaEmpleados(): ArrayList<Empleado>`
+
+<!-- Gestión de Contratos -->
+
+- `+ registrarContrato(contrato: Contrato): boolean`
+- `+ eliminarContrato(numContrato: int): boolean`
+- `+ buscarContratoPorNumContrato(numContrato: int): Contrato`
+- `+ existeContratoConNumContrato(numContrato: int): boolean`
+- `+ vehiculoTieneContrato(vehiculo: Vehiculo): boolean`
+- `+ vehiculoTiempoEnParking(vehiculo: Vehiculo): String`
+- `+ getListaContratos(): ArrayList<Contrato>`
+
+<!-- Movimientos: Entradas -->
+
+- `+ registrarEntrada(entrada: Entrada): boolean`
+- `+ buscarEntradaPorNumMovimiento(numMovimiento: int): Entrada`
+- `+ buscarEntradaPorMatricula(matricula: String): Entrada`
+- `+ existeEntradaConNumMovimiento(numMovimiento: int): boolean`
+- `+ vehiculoEstaEnParking(matricula: String): boolean`
+- `+ getListaEntradas(): ArrayList<Entrada>`
+- `+ getEntradasSinSalida(): ArrayList<Entrada>`
+
+<!-- Movimientos: Salidas -->
+
+- `+ registrarSalida(salida: Salida, entrada: Entrada): boolean`
+- `+ getListaSalidas(): ArrayList<Salida>`
+
+<!-- Movimientos: Servicios Adicionales -->
+
+- `+ registrarServicio(servicio: ServicioAdicional): boolean`
+- `+ getListaServiciosAdicionales(): ArrayList<ServicioAdicional>`
+- `+ buscarServicioPorMatricula(matricula: String): ServicioAdicional`
+
+<!-- Reportes y Estadísticas -->
+
+- `- convertirDuracionAMinutos(duracion: String): long`
+- `+ filtrarMovimientos(movimientos: ArrayList<Object>, incluirEntradas: boolean, incluirSalidas: boolean, incluirServicios: boolean): ArrayList<Object>`
+- `+ ordenarMovimientos(movimientos: ArrayList<Object>, ascendente: boolean): ArrayList<Object>`
+- `+ exportarMovimientosATxt(movimientos: ArrayList<Object>, matricula: String): void`
+- `+ calcularDiferenciaTiempo(fechaEntrada: String, horaEntrada: String, fechaSalida: String, horaSalida: String): String`
+- `+ obtenerMovimientosPorPeriodo(fecha: String, horaInicio: int, horaFin: int): ArrayList<Object>`
+
+<!-- Persistencia y Datos de Prueba -->
+
+- `+ cargarDatosPrueba(): void`
+
+- `+ getProxNumContrato(): int`
+- `+ getProxNumEntrada(): int`
+- `+ getProxNumSalida(): int`
+- `+ getProxNumServicio(): int`
+
+- `+ existenDatosGuardados(): boolean`
+- `+ guardarDatos(): void`
+- `+ cargarDatos(): Sistema`
 
 ---
+
+
+
+
 
 
 ## Relaciones

@@ -43,8 +43,6 @@ public class Sistema implements Serializable{
     // Lista de observers
     // transitent para que no se serializen los observers
     private transient PropertyChangeSupport manejador;
-    // private transient List<SistemaObserver> observers = new ArrayList<>();
-
 
     //Constructor
     public Sistema() {
@@ -1133,107 +1131,6 @@ public class Sistema implements Serializable{
         return proxNumServicio;
     }
     
-    // Registrar observer
-    // public void addObserver(SistemaObserver observer) {
-        // if (observers == null) {
-        //     observers = new ArrayList<>();
-        // }
-        // observers.add(observer);
-    // }
-    
-    // Notificar cambios
-    // private void notificarClienteEliminado() {
-    //     // Verificar que observers no sea null antes de iterar
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onClienteEliminado();
-    //     //     }
-    //     // }
-    // }
-
-    // private void notificarClienteCreado() {
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onClienteCreado();
-    //     //     }
-    //     // }
-    // }
-    
-    // // Aplicar el mismo patrón a TODOS los métodos de notificación...
-    // private void notificarVehiculoEliminado() {
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onVehiculoEliminado();
-    //     //     }
-    //     // }
-    // }
-
-    // private void notificarVehiculoCreado() {
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onVehiculoCreado();
-    //     //     }
-    //     // }
-    // }
-
-    // private void notificarEmpleadoEliminado() {
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onEmpleadoEliminado();
-    //     //     }
-    //     // }
-    // }
-
-    // private void notificarEmpleadoCreado() {
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onEmpleadoCreado();
-    //     //     }
-    //     // }
-    // }
-
-    // private void notificarContratoEliminado() {
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onContratoEliminado();
-    //     //     }
-    //     // }
-    // }
-
-    // private void notificarContratoCreado() {
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onContratoCreado();
-    //     //     }
-    //     // }
-    // }
-
-    // private void notificarEntradaCreada(){
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onEntradaCreada();
-    //     //     }
-    //     // }
-    // }
-
-    // private void notificarSalidaCreada(){
-    //     // if (observers != null) {
-    //     //     for (int i = 0; i < observers.size(); i++) {
-    //     //         SistemaObserver observer = observers.get(i);
-    //     //         observer.onSalidaCreada();
-    //     //     }
-    //     // }
-    // }
-
     public boolean existenDatosGuardados() {
         java.io.File archivo = new java.io.File("DATOS.ser");
         return archivo.exists();
