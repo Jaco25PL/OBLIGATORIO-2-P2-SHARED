@@ -4,17 +4,14 @@
 package view;
 
 import controlador.EntradaControlador;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-// import javax.swing.JOptionPane;
 import model.Empleado;
+import model.Entrada;
 import model.Vehiculo;
-// import observer.SistemaObserver;
+import util.ValidadorFechaHora;
 
-// public class VentanaEntradas extends javax.swing.JFrame implements SistemaObserver{
 public class VentanaEntradas extends javax.swing.JFrame implements PropertyChangeListener{
 
     private EntradaControlador controlador;
@@ -24,27 +21,14 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         
         initComponents();
 
-        // controlador.getSistema().addObserver(this);
         controlador.getSistema().addPropertyChangeListener(this);
         
-        // actualizarListaVehiculos();
-        // actualizarListaEmpleados();
         actualizarVista();
 
         jTextFieldFecha.setText(controlador.getFechaActual());
         jTextFieldHora.setText(controlador.getHoraActual());
 
         ClaroOscuro.aplicarModo(this);
-        
-        //Listener para la Lista
-        // jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-        //     @Override
-        //     public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-        //         if (!evt.getValueIsAdjusting()) {
-        //             vehiculoTieneContrato();
-        //         }
-        //     }
-        // });
     }
 
     /**
@@ -189,31 +173,6 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
         setBounds(0, 0, 584, 329);
     }// </editor-fold>//GEN-END:initComponents
 
-    // private void vehiculoTieneContrato(){
-    //     String seleccionado = jListVehiculos.getSelectedValue();
-
-    //     if (seleccionado != null) {
-    //         try {
-    //             String matricula = seleccionado.split(" - ")[1];
-    //             Vehiculo vehiculo = controlador.buscarVehiculoPorMatricula(matricula);
-
-    //             if (vehiculo != null) {
-    //                 if(controlador.vehiculoTieneContrato(vehiculo)){
-    //                     jLabelTieneContratoRespuesta.setText("SI");
-    //                 } else if(!controlador.vehiculoTieneContrato(vehiculo)){
-    //                     jLabelTieneContratoRespuesta.setText("NO");
-    //                 }
-                    
-    //             }
-    //         } catch (Exception e) {
-    //             // JOptionPane.showMessageDialog(this, "Error al cargar datos del cliente: " + e.getMessage(),
-    //             //         "Error", JOptionPane.ERROR_MESSAGE);
-
-    //              ClaroOscuro.mostrarMensaje(this, "Error al cargar datos del cliente: " + e.getMessage(), "Error");
-    //         }
-    //     }
-    // }
-
     private void vehiculoTieneContrato(){
         Vehiculo vehiculo = (Vehiculo) jListVehiculos.getSelectedValue();
         
@@ -265,23 +224,67 @@ public class VentanaEntradas extends javax.swing.JFrame implements PropertyChang
             Empleado empleadoSeleccionado = (Empleado) jListEmpleados.getSelectedValue();
             Vehiculo vehiculoSeleccionado = (Vehiculo) jListVehiculos.getSelectedValue();
 
-            String cedulaEmpleado = "";
+            String cedulaEmpleadoStr = "";
             String matriculaVehiculo = "";
 
             if (empleadoSeleccionado != null) {
-                cedulaEmpleado = String.valueOf(empleadoSeleccionado.getCedula());
+                cedulaEmpleadoStr = String.valueOf(empleadoSeleccionado.getCedula());
             }
             if (vehiculoSeleccionado != null) {
                 matriculaVehiculo = vehiculoSeleccionado.getMatricula();
             }
 
-            controlador.registrarEntrada(fecha, hora, notas, cedulaEmpleado, matriculaVehiculo);
+            // Validar que los campos no estén vacíos y tengan el formato correcto
+            ValidadorFechaHora.validarFecha(fecha);
+            ValidadorFechaHora.validarHora(hora);
             
+            if (notas == null) { // Las notas pueden estar vacías
+                notas = "";
+            }
+            if (cedulaEmpleadoStr == null || cedulaEmpleadoStr.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un empleado");
+            }
+            if (matriculaVehiculo == null || matriculaVehiculo.trim().isEmpty()) {
+                throw new Exception("Debe seleccionar un vehículo");
+            }
+
+            // Convertir cédulas
+            int cedulaEmpleado;
+
+            try {
+                cedulaEmpleado = Integer.parseInt(cedulaEmpleadoStr);
+            } catch (NumberFormatException e) {
+                throw new Exception("La cédula del empleado debe ser un número válido");
+            }
+
+            // Buscar en sistema
+            Empleado empleado = controlador.getSistema().buscarEmpleadoPorCedula(cedulaEmpleado);
+            if (empleado == null) {
+                throw new Exception("El empleado seleccionado no existe");
+            }
+
+            Vehiculo vehiculo = controlador.getSistema().buscarVehiculoPorMatricula(matriculaVehiculo);
+            if (vehiculo == null) {
+                throw new Exception("El vehículo seleccionado no existe");
+            }
+
+            // Verificar unicidad
+            if (controlador.getSistema().vehiculoEstaEnParking(matriculaVehiculo)) {
+                throw new Exception("El vehículo ya está en el parking");
+            }
+
+            // Crear y registrar
+            Entrada entrada = new Entrada(0, fecha, hora, notas, empleado, vehiculo);
+            boolean resultado = controlador.getSistema().registrarEntrada(entrada);
+
+            if (!resultado) {
+                throw new Exception("No se pudo registrar la entrada");
+            }
+
             actualizarListaVehiculos();
             
             // JOptionPane.showMessageDialog(this, "Entrada agregada con éxito");
             ClaroOscuro.mostrarMensaje(this, "Entrada agregada con éxito", "Éxito");
-
 
             limpiarCampos();
 
