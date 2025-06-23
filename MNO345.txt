@@ -1,5 +1,0 @@
-HISTORIAL DE MOVIMIENTOS PARA VEHÍCULO: MNO345
-========================================================
-
-ENTRADA | Fecha: 19/11/2023 | Hora: 10:15 | Empleado: Sergio Torres - Notas: Neumático delantero bajo
-SALIDA | Fecha: 19/11/2023 | Hora: 16:45 | Empleado: Roberto Gómez - Notas: Sin observaciones - Tiempo en parking: 6:30

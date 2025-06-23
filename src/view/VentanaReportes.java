@@ -130,6 +130,12 @@ public class VentanaReportes extends javax.swing.JFrame implements PropertyChang
         });
         jScrollPaneVehiculos.setViewportView(jListVehiculos);
 
+        jListVehiculos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListVehiculosValueChanged(evt);
+            }
+        });
+
         jPanelHistorial.add(jScrollPaneVehiculos);
         jScrollPaneVehiculos.setBounds(10, 40, 150, 130);
 
